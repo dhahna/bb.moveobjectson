@@ -412,6 +412,24 @@ td.nm{font-family:var(--chip);font-size:13.5px}
   .sitenav .spacer{flex-basis:100%}
   .sitenav a.tool{font-size:12.5px;padding:3px 10px}
 }
+
+/* ---- mobile fit (ported from index.html, Oct 2026) ----
+   A nowrap title inside a grid child without min-width:0 pushes the whole
+   page wider than the screen, and the fit script then measures the
+   stretched plate and never shrinks. Clip at the plate as a backstop. */
+.wrap{overflow-x:clip}
+html,body{max-width:100%;overflow-x:hidden}
+header.hero .plate{min-width:0;overflow:hidden}
+header.hero h1{max-width:100%}
+footer p{min-width:0;overflow-wrap:anywhere}
+footer .crowd{
+  display:block;margin-top:10px;padding:9px 12px;background:#fff6c9;
+  border:2px solid var(--line);border-radius:3px;box-shadow:var(--shadow-sm);
+  font-size:11.5px;line-height:1.6;color:var(--ink);
+}
+footer .crowd b{font-family:var(--chip);font-weight:400}
+footer .dcontrib{font-family:var(--chip);font-size:12.5px;color:var(--plumbob);white-space:nowrap}
+footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
 </style>
 </head>
 <body>
@@ -552,6 +570,8 @@ td.nm{font-family:var(--chip);font-size:13.5px}
   <footer>
     <p class="credit">Built by <strong>@dhahna</strong> &middot; The mod-side activities are all konanhurry&rsquo;s work &mdash; grab <a href="https://www.curseforge.com/sims4/mods/club-business-activity-expanded" target="_blank" rel="noopener noreferrer">Club &amp; Business Activities Expanded</a> and show them some love. &#128154;</p>
     <p>Sources &mdash; <span class="srcbadge src-Vanilla">Vanilla</span>: EA&rsquo;s official Businesses &amp; Hobbies &ldquo;Customer Rules&rdquo; list, the pack&rsquo;s tattoo/pottery/candy/mentoring/class activities, and Adventure Awaits&rsquo; getaway activities. <span class="srcbadge src-Mod">Mod</span>: <a href="https://www.curseforge.com/sims4/mods/club-business-activity-expanded" target="_blank" rel="noopener noreferrer">konanhurry&rsquo;s Club &amp; Business Activities Expanded</a>. Getaways use customizable roles, so activities aren&rsquo;t split by guest/host &mdash; the itinerary draws from the whole getaway-compatible pool. Each activity needs its listed pack installed to appear in-game.</p>
+    <p class="crowd"><b>This is a work in progress, and yours to correct.</b> The activity lists follow EA&rsquo;s Customer Rules and konanhurry&rsquo;s spreadsheet, and packs change with patches. If an activity is missing or wrong, send it over and it goes in with your name on it. <a class="dcontrib" href="https://github.com/dhahna/bb.moveobjectson/issues/new?title=Activity%20Finder%3A%20" target="_blank" rel="noopener">Send us the wording &rarr;</a></p>
+    <p class="ea">This site is not endorsed by or affiliated with Electronic Arts, or its licensors. Trademarks are the property of their respective owners. Game content and materials copyright Electronic Arts Inc. and its licensors. All rights reserved.</p>
   </footer>
 </div>
 
@@ -1136,11 +1156,15 @@ document.querySelector('.venue[data-id="salon"]').click();
 (function(){
   function fitTitle(){
     var h1=document.querySelector('header.hero h1'); if(!h1) return;
-    var plate=h1.closest('.plate'); if(!plate) return;
-    var cs=getComputedStyle(plate);
-    var box=plate.clientWidth-parseFloat(cs.paddingRight||0)-parseFloat(cs.paddingLeft||0);
-    h1.style.fontSize=''; var size=36;
-    while(h1.scrollWidth>box && size>16){ size-=1; h1.style.fontSize=size+'px'; }
+    var plate=h1.closest('.plate'), hero=h1.closest('header.hero'); if(!plate||!hero) return;
+    // Measure the hero, not the plate: the plate can be stretched by the h1
+    // itself, which made the old check think there was room when there wasn't.
+    var ps=getComputedStyle(plate);
+    var room=Math.min(plate.clientWidth, hero.clientWidth)
+             - parseFloat(ps.paddingLeft||0) - parseFloat(ps.paddingRight||0);
+    h1.style.fontSize='';
+    var size=parseFloat(getComputedStyle(h1).fontSize) || 36;
+    while(h1.scrollWidth>room && size>10){ size-=1; h1.style.fontSize=size+'px'; }
   }
   window.addEventListener('resize',fitTitle);
   fitTitle();

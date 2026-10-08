@@ -51,7 +51,7 @@ Files sit at the root because that's how the live site is laid out: the pages li
 - A definition card answers "what is that?" before showing filtered results, with a path back to the style card.
 - About 180 glossary entries; 117 of them were AI-drafted and are **flagged unreviewed**. Missing entries prompt for crowd-sourced contributions.
 - Build tips are limited to base-game techniques.
-- A `CONTRIBUTE` config object at the top of the injected script holds the correction-form URL so it can be swapped with a one-line edit. It's currently blank (see AUDIT.md).
+- A `CONTRIBUTE` config object at the top of the injected script holds the correction-form URL so it can be swapped with a one-line edit. It points at GitHub issues on this repo for now (`https://github.com/dhahna/bb.moveobjectson/issues/new`); a WPForms page is the long-term plan. The same link sits in every tool's footer under "Send us the wording".
 
 ### Small Business & Getaway Activity Finder
 - Which activities are available as Club Activity, Small Business Customer/Employee, or Getaway activity, by pack. Built around Businesses & Hobbies.
