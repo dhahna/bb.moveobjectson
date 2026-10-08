@@ -21,18 +21,16 @@ Read this first, then `docs/design-system.md` and `docs/roadmap.md`.
 ## Repo layout (target)
 
 ```
-index.html                 bookcase home page (live)
-locker.html                alternative home page (not chosen; keep for reference)
-tools/
-  sims-tag-builder-public.html
-  sims4-house-style-finder.html
-  sims-business-activity-finder.html
-docs/
-  design-system.md
-  roadmap.md
+index.html                          bookcase home page (live)
+sims-tag-builder-public.html        Gallery Tag Builder
+sims4-house-style-finder.html       House Style Finder
+sims-business-activity-finder.html  Small Business & Getaway Activity Finder
+docs/design-system.md
+docs/roadmap.md
+AUDIT.md                            consistency / mobile / content audit (Oct 2026)
 ```
 
-If `tools/` is empty, the source files haven't been uploaded yet. They exist on Dana's computer and on the live server (SiteGround). **Don't rebuild a tool from scratch.** Ask for the file.
+Files sit at the root because that's how the live site is laid out: the pages link to each other by bare filename and to `https://bb.moveobjects.com/<file>`. Keep the names; renaming breaks live links. These are the Sep 16 2026 versions from Dana's computer. **Don't rebuild a tool from scratch.** Edit the file that's here.
 
 ## Tool notes
 
@@ -45,12 +43,15 @@ If `tools/` is empty, the source files haven't been uploaded yet. They exist on 
 - The description is editable; manual edits survive chip changes. The field is not re-rendered while the user is typing (that would make the caret jump). Paste strips formatting. **Clear all** resets edits too.
 - Tag counter lives in the sticky sidebar next to Clear all and reads zero until the first manual selection.
 - Pack counts stay out of titles (the "only show what I own" filter handles that). Pack *names* may appear in titles.
+- Chip *ordering* is still derived from Dana's own gallery export, even though the numbers are stripped. Whether to say so on the site is undecided.
 - Description logic avoids repeating itself: a structure doesn't restate the lot's phrase and a use doesn't restate the room (see `dropEchoes`).
 
 ### House Style Finder
 - Tabs; colours scoped to content sections, not whole tabs.
 - A definition card answers "what is that?" before showing filtered results, with a path back to the style card.
-- 117 glossary definitions were AI-drafted and are **flagged unreviewed**. Missing entries prompt for crowd-sourced contributions.
+- About 180 glossary entries; 117 of them were AI-drafted and are **flagged unreviewed**. Missing entries prompt for crowd-sourced contributions.
+- Build tips are limited to base-game techniques.
+- A `CONTRIBUTE` config object at the top of the injected script holds the correction-form URL so it can be swapped with a one-line edit. It's currently blank (see AUDIT.md).
 
 ### Small Business & Getaway Activity Finder
 - Which activities are available as Club Activity, Small Business Customer/Employee, or Getaway activity, by pack. Built around Businesses & Hobbies.
@@ -75,6 +76,10 @@ These are Dana's working methods. Label them as one builder's methods.
 - Search indexing has been discouraged during the build. Turning it on is Dana's call.
 - An SFTP client (Cyberduck or Transmit) is planned but not set up.
 - Possible future: GitHub Pages as a mirror or deploy source. Ask before changing where the live site comes from.
+
+## Tone
+
+Not cheesy, not salesy. Plain and direct, written by a builder who worked it out the hard way and is handing over the map. No "unlock your creativity", no exclamation-point enthusiasm.
 
 ## Working style
 

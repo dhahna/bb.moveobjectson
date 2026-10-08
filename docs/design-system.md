@@ -11,7 +11,8 @@ The look is a **90s high-school girl's notebook**: a composition notebook cover,
 | Token | Value | Use |
 |---|---|---|
 | Page background | `#e6f2fb` | Very pale Sims blue, echoing the blue grid on the paper |
-| Margin rule / pink accent | `#e0aabb` or `#ef6f9c` | ⚠️ Both values appear in project notes. Check the live files and settle on one. |
+| Margin rule / pink accent | `#ef6f9c` | `--margin-rule`. Settled Oct 2026. |
+| Secondary tinted sheet | `#f1f8fd` | Replaced pink sheets across all tools |
 | Plumbob green | `#2ba355` | The dot in the wordmark; the plumbob sticker. The plumbob is always green. |
 | `--plumbob` CSS token | pink | Link colour token only (the name is historical) |
 | Section highlighters | 15 rotating pairs | Each pair = a light fill + a darker tint for borders |
@@ -19,9 +20,10 @@ The look is a **90s high-school girl's notebook**: a composition notebook cover,
 ## Type
 
 - **Headings:** Momo Signature
-- **Chips and body text:** Walter Turncoat (this replaced Verdana for body text everywhere except titles)
+- **Chips and body text:** Walter Turncoat (the home page switched body text from Verdana to Walter Turncoat; the tools still use Verdana for body text, which is an open audit item)
 - **Wordmark:** Verdana bold
 - Fonts are embedded as base64. No Google Fonts calls.
+- **Check that the fonts actually render before judging a layout.** If the embedded fonts are missing, the page falls back to Comic Sans and Papyrus and everything reads as cheesy. This has already caused one wasted round of revisions.
 - **Title Case** for titles and every chip label.
 - **Titles stay on one line.** Shrink the font to fit; never wrap. Watch grid children: they need `min-width: 0` or a `nowrap` title will push the container wider than the screen, and fit-to-width scripts will measure the stretched container and never shrink. This caused clipping on mobile before.
 
@@ -53,7 +55,7 @@ The **bookcase** treatment (`index.html`) is the live one: three composition boo
 - Inspiration · Commercial → Small Business & Getaway Activity Finder
 - Posting → Gallery Tag Builder
 
-Stat stickers are SVG circles so the text always fills them at any size. Don't make the shelf near-black, because the black cloth spines then read as VHS cassettes. A **locker** variant (`locker.html`) was built and not chosen.
+Stat stickers are SVG circles so the text always fills them at any size. Don't make the shelf near-black, because the black cloth spines then read as VHS cassettes. A **locker** variant was built and not chosen. It isn't in this repo because its copy included first-person text that Dana didn't write.
 
 A shared nav strip on every page links back to `https://bb.moveobjects.com`.
 

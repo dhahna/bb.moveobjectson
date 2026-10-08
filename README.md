@@ -14,9 +14,9 @@ Each tool is a single, self-contained HTML file. Fonts and images are embedded, 
 
 | Tool | What it does | File |
 |---|---|---|
-| **Gallery Tag Builder** | Builds gallery titles, descriptions and hashtags for your uploads. Has a 500-character meter, a ✂ marker showing which tags will be cut off, a no-spaces toggle, click-to-remove tags, and an editable description. | `tools/sims-tag-builder-public.html` |
-| **House Style Finder** | Build inspiration by architectural style, with a glossary that answers "what is that?" | `tools/sims4-house-style-finder.html` |
-| **Small Business & Getaway Activity Finder** | Find which activities work for small businesses, clubs and getaways, by pack. | `tools/sims-business-activity-finder.html` |
+| **Gallery Tag Builder** | Builds gallery titles, descriptions and hashtags for your uploads. Has a 500-character meter, a ✂ marker showing which tags will be cut off, a no-spaces toggle, click-to-remove tags, and an editable description. | `sims-tag-builder-public.html` |
+| **House Style Finder** | Build inspiration by architectural style, with a glossary that answers "what is that?" | `sims4-house-style-finder.html` |
+| **Small Business & Getaway Activity Finder** | Find which activities work for small businesses, clubs and getaways, by pack. | `sims-business-activity-finder.html` |
 
 Planned: a gallery stats exporter (a step-by-step guide for Mac and PC so you can export your own gallery data), builder mod recommendations, and links to other community tools such as challenge generators.
 

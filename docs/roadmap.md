@@ -1,8 +1,9 @@
 # Roadmap
 
 ## Now
-- [ ] Upload the existing tool files into `tools/` and the home pages to the root (from Dana's computer or the live server)
-- [ ] Settle the pink margin-rule colour (`#e0aabb` vs `#ef6f9c`)
+- [x] Upload the existing tool files and home page (Sep 16 2026 versions)
+- [x] Settle the pink margin-rule colour: `#ef6f9c`
+- [ ] Work through AUDIT.md
 - [ ] Review the 117 unreviewed House Style Finder glossary entries
 - [ ] Add a contribution path on the site (a form, or links to GitHub issues) so visitors can send corrections
 - [ ] Collect the focus group's feedback on the look comparison (font pairings × border treatments)
