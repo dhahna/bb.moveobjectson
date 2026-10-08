@@ -357,6 +357,7 @@ header.hero .plate{min-width:0;overflow:hidden}
 header.hero h1{max-width:100%}
 footer p{min-width:0;overflow-wrap:anywhere}
 footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
+.empty{margin:8px 0 0;font-size:12.5px;color:var(--ink-soft);line-height:1.6}
 </style></head><body><div class="wrap">
 <nav class="sitenav">
   <a class="home" href="https://bb.moveobjects.com/">bb<span class="dot">.</span>moveobjects</a>
@@ -419,7 +420,7 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
   <p class="meta">Type anything (e.g. <em>gambrel</em>, <em>wraparound porch</em>, <em>board-and-batten</em>, <em>Cottage Living</em>) and/or tap facet chips. Matching styles are ranked by how many of your picks they hit; matched elements are highlighted gold.</p>
   <div class="toolbar">
     <input type="search" id="finderSearch" placeholder="Search every element across all 50 styles">
-    <select id="matchMode"><option value="any">Match ANY selected chip</option><option value="all">Match ALL selected chips</option></select>
+    <select id="matchMode" aria-label="How to match selected chips"><option value="any">Match ANY selected chip</option><option value="all">Match ALL selected chips</option></select>
     <button class="btn" id="clearFinder">Clear all</button>
   </div>
   <div class="facets" id="facets"></div>
@@ -433,9 +434,9 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
   <div class="note">Sourcing note: EA doesn't publish a machine-readable Build/Buy catalog, so this is a curated, pack-accurate list of item <em>types</em> per style (e.g. "Get Together &rarr; half-timbered walls") rather than a dump of every catalog object. In-game, filter Build/Buy by the listed pack and category to surface the exact swatches.</div>
   <div class="toolbar">
     <input type="search" id="itemSearch" placeholder="Search items (e.g. wrought iron, thatch, columns)">
-    <select id="itemPack"><option value="">All packs</option></select>
-    <select id="itemCat"><option value="">All categories</option></select>
-    <select id="itemStyle"><option value="">All styles</option></select>
+    <select id="itemPack" aria-label="Filter items by pack"><option value="">All packs</option></select>
+    <select id="itemCat" aria-label="Filter items by category"><option value="">All categories</option></select>
+    <select id="itemStyle" aria-label="Filter items by style"><option value="">All styles</option></select>
     <button class="btn" id="clearItems">Clear</button>
   </div>
   <div class="count" id="itemCount"></div>
@@ -447,7 +448,7 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
 <section id="glossary" class="tab card">
   <h2>Feature Glossary</h2>
   <p class="meta">Sixty-three terms you’ll meet on the style cards, each with a note on how to fake it in Build mode. Search a word or filter by group.</p>
-  <div class="toolbar"><input type="search" id="glSearch" placeholder="Search terms (corbel, dormer, Palladian, gambrel...)"><select id="glCat"><option value="">All groups</option></select></div>
+  <div class="toolbar"><input type="search" id="glSearch" placeholder="Search terms (corbel, dormer, Palladian, gambrel...)"><select id="glCat" aria-label="Filter glossary by group"><option value="">All groups</option></select></div>
   <div class="gl" id="glList"></div>
 </section>
 
@@ -535,6 +536,10 @@ function runFinder(){
   });
   res.sort((a,b)=>b.score-a.score||a.s.id-b.s.id);
   $('#finderCount').textContent=(sel.size||terms.length)?`${res.length} of ${S.length} styles match`:`Showing all ${S.length} styles — add a search term or chips to narrow.`;
+  if(!res.length){
+    $('#finderResults').innerHTML='<p class="empty">No style matches every selected chip. Switch to Match ANY, or untick a chip or two.</p>';
+    return;
+  }
   $('#finderResults').innerHTML=res.map(r=>{
     const hitChips=[...r.hits].map(id=>id.split('|')[1]);
     return `<div class="res" data-id="${r.s.id}">${(sel.size||terms.length)?`<span class="score">${r.hits.size} match${r.hits.size===1?'':'es'}</span>`:''}<h4>${esc(r.s.name)}</h4><div class="meta">${esc(r.s.eraName)} &middot; ${esc(r.s.dates)}</div><div style="margin:4px 0">${esc(r.s.signature)}</div>

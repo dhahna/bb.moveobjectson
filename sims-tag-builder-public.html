@@ -352,7 +352,7 @@ button.ghost:hover{background:var(--paper-2);filter:none}
 #tagOut .tg{cursor:pointer;border-radius:3px}
 #tagOut .tg:hover{background:#ffd2cd;text-decoration:line-through}
 .spaceopt{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:10px 0 0;font-size:11px}
-.spaceopt label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--ink)}
+.spaceopt label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--ink);min-height:28px;padding:2px 6px 2px 0}
 .spaceopt input{accent-color:var(--plumbob);width:14px;height:14px;cursor:pointer}
 .spaceopt .saves{color:var(--pale-dim)}
 /* tags that fall past the limit */
@@ -1995,6 +1995,7 @@ function restore(s){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+const escHTML = x => String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 function drawTemplates(){
   const el = document.getElementById('tplList');
   if(!tplCache.length){
@@ -2003,8 +2004,8 @@ function drawTemplates(){
   }
   el.innerHTML = tplCache.map((t,i)=>
     `<div class="trow" data-tpl="${i}">`
-    + `<span class="ttext">${t.name}</span>`
-    + `<span class="tlen">${t.when}</span>`
+    + `<span class="ttext">${escHTML(t.name)}</span>`
+    + `<span class="tlen">${escHTML(t.when)}</span>`
     + `<span class="tdel" data-tpldel="${i}" title="Delete">\u00d7</span></div>`
   ).join('');
 }
