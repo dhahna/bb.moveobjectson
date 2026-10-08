@@ -1,0 +1,53 @@
+# Uploads the site to SiteGround whenever main changes.
+# Setup (one time): see docs/deploy.md. Until the secrets exist, this job skips itself.
+name: Deploy to SiteGround
+
+on:
+  push:
+    branches: [main]
+    paths: ['*.html']
+  workflow_dispatch:
+
+concurrency: deploy-siteground
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check setup
+        id: check
+        env:
+          KEY: ${{ secrets.SG_SSH_KEY }}
+        run: |
+          if [ -z "$KEY" ]; then
+            echo "SiteGround secrets not set yet; skipping deploy. See docs/deploy.md."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.ready == 'true'
+
+      - name: Upload HTML files
+        if: steps.check.outputs.ready == 'true'
+        env:
+          SG_SSH_KEY: ${{ secrets.SG_SSH_KEY }}
+          SG_SSH_PASSPHRASE: ${{ secrets.SG_SSH_PASSPHRASE }}
+          SG_HOST: ${{ secrets.SG_HOST }}
+          SG_USER: ${{ secrets.SG_USER }}
+          SG_PATH: ${{ secrets.SG_PATH }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SG_SSH_KEY" > ~/.ssh/sg && chmod 600 ~/.ssh/sg
+          eval "$(ssh-agent -s)"
+          if [ -n "$SG_SSH_PASSPHRASE" ]; then
+            printf '#!/bin/sh\necho "$SG_SSH_PASSPHRASE"\n' > ~/.ssh/askpass && chmod 700 ~/.ssh/askpass
+            DISPLAY=none SSH_ASKPASS=~/.ssh/askpass SSH_ASKPASS_REQUIRE=force ssh-add ~/.ssh/sg </dev/null
+          else
+            ssh-add ~/.ssh/sg
+          fi
+          ssh-keyscan -p 18765 "$SG_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          # Only the site pages go up. No --delete, so WordPress and anything
+          # else already on the server is left alone.
+          rsync -avz -e "ssh -p 18765" ./*.html "$SG_USER@$SG_HOST:$SG_PATH/"
