@@ -127,6 +127,8 @@ body{
 }
 .readout .r-id input::placeholder{color:var(--pale-dim);opacity:.65}
 .readout .r-id input:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.readout .r-id.needed input{outline:2px dashed var(--warn);outline-offset:3px}
+.readout .r-id.needed .cap{color:var(--warn)}
 .readout .r-tags .num{color:#d18e00}
 .readout .r-tags.short .num{color:var(--warn)}
 
@@ -356,6 +358,7 @@ button.ghost:hover{background:var(--paper-2);filter:none}
 /* tags that fall past the limit */
 #tagOut .cut{opacity:.34;text-decoration:line-through}
 #tagOut .cutmark{color:var(--warn);font-weight:700;margin:0 4px}
+#tagOut .idgate{margin:0;font-size:12px;line-height:1.6;color:#8a6400}
 @media (prefers-reduced-motion:reduce){.tagcount .mbar span{transition:none}}
 
 /* ---- shared nav strip (injected; replace when the site gets a theme) ---- */
@@ -449,7 +452,7 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
   </div>
   <div class="sidecar">
   <div class="readout" id="readout">
-    <div class="r-id"><input id="simid" placeholder="your ea id" spellcheck="false" autocomplete="off"><span class="cap">tagged on every post</span></div>
+    <div class="r-id"><input id="simid" placeholder="your ea id" spellcheck="false" autocomplete="off"><span class="cap">required &middot; tagged on every post</span></div>
   </div>
 
   <div class="steps">
@@ -1371,6 +1374,23 @@ function customTags(){
     .split(/[,\n;]+/).map(s=>s.replace(/[^A-Za-z0-9]/g,'')).filter(Boolean).slice(0,12);
 }
 
+// ---------- EA ID ----------
+// Required: it goes on every post as a tag, so nothing is generated without it.
+// Remembered in this browser so it survives Clear all and reloads.
+const EAID_KEY = 's4tagbuilder_eaid';
+function eaId(){
+  return document.getElementById('simid').value.trim().replace(/[^A-Za-z0-9_]/g,'');
+}
+function rememberEaId(){
+  try{ localStorage.setItem(EAID_KEY, document.getElementById('simid').value.trim()); }catch(err){}
+}
+function restoreEaId(){
+  try{
+    const v = localStorage.getItem(EAID_KEY);
+    if(v && !document.getElementById('simid').value) document.getElementById('simid').value = v;
+  }catch(err){}
+}
+
 function buildTags(){
   const pack = PACKS.find(p=>p.id===state.pack);
   const out = [];
@@ -1393,7 +1413,7 @@ function buildTags(){
   if(world) push([world]);
   const place = currentLotPlace();
   if(place) push([place.s]);
-  const simid = document.getElementById('simid').value.trim().replace(/[^A-Za-z0-9_]/g,'');
+  const simid = eaId();
   if(simid) push([simid]);
 
   const lotname = document.getElementById('lotname').value.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
@@ -1709,7 +1729,7 @@ function buildDesc(){
   else if(who.length>1) whoStr = `, built for ${who[0]} and ${who[1]}`;
 
   const cc = isBG() ? 'No CC, no mods, no packs.' : 'No CC, no mods.';
-  return `${head}${placeStr}${featStr}${tail}${whoStr}. ${cc} [[bb.moveobjects.com]]`;
+  return `${head}${placeStr}${featStr}${tail}${whoStr}. ${cc} [[bb.moveobjects on]]`;
 }
 
 function estimate(){
@@ -1825,6 +1845,25 @@ function render(){
   const gone = tags.filter(t =>  state.dropped.has(t));
   tags = kept;
 
+  // No EA ID, no tags. Everything else still renders so the build isn't lost.
+  const idBox = document.querySelector('.readout .r-id');
+  const idOK = !!eaId();
+  idBox.classList.toggle('needed', !idOK && started);
+  if(!idOK){
+    document.getElementById('tagOut').innerHTML =
+      '<p class="idgate">Add your EA ID in the cover box first. It goes on every post as a tag, so the tag block isn\u2019t generated without it.</p>';
+    document.getElementById('droppedOut').hidden = true;
+    document.getElementById('tightSaves').textContent = '';
+    document.getElementById('charCount').textContent = 0;
+    document.getElementById('mfill').style.width = '0%';
+    document.getElementById('tagCountBox').classList.remove('over','warn');
+    document.getElementById('mline').hidden = true;
+    document.getElementById('tagCount').textContent = 0;
+    document.getElementById('tagCountBox').classList.add('short');
+    document.getElementById('notes').innerHTML = '';
+    return;
+  }
+
   const dropEl = document.getElementById('droppedOut');
   dropEl.hidden = !gone.length;
   dropEl.innerHTML = gone.length
@@ -1902,7 +1941,7 @@ function clearAll(){
   document.getElementById('beds').value = 3;
   document.getElementById('baths').value = 2;
   document.getElementById('lotname').value = '';
-  document.getElementById('simid').value = '';
+  // The EA ID is the builder's, not the build's: Clear all leaves it alone.
   document.getElementById('custom').value = '';
   document.getElementById('hideDash').checked = false;
   catTouched = false;
@@ -2027,6 +2066,7 @@ document.addEventListener('change', e=>{
   render();
 });
 document.addEventListener('input', e=>{
+  if(e.target.id==='simid') rememberEaId();
   if(['beds','baths','lotname','custom','simid'].includes(e.target.id)){ started = true; render(); }
 });
 document.getElementById('packCount').addEventListener('change', render);
@@ -2090,6 +2130,12 @@ document.addEventListener('click', e=>{
   const btn = e.target.closest('button[data-copy]');
   if(!btn) return;
   const which = btn.dataset.copy;
+  if(which!=='descOut' && !eaId()){
+    const old = btn.textContent; btn.textContent = 'Add your EA ID first';
+    setTimeout(()=>{ btn.textContent = old; }, 1600);
+    document.getElementById('simid').focus();
+    return;
+  }
   const text = which==='bothOut'
     ? document.getElementById('descOut').textContent + '\n\n' + document.getElementById('tagOut').textContent
     : document.getElementById(which).textContent;
@@ -2139,6 +2185,8 @@ function fitTitle(){
 window.addEventListener('resize', fitTitle);
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitTitle);
 fitTitle();
+restoreEaId();
+render();
 tplLoad();
 
 

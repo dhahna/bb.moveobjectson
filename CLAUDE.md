@@ -37,7 +37,8 @@ Files sit at the root because that's how the live site is laid out: the pages li
 ### Gallery Tag Builder
 - Build scope is chosen first: Lot, Room or Shell. Dana's own build order is Shell → Rooms → Lot.
 - Generates gallery titles, a description and hashtags from chip selections.
-- The description ends with the marker **`[[bb.moveobjects.com]]`** (changed from `[[bb.moveobjects on]]`). It still matches gallery searches for `bb.moveobjects` and credits the tool. Trade-off noted: the old form also told builders "MOO was used"; `#moo` in the tags now carries that.
+- The description ends with the marker **`[[bb.moveobjects on]]`**. It was briefly `[[bb.moveobjects.com]]` (Sep 2026), but the gallery rejects any description containing `.com`, so it went back (Oct 2026). It matches gallery searches for `bb.moveobjects`, credits the tool and says MOO was used.
+- **EA ID is required.** The tag block isn't generated, and Copy tags / Copy all won't copy, until it's filled in. It's remembered in `localStorage` in that browser, and **Clear all leaves it alone**: it's the builder's, not the build's.
 - CC line: "No CC, no mods." or "No CC, no mods, no packs." depending on selections.
 - **500-character description cap** (EA's limit): meter with progress bar, green/amber/red states, a visible ✂ marker showing which tags will be truncated, a "no spaces between tags" toggle to save characters, click-to-remove for individual tags with a restore row.
 - The description is editable; manual edits survive chip changes. The field is not re-rendered while the user is typing (that would make the caret jump). Paste strips formatting. **Clear all** resets edits too.
