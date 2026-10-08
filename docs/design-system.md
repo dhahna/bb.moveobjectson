@@ -15,7 +15,7 @@ The look is a **90s high-school girl's notebook**: a composition notebook cover,
 | Secondary tinted sheet | `#f1f8fd` | Replaced pink sheets across all tools |
 | Plumbob green | `#2ba355` | The dot in the wordmark; the plumbob sticker. The plumbob is always green. |
 | `--plumbob` CSS token | pink | Link colour token only (the name is historical) |
-| Section highlighters | 15 rotating pairs | Each pair = a light fill + a darker tint for borders |
+| Section highlighters | 15 rotating pairs | Each pair = a light fill + a darker tint for borders. Darkened Oct 2026 so every pen reads at 4.5:1 on its own fill and on paper; keep that when adding a pair. |
 
 ## Type
 

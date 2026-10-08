@@ -2,7 +2,7 @@
 
 Scope: `index.html` and the three tools (Sep 16 2026 versions), checked against `docs/design-system.md` and `CLAUDE.md`. Each page was rendered in Chromium at 375px (phone) and 1280px (desktop), and the source was read for fonts, tokens, network calls and copy. Items are ranked by how much they matter to a visitor.
 
-**Status (Oct 8 2026):** items 1, 2, 3, 5 and 5b are fixed and re-checked at 375px and 1280px. The rest is still open.
+**Status (Oct 8 2026):** items 1, 2, 3, 5, 5b and 8 are fixed and re-checked at 375px and 1280px, and the break test below found and fixed six more. Items 4, 6, 7 and 9 are still open.
 
 ## What's already right
 
@@ -55,8 +55,9 @@ Nothing is shown on screen, but a code comment reads *"spaced follow-ups median 
 ### 7. Inconsistent bylines
 The home page says "Made by dhahna" and the tools say "Built by @dhahna". The Tag Builder has no byline at all. Pick one form.
 
-### 8. Small tap targets
+### 8. Small tap targets — fixed
 Each tool has 1–4 controls under 24px tall, mostly checkboxes such as the "no spaces between tags" toggle. They're fiddly on a phone. Making the whole label clickable with some padding fixes it.
+**Done:** the "no spaces between tags" toggle and the Activity Finder's "Only Base Game" / "Hide Base Game" labels are 28px tall with the whole label clickable.
 
 ### 9. Page titles (browser tabs and search results) are inconsistent
 - Home: "bb.moveobjects — Sims 4 building tools by dhahna"
@@ -65,6 +66,16 @@ Each tool has 1–4 controls under 24px tall, mostly checkboxes such as the "no 
 - "Sims 4 Small Business & Getaway Activity Finder — Businesses & Hobbies + Adventure Awaits"
 
 Suggested pattern: `<Tool name> · bb.moveobjects`. The long ones help search, so keep them only if you want search traffic.
+
+## Break test (Oct 8 2026)
+
+Every page was driven in headless Chromium at 320, 375, 640, 768, 850, 950, 1024, 1280 and 1920px, with hostile strings in all 12 text fields and every card, tab, venue and select option exercised. Nothing threw, nothing made a network request, and no field let script through except one. Found and fixed:
+
+- **Tag Builder saved-build names rendered as raw HTML.** A `<` or `&` in a name could blank the row, and a script payload ran (in the person's own browser only, since names live in their localStorage). Names are escaped now.
+- **House Style Finder "Match ALL" went blank** when no style satisfied every chip. It now says so and suggests Match ANY.
+- **Activity Finder Browse All showed an empty table** on a no-match search (the count line said "0 of 409"). It now shows a "Nothing matches" row.
+- **Five unlabeled select menus** in the House Style Finder now carry `aria-label`s.
+- **Text contrast.** Section pens on their own highlighter fill were 3.1–4.3:1, below WCAG AA's 4.5:1 (worst: amber "Basegame" at 3.1:1), and the pink link colour and the muted grey were under on the page background. Every pen, the nav pens, `--plumbob` and `--pale-dim` were darkened along their own hue just far enough to pass on their fill and on paper. The look is the same; the pens are a shade deeper. This is one commit, so it can be reverted on its own.
 
 ## Suggested order
 
