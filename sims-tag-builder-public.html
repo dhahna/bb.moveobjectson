@@ -1950,20 +1950,20 @@ function clearAll(){
 }
 
 // ---------- templates ----------
-// Artifact storage when it's there, memory when it isn't.
+// Saved in this browser's localStorage; memory only when that's blocked.
 const TPL_KEY = 's4tagbuilder_templates';
 let tplCache = [];
 
 async function tplLoad(){
   try{
-    const r = await window.storage.get(TPL_KEY);
-    tplCache = r && r.value ? JSON.parse(r.value) : [];
-  }catch(err){ /* nothing saved yet, or no storage here */ }
+    const raw = localStorage.getItem(TPL_KEY);
+    tplCache = raw ? JSON.parse(raw) : [];
+  }catch(err){ /* private window or storage blocked: memory only */ }
   drawTemplates();
 }
 async function tplPersist(){
   drawTemplates();
-  try{ await window.storage.set(TPL_KEY, JSON.stringify(tplCache)); }
+  try{ localStorage.setItem(TPL_KEY, JSON.stringify(tplCache)); }
   catch(err){ /* memory only for this session */ }
 }
 
