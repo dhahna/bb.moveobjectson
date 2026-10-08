@@ -446,7 +446,7 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
   <header class="hero">
   <div class="plate">
   <div class="titles">
-      <h1>Small Business &amp; Getaway Activity Finder</h1>
+      <h1>Activity Finder</h1>
       <p>Every small-business and getaway activity in one place &mdash; the vanilla Businesses &amp; Hobbies &ldquo;Customer Rules,&rdquo; Adventure Awaits getaway activities, and konanhurry&rsquo;s mod additions. Pick a venue or getaway for recommendations, or search the full list.</p>
       <p class="byline">Made by <strong>@dhahna</strong> &middot; Mod activities from <a href="https://www.curseforge.com/sims4/mods/club-business-activity-expanded" target="_blank" rel="noopener noreferrer">konanhurry&rsquo;s Club &amp; Business Activities Expanded</a> &mdash; thank you, konanhurry! &#128154;</p>
     </div>
@@ -939,8 +939,11 @@ function renderRec(profile, label){
     fillList('listCust', cust, 'nothing here fits a customer role');
     fillList('listEmp', emp, 'nothing here fits an employee role');
   }
-  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+  // Scroll to the results when the visitor picks a venue, not on the first
+  // render: that landed phones several screens below the cover.
+  if(!firstRender) box.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
+let firstRender = true;
 function countPill(n){ return ' <span class="hcount">'+n+'</span>'; }
 function openInDb(name){
   selectTab('db');
@@ -1151,6 +1154,7 @@ initPackFilter();
 
 /* open on the salon by default so it's never an empty screen */
 document.querySelector('.venue[data-id="salon"]').click();
+firstRender = false;
 </script>
 <script>
 (function(){

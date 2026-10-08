@@ -2,7 +2,7 @@
 
 Scope: `index.html` and the three tools (Sep 16 2026 versions), checked against `docs/design-system.md` and `CLAUDE.md`. Each page was rendered in Chromium at 375px (phone) and 1280px (desktop), and the source was read for fonts, tokens, network calls and copy. Items are ranked by how much they matter to a visitor.
 
-**Status (Oct 8 2026):** items 1, 2 and 3 are fixed in all three tools and re-checked at 375px and 1280px. The rest is still open.
+**Status (Oct 8 2026):** items 1, 2, 3, 5 and 5b are fixed and re-checked at 375px and 1280px. The rest is still open.
 
 ## What's already right
 
@@ -17,7 +17,7 @@ Scope: `index.html` and the three tools (Sep 16 2026 versions), checked against 
 ### 1. All three tools scroll sideways on phones — fixed
 At 375px each tool is wider than the screen: the Tag Builder is 534px wide, the House Style Finder 483px and the Activity Finder 464px. The cover title is cut off ("Gallery Tag B…") and the intro text runs off the edge. This is the same bug fixed on the home page (a `nowrap` title inside a grid child without `min-width: 0`), and it was never carried over to the tools. Most gallery builders will open these on a phone, so this matters most.
 **Fix:** port the home page's title-fit and `min-width: 0` fix into the shared cover/plate CSS of all three tools.
-**Done:** all three tools now sit at 375px wide. The Tag Builder title fits at 17px and the House Style Finder at 15px. The Activity Finder title only fits at 10px, the floor, which is why item 5 still matters. The House Style Finder title was also clipped by a few pixels at 1280px (its fit script ignored the plate's left padding); that is fixed by the same port.
+**Done:** all three tools now sit at 375px wide. The Tag Builder title fits at 17px and the House Style Finder at 15px. The Activity Finder's full title only fit at 10px, the floor, so it got the shorter cover title from item 5. The House Style Finder title was also clipped by a few pixels at 1280px (its fit script ignored the plate's left padding); that is fixed by the same port.
 
 ### 2. The EA disclaimer is missing from all three tools — fixed
 Only the home page has it. The project rule is "on every page", and the tools are the pages people will share and land on directly.
@@ -38,12 +38,13 @@ The crowd-sourcing promise is central to the site, but:
 The home page uses Walter Turncoat for body text. All three tools still use **Verdana** for body text, and in the Tag Builder even the **chips** are Verdana, which breaks the "Walter Turncoat chips" rule. Next to the home page, the tools look like a different site.
 **Fix:** point the tools' body and chip styles at the same `--body` token the home page uses. *Your call:* Walter Turncoat is harder to read in long paragraphs, so you might keep Verdana for long glossary definitions only.
 
-### 5. The Activity Finder title wraps to two lines on phones
+### 5. The Activity Finder title wraps to two lines on phones — fixed
 "Small Business & Getaway Activity Finder" breaks onto two lines at 375px, which breaks the one-line title rule. This is fixed by the same change as #1, but at that length it will shrink quite small. A shorter cover title ("Activity Finder", matching the nav label) would read better.
+**Done:** the cover title is now "Activity Finder". The full name stays in the browser tab title, the home page and the intro paragraph.
 
-### 5b. The Activity Finder jumps down the page when it loads
-Opening the page lands the visitor several screens down, below the cover and the venue list, because the default venue's results are scrolled into view as part of the first render. At 375px that is about 4,500px of scroll. Seen during the item 1–3 re-check; not changed.
-**Fix:** skip the `scrollIntoView` on the initial render and only scroll when the visitor picks a venue.
+### 5b. The Activity Finder jumps down the page when it loads — fixed
+Opening the page landed the visitor several screens down, below the cover and the venue list, because the default venue's results were scrolled into view as part of the first render. At 375px that was about 4,500px of scroll. Seen during the item 1–3 re-check.
+**Done:** the first render no longer scrolls; picking a venue still does.
 
 ### 6. Your gallery numbers are in the Tag Builder's source code
 Nothing is shown on screen, but a code comment reads *"spaced follow-ups median 258 downloads against 74 same-day"*, and the chip ordering and weights come from your export. Anyone can read them with "view source", both here and on the live site.
