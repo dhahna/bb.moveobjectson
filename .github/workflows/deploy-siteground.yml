@@ -20,7 +20,7 @@ jobs:
           KEY: ${{ secrets.SG_SSH_KEY }}
         run: |
           if [ -z "$KEY" ]; then
-            echo "SiteGround secrets not set yet; skipping deploy. See docs/deploy.md."
+            echo "::warning::SiteGround secrets not set; nothing was deployed. See docs/deploy.md."
             echo "ready=false" >> "$GITHUB_OUTPUT"
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
@@ -51,3 +51,20 @@ jobs:
           # Only the site pages go up. No --delete, so WordPress and anything
           # else already on the server is left alone.
           rsync -avz -e "ssh -p 18765" ./*.html "$SG_USER@$SG_HOST:$SG_PATH/"
+
+      - name: Check the live site
+        if: steps.check.outputs.ready == 'true'
+        run: |
+          # Fetch each page back from the live site and compare it to what was
+          # uploaded. A mismatch is a warning, not a failure: SiteGround's cache
+          # can serve the old copy for a few minutes.
+          ok=0; total=0
+          for f in *.html; do
+            total=$((total+1))
+            url="https://bb.moveobjects.com/$f"; [ "$f" = index.html ] && url="https://bb.moveobjects.com/"
+            code=$(curl -s -o /tmp/live.html -w '%{http_code}' "$url?v=$GITHUB_SHA")
+            if [ "$code" != 200 ]; then echo "::warning::$url returned HTTP $code"; continue; fi
+            if cmp -s "$f" /tmp/live.html; then echo "live matches: $f"; ok=$((ok+1));
+            else echo "::warning::$url does not match the uploaded $f yet (cache?)"; fi
+          done
+          echo "$ok of $total pages verified live"

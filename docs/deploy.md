@@ -20,7 +20,7 @@ Every change to an `.html` file on `main` is uploaded to SiteGround automaticall
 | `SG_USER` | the username from step 3 |
 | `SG_PATH` | the folder path from step 4, no trailing slash |
 
-Then go to **Actions → Deploy to SiteGround → Run workflow** to test it. A green check means the live site is updated.
+Then go to **Actions → Deploy to SiteGround → Run workflow** to test it. The run's last step fetches every page back from bb.moveobjects.com and reports "live matches" for each one. A run that only says "SiteGround secrets not set" (a yellow warning) uploaded nothing.
 
 ## Notes
 
