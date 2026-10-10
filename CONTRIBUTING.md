@@ -4,6 +4,8 @@ This is a crowd-sourced project. Corrections and additions are the whole point.
 
 ## Ways to help
 
+No GitHub account? Email **bb@moveobjects.com** instead; everything below works by email too.
+
 - **Fix a glossary entry or tip.** Open an issue titled `Glossary: <term>` or `Tip: <topic>` with the correction and, if you have one, a source.
 - **Fill a gap.** Anywhere a tool says something is missing, that's an open invitation.
 - **Report a bug.** Say which tool, what you clicked, what you expected and what happened. A screenshot helps.
