@@ -340,6 +340,7 @@ footer .crowd b{font-family:var(--chip);font-weight:400}
   background:var(--navbg,#ffe9a8);color:var(--navpen,#2b2537);
   border-color:var(--navpen,#2b2537);transform:rotate(-.6deg);
 }
+.sitenav a.contact{border-style:dashed;--navbg:#ffe9a8;--navpen:#2b2537}
 .sitenav a:focus-visible{outline:3px solid #f0b429;outline-offset:2px}
 @media (max-width:620px){
   .sitenav{gap:7px 9px;padding:9px 11px}
@@ -365,6 +366,7 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
   <a class="tool" href="https://bb.moveobjects.com/sims4-house-style-finder.html" style="--navpen:#6a3fc0;--navbg:#e4d7ff" aria-current="page">House Style Finder</a>
   <a class="tool" href="https://bb.moveobjects.com/sims-business-activity-finder.html" style="--navpen:#0d7666;--navbg:#c8f2ea">Activity Finder</a>
   <a class="tool" href="https://bb.moveobjects.com/sims-tag-builder-public.html" style="--navpen:#b22b6f;--navbg:#ffd3e6">Gallery Tag Builder</a>
+  <a class="tool contact" href="mailto:bb@moveobjects.com" title="Email bb@moveobjects.com">Contact</a>
 </nav>
 
 
@@ -461,7 +463,7 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
 
 <footer>
   <p>Built by <strong>@dhahna</strong> &middot; Architecture reference compiled from standard US field-guide categories (Colonial through contemporary vernacular). Sims 4 mappings are by pack and item type; swatch names vary by patch, so search the in-game catalog by pack filter.</p>
-<p class="crowd"><b>This is a work in progress, and yours to correct.</b> The glossary covers 63 terms out of several hundred you can click, and the build tips are one builder’s methods rather than gospel. If something is missing, wrong, or there’s a better way to fake it in Build mode, send it over and it goes in with your name on it. <a class="dcontrib" href="https://github.com/dhahna/bb.moveobjectson/issues/new?title=House%20Style%20Finder%3A%20" target="_blank" rel="noopener">Send us the wording &rarr;</a></p>
+<p class="crowd"><b>This is a work in progress, and yours to correct.</b> The glossary covers 63 terms out of several hundred you can click, and the build tips are one builder’s methods rather than gospel. If something is missing, wrong, or there’s a better way to fake it in Build mode, send it over and it goes in with your name on it. <a class="dcontrib" href="https://github.com/dhahna/bb.moveobjectson/issues/new?title=House%20Style%20Finder%3A%20" target="_blank" rel="noopener">Send us the wording &rarr;</a> or <a class="dcontrib" href="mailto:bb@moveobjects.com?subject=House%20Style%20Finder">email bb@moveobjects.com</a></p>
   <p class="ea">This site is not endorsed by or affiliated with Electronic Arts, or its licensors. Trademarks are the property of their respective owners. Game content and materials copyright Electronic Arts Inc. and its licensors. All rights reserved.</p>
 </footer>
 </div>
@@ -671,12 +673,14 @@ renderPresets();renderFacets();runFinder();runItems();runGl();runPg();
       // link pre-fills the issue title with the term and what kind of fix it is.
       var CONTRIBUTE = {
         url: 'https://github.com/dhahna/bb.moveobjectson/issues/new',
+        email: 'bb@moveobjects.com',          // no GitHub account needed
         label: 'Send us the wording'
       };
       var contributeLink = function(term, kind){
         var title = encodeURIComponent('House Style Finder ' + (kind||'definition') + ': ' + (term || ''));
         var href = CONTRIBUTE.url + (CONTRIBUTE.url.indexOf('?') > -1 ? '&' : '?') + 'title=' + title;
-        return '<a class="dcontrib" href="' + href + '" target="_blank" rel="noopener">' + CONTRIBUTE.label + ' &rarr;</a>';
+        return '<a class="dcontrib" href="' + href + '" target="_blank" rel="noopener">' + CONTRIBUTE.label + ' &rarr;</a>'
+          + ' or <a class="dcontrib" href="mailto:' + CONTRIBUTE.email + '?subject=' + title + '">email it</a>';
       };
 
       var esc2 = function(x){ return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };

@@ -6,6 +6,7 @@ Read this first, then `docs/design-system.md` and `docs/roadmap.md`.
 
 - **Owner:** Dana Hahn, EA ID **@dhahna**. A Sims 4 gallery builder since 2020 (building-focused, 3k+ uploads, plays on Mac).
 - **Project:** bb.moveobjects, a free, open-source site of Sims 4 building tools and a "START HERE" front door for newer builders. Live at **bb.moveobjects.com**.
+- **Contact:** **bb@moveobjects.com** (since Oct 2026). It sits in the nav strip of every page as a dashed "Contact" chip, next to every "Send us the wording" link, and in README and CONTRIBUTING. GitHub issues stay as the other route; email is for people without an account.
 - **Authorship:** Dana built these tools herself, using Claude as a tool. The knowledge in them is entirely hers. **Never describe the tools as commissioned**, and never invent first-person anecdotes, motivations or "things I wish I'd known" in her voice. If copy needs her voice and you don't have her words, leave a clearly marked placeholder and ask.
 
 ## Hard rules
