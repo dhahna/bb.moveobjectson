@@ -23,8 +23,8 @@
   --ink:#2b2537;
   --ink-soft:#6f6780;
   --line:#2b2537;
-  --pale-dim:#7b7389;
-  --plumbob:#e04f93;
+  --pale-dim:#716a7e;
+  --plumbob:#cb2472;
   --signal:#f0b429;
   --warn:#e2574c;
   --hand:'Momo Signature',cursive;
@@ -173,11 +173,11 @@ footer strong{color:var(--plumbob)}
 body{--accent:#ffe9a8;--pen:#2b2537}
 .panel{border-color:var(--line)}
 
-.sec-biz   {--accent:#c9f5d2;--pen:#1f8a4c}   /* Small business  */
-.sec-get   {--accent:#cfe9ff;--pen:#1670a8}   /* Getaways        */
-.sec-fbiz  {--accent:#ffe3a8;--pen:#b07500}   /* Signature biz   */
+.sec-biz   {--accent:#c9f5d2;--pen:#1b7943}   /* Small business  */
+.sec-get   {--accent:#cfe9ff;--pen:#156ba1}   /* Getaways        */
+.sec-fbiz  {--accent:#ffe3a8;--pen:#8c5d00}   /* Signature biz   */
 .sec-fget  {--accent:#e4d7ff;--pen:#6a3fc0}   /* Signature getaways */
-.sec-browse{--accent:#c8f2ea;--pen:#0f8b78}   /* Browse all      */
+.sec-browse{--accent:#c8f2ea;--pen:#0d7666}   /* Browse all      */
 
 /* hero: plumbob sits as the cover sticker */
 header.hero .plate{display:block}
@@ -252,8 +252,8 @@ header.hero .stat span{display:block;font-size:10px;font-weight:700;color:var(--
   background:var(--paper-2);border:2px solid var(--pen);border-radius:6px;
   padding:12px 14px;box-shadow:var(--shadow-sm);
 }
-.rcard.cust{--accent:#cfe9ff;--pen:#1670a8}
-.rcard.emp{--accent:#ffe3a8;--pen:#b07500}
+.rcard.cust{--accent:#cfe9ff;--pen:#156ba1}
+.rcard.emp{--accent:#ffe3a8;--pen:#8c5d00}
 .rcard > h3{
   font-family:var(--hand);font-size:20px;font-weight:400;margin:0 0 8px;color:var(--pen);
   padding-bottom:5px;border-bottom:2px dashed var(--margin-rule);
@@ -283,10 +283,10 @@ header.hero .stat span{display:block;font-size:10px;font-weight:700;color:var(--
 }
 .tg:hover{background:var(--paper-2)}
 .tg[aria-pressed="true"]{background:var(--accent);border-color:var(--pen);color:var(--pen);transform:rotate(-.6deg)}
-.tg.cust[aria-pressed="true"]{background:#cfe9ff;border-color:#1670a8;color:#1670a8}
-.tg.emp[aria-pressed="true"]{background:#ffe3a8;border-color:#b07500;color:#b07500}
+.tg.cust[aria-pressed="true"]{background:#cfe9ff;border-color:#156ba1;color:#156ba1}
+.tg.emp[aria-pressed="true"]{background:#ffe3a8;border-color:#8c5d00;color:#8c5d00}
 .tg.club[aria-pressed="true"]{background:#e4d7ff;border-color:#6a3fc0;color:#6a3fc0}
-.tg.get[aria-pressed="true"]{background:#ffd3e6;border-color:#c02f78;color:#c02f78}
+.tg.get[aria-pressed="true"]{background:#ffd3e6;border-color:#b22b6f;color:#b22b6f}
 .tg:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
 
 .count{font-family:var(--chip);font-size:15px;color:var(--pen);margin:0 0 10px}
@@ -322,7 +322,7 @@ th{position:sticky;top:0;z-index:2;background:var(--accent);color:var(--pen);
   border-radius:9px;padding:2px 10px;font-family:var(--chip);font-size:12px;cursor:pointer;
 }
 .pf-mini:hover{background:#ffd2cd}
-.pf-base{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--ink-soft);cursor:pointer}
+.pf-base{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--ink-soft);cursor:pointer;min-height:28px;padding:2px 6px 2px 0}
 .pf-base input{accent-color:var(--plumbob);width:14px;height:14px;cursor:pointer}
 .pf-chips{display:flex;flex-wrap:wrap;gap:6px}
 .pf-chip{
@@ -365,12 +365,12 @@ thead th.sorted.asc::after{content:" 91"}
 tbody tr:hover{background:var(--paper-2)}
 td.nm{font-family:var(--chip);font-size:13.5px}
 .role{font-weight:700}
-.yes-cust{color:#1670a8}
+.yes-cust{color:#156ba1}
 .no{color:var(--pale-dim);opacity:.5}
 .tag,.dyn{font-size:11px;color:var(--ink-soft)}
 .srcbadge{font-family:var(--body);font-size:9.5px;font-weight:700;border:2px solid var(--line);
   border-radius:9px;padding:0 7px;background:var(--paper)}
-.src-Vanilla{color:#1f8a4c}
+.src-Vanilla{color:#1b7943}
 .src-Mod{color:#6a3fc0}
 
 /* ---- credits ---- */
@@ -412,6 +412,25 @@ td.nm{font-family:var(--chip);font-size:13.5px}
   .sitenav .spacer{flex-basis:100%}
   .sitenav a.tool{font-size:12.5px;padding:3px 10px}
 }
+
+/* ---- mobile fit (ported from index.html, Oct 2026) ----
+   A nowrap title inside a grid child without min-width:0 pushes the whole
+   page wider than the screen, and the fit script then measures the
+   stretched plate and never shrinks. Clip at the plate as a backstop. */
+.wrap{overflow-x:clip}
+html,body{max-width:100%;overflow-x:hidden}
+header.hero .plate{min-width:0;overflow:hidden}
+header.hero h1{max-width:100%}
+footer p{min-width:0;overflow-wrap:anywhere}
+footer .crowd{
+  display:block;margin-top:10px;padding:9px 12px;background:#fff6c9;
+  border:2px solid var(--line);border-radius:3px;box-shadow:var(--shadow-sm);
+  font-size:11.5px;line-height:1.6;color:var(--ink);
+}
+footer .crowd b{font-family:var(--chip);font-weight:400}
+footer .dcontrib{font-family:var(--chip);font-size:12.5px;color:var(--plumbob);white-space:nowrap}
+footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
+.emptyrow td{color:var(--ink-soft);font-size:12.5px;padding:14px 10px;text-align:left}
 </style>
 </head>
 <body>
@@ -420,15 +439,15 @@ td.nm{font-family:var(--chip);font-size:13.5px}
   <a class="home" href="https://bb.moveobjects.com/">bb<span class="dot">.</span>moveobjects</a>
   <span class="spacer"></span>
   <a class="tool" href="https://bb.moveobjects.com/sims4-house-style-finder.html" style="--navpen:#6a3fc0;--navbg:#e4d7ff">House Style Finder</a>
-  <a class="tool" href="https://bb.moveobjects.com/sims-business-activity-finder.html" style="--navpen:#0f8b78;--navbg:#c8f2ea" aria-current="page">Activity Finder</a>
-  <a class="tool" href="https://bb.moveobjects.com/sims-tag-builder-public.html" style="--navpen:#c02f78;--navbg:#ffd3e6">Gallery Tag Builder</a>
+  <a class="tool" href="https://bb.moveobjects.com/sims-business-activity-finder.html" style="--navpen:#0d7666;--navbg:#c8f2ea" aria-current="page">Activity Finder</a>
+  <a class="tool" href="https://bb.moveobjects.com/sims-tag-builder-public.html" style="--navpen:#b22b6f;--navbg:#ffd3e6">Gallery Tag Builder</a>
 </nav>
 
 
   <header class="hero">
   <div class="plate">
   <div class="titles">
-      <h1>Small Business &amp; Getaway Activity Finder</h1>
+      <h1>Activity Finder</h1>
       <p>Every small-business and getaway activity in one place &mdash; the vanilla Businesses &amp; Hobbies &ldquo;Customer Rules,&rdquo; Adventure Awaits getaway activities, and konanhurry&rsquo;s mod additions. Pick a venue or getaway for recommendations, or search the full list.</p>
       <p class="byline">Made by <strong>@dhahna</strong> &middot; Mod activities from <a href="https://www.curseforge.com/sims4/mods/club-business-activity-expanded" target="_blank" rel="noopener noreferrer">konanhurry&rsquo;s Club &amp; Business Activities Expanded</a> &mdash; thank you, konanhurry! &#128154;</p>
     </div>
@@ -552,6 +571,8 @@ td.nm{font-family:var(--chip);font-size:13.5px}
   <footer>
     <p class="credit">Built by <strong>@dhahna</strong> &middot; The mod-side activities are all konanhurry&rsquo;s work &mdash; grab <a href="https://www.curseforge.com/sims4/mods/club-business-activity-expanded" target="_blank" rel="noopener noreferrer">Club &amp; Business Activities Expanded</a> and show them some love. &#128154;</p>
     <p>Sources &mdash; <span class="srcbadge src-Vanilla">Vanilla</span>: EA&rsquo;s official Businesses &amp; Hobbies &ldquo;Customer Rules&rdquo; list, the pack&rsquo;s tattoo/pottery/candy/mentoring/class activities, and Adventure Awaits&rsquo; getaway activities. <span class="srcbadge src-Mod">Mod</span>: <a href="https://www.curseforge.com/sims4/mods/club-business-activity-expanded" target="_blank" rel="noopener noreferrer">konanhurry&rsquo;s Club &amp; Business Activities Expanded</a>. Getaways use customizable roles, so activities aren&rsquo;t split by guest/host &mdash; the itinerary draws from the whole getaway-compatible pool. Each activity needs its listed pack installed to appear in-game.</p>
+    <p class="crowd"><b>This is a work in progress, and yours to correct.</b> The activity lists follow EA&rsquo;s Customer Rules and konanhurry&rsquo;s spreadsheet, and packs change with patches. If an activity is missing or wrong, send it over and it goes in with your name on it. <a class="dcontrib" href="https://github.com/dhahna/bb.moveobjectson/issues/new?title=Activity%20Finder%3A%20" target="_blank" rel="noopener">Send us the wording &rarr;</a></p>
+    <p class="ea">This site is not endorsed by or affiliated with Electronic Arts, or its licensors. Trademarks are the property of their respective owners. Game content and materials copyright Electronic Arts Inc. and its licensors. All rights reserved.</p>
   </footer>
 </div>
 
@@ -919,8 +940,11 @@ function renderRec(profile, label){
     fillList('listCust', cust, 'nothing here fits a customer role');
     fillList('listEmp', emp, 'nothing here fits an employee role');
   }
-  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+  // Scroll to the results when the visitor picks a venue, not on the first
+  // render: that landed phones several screens below the cover.
+  if(!firstRender) box.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
+let firstRender = true;
 function countPill(n){ return ' <span class="hcount">'+n+'</span>'; }
 function openInDb(name){
   selectTab('db');
@@ -1082,6 +1106,10 @@ function renderDb(){
   document.querySelectorAll('thead th').forEach(th=>{ th.classList.toggle('sorted', th.dataset.k===sortKey); th.classList.toggle('asc', th.dataset.k===sortKey && sortAsc); });
   document.getElementById('dbCount').textContent = rows.length+' of '+ACTIVITIES.length+' activities';
   const tb=document.getElementById('tbody');
+  if(!rows.length){
+    tb.innerHTML = '<tr class="emptyrow"><td colspan="9">Nothing matches. Try a shorter word, or clear a filter above.</td></tr>';
+    return;
+  }
   tb.innerHTML = rows.map(a=>{
     const role=(on,cls,ch)=> on? '<span class="role '+cls+'">'+ch+'</span>' : '<span class="role no">\u2013</span>';
     return '<tr>'+
@@ -1131,16 +1159,21 @@ initPackFilter();
 
 /* open on the salon by default so it's never an empty screen */
 document.querySelector('.venue[data-id="salon"]').click();
+firstRender = false;
 </script>
 <script>
 (function(){
   function fitTitle(){
     var h1=document.querySelector('header.hero h1'); if(!h1) return;
-    var plate=h1.closest('.plate'); if(!plate) return;
-    var cs=getComputedStyle(plate);
-    var box=plate.clientWidth-parseFloat(cs.paddingRight||0)-parseFloat(cs.paddingLeft||0);
-    h1.style.fontSize=''; var size=36;
-    while(h1.scrollWidth>box && size>16){ size-=1; h1.style.fontSize=size+'px'; }
+    var plate=h1.closest('.plate'), hero=h1.closest('header.hero'); if(!plate||!hero) return;
+    // Measure the hero, not the plate: the plate can be stretched by the h1
+    // itself, which made the old check think there was room when there wasn't.
+    var ps=getComputedStyle(plate);
+    var room=Math.min(plate.clientWidth, hero.clientWidth)
+             - parseFloat(ps.paddingLeft||0) - parseFloat(ps.paddingRight||0);
+    h1.style.fontSize='';
+    var size=parseFloat(getComputedStyle(h1).fontSize) || 36;
+    while(h1.scrollWidth>room && size>10){ size-=1; h1.style.fontSize=size+'px'; }
   }
   window.addEventListener('resize',fitTitle);
   fitTitle();

@@ -26,8 +26,8 @@
   --ink-soft:#6f6780;
   --line:#2b2537;
   --pale:#2b2537;
-  --pale-dim:#7b7389;
-  --plumbob:#e04f93;
+  --pale-dim:#716a7e;
+  --plumbob:#cb2472;
   --signal:#f0b429;
   --warn:#e2574c;
   --plaid:#f6d76b;
@@ -109,7 +109,7 @@ body{
 .steps li{margin-bottom:3px}
 .steps li b{color:var(--ink)}
 @media (max-width:820px){
-  .masthead{grid-template-columns:1fr}
+  .masthead{grid-template-columns:minmax(0,1fr)}
   .readout,.steps,.masthead .plate{transform:none}
 }
 .readout div{padding:12px 18px}
@@ -127,6 +127,8 @@ body{
 }
 .readout .r-id input::placeholder{color:var(--pale-dim);opacity:.65}
 .readout .r-id input:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.readout .r-id.needed input{outline:2px dashed var(--warn);outline-offset:3px}
+.readout .r-id.needed .cap{color:var(--warn)}
 .readout .r-tags .num{color:#d18e00}
 .readout .r-tags.short .num{color:var(--warn)}
 
@@ -160,21 +162,21 @@ body{
 .row > label.lead{display:block;font-family:var(--chip);font-size:14px;font-weight:400;margin-bottom:8px;color:var(--ink-soft)}
 
 /* ---- highlighter accents per section ---- */
-.sec-scope   {--accent:#c9f5d2;--pen:#1f8a4c}
-.sec-packs   {--accent:#ffe3a8;--pen:#b07500}
-.sec-uses    {--accent:#cfe9ff;--pen:#1670a8}
-.sec-who     {--accent:#ffd3e6;--pen:#c02f78}
+.sec-scope   {--accent:#c9f5d2;--pen:#1b7943}
+.sec-packs   {--accent:#ffe3a8;--pen:#8c5d00}
+.sec-uses    {--accent:#cfe9ff;--pen:#156ba1}
+.sec-who     {--accent:#ffd3e6;--pen:#b22b6f}
 .sec-style   {--accent:#e4d7ff;--pen:#6a3fc0}
-.sec-color   {--accent:#ffdcc2;--pen:#c25a15}
-.sec-place   {--accent:#c8f2ea;--pen:#0f8b78}
-.sec-site    {--accent:#dcf3bd;--pen:#5b8f1c}
-.sec-addons  {--accent:#c9ecf7;--pen:#0b7f9e}
-.sec-biz     {--accent:#fff0b8;--pen:#9b7400}
+.sec-color   {--accent:#ffdcc2;--pen:#a24b12}
+.sec-place   {--accent:#c8f2ea;--pen:#0d7666}
+.sec-site    {--accent:#dcf3bd;--pen:#4b7517}
+.sec-addons  {--accent:#c9ecf7;--pen:#0a708b}
+.sec-biz     {--accent:#fff0b8;--pen:#896700}
 .sec-layout  {--accent:#d9dcff;--pen:#4a52bd}
-.sec-skills  {--accent:#ffd6cd;--pen:#c2432f}
-.sec-world   {--accent:#cdf0de;--pen:#17876a}
+.sec-skills  {--accent:#ffd6cd;--pen:#ad3c2a}
+.sec-world   {--accent:#cdf0de;--pen:#14765c}
 .sec-credits {--accent:#eed6fb;--pen:#8433ae}
-.sec-out     {--accent:#ffd3e6;--pen:#c02f78}
+.sec-out     {--accent:#ffd3e6;--pen:#b22b6f}
 
 
 /* Heading carries the section colour with no highlighter behind it; chips are
@@ -260,7 +262,7 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid 
   padding:9px 12px;cursor:pointer;text-align:left;font:inherit;color:var(--ink);box-shadow:var(--shadow-sm);
 }
 .trow:hover{background:var(--paper-2)}
-.trow .tcat{flex:0 0 auto;font-family:var(--chip);font-size:11.5px;font-weight:400;color:#c02f78;background:#ffd3e6;border:2px solid var(--line);border-radius:9px;padding:1px 9px}
+.trow .tcat{flex:0 0 auto;font-family:var(--chip);font-size:11.5px;font-weight:400;color:#b22b6f;background:#ffd3e6;border:2px solid var(--line);border-radius:9px;padding:1px 9px}
 .trow .tday{flex:0 0 auto;font-size:11px;color:var(--pale-dim);font-weight:700;font-variant-numeric:tabular-nums}
 .trow.active{background:#ffeef5;border-color:var(--plumbob)}
 .trow .ttext{flex:1;font-family:var(--chip);font-size:15px;font-weight:400;letter-spacing:.01em}
@@ -311,7 +313,7 @@ button.ghost:hover{background:var(--paper-2);filter:none}
 .tagcount{flex-wrap:wrap}
 .tagcount .divider{width:2px;align-self:stretch;background:var(--grid);margin:0 4px}
 .tagcount .chars{color:var(--ink)}
-.tagcount.warn .chars{color:#b07500}
+.tagcount.warn .chars{color:#8c5d00}
 .tagcount.over .chars{color:var(--warn)}
 .tagcount .mbar{
   flex:0 0 100%;height:7px;margin-top:8px;
@@ -350,12 +352,13 @@ button.ghost:hover{background:var(--paper-2);filter:none}
 #tagOut .tg{cursor:pointer;border-radius:3px}
 #tagOut .tg:hover{background:#ffd2cd;text-decoration:line-through}
 .spaceopt{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:10px 0 0;font-size:11px}
-.spaceopt label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--ink)}
+.spaceopt label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--ink);min-height:28px;padding:2px 6px 2px 0}
 .spaceopt input{accent-color:var(--plumbob);width:14px;height:14px;cursor:pointer}
 .spaceopt .saves{color:var(--pale-dim)}
 /* tags that fall past the limit */
 #tagOut .cut{opacity:.34;text-decoration:line-through}
 #tagOut .cutmark{color:var(--warn);font-weight:700;margin:0 4px}
+#tagOut .idgate{margin:0;font-size:12px;line-height:1.6;color:#8a6400}
 @media (prefers-reduced-motion:reduce){.tagcount .mbar span{transition:none}}
 
 /* ---- shared nav strip (injected; replace when the site gets a theme) ---- */
@@ -389,6 +392,25 @@ button.ghost:hover{background:var(--paper-2);filter:none}
   .sitenav .spacer{flex-basis:100%}
   .sitenav a.tool{font-size:12.5px;padding:3px 10px}
 }
+
+/* ---- mobile fit (ported from index.html, Oct 2026) ----
+   A nowrap title inside a grid child without min-width:0 pushes the whole
+   page wider than the screen, and the fit script then measures the
+   stretched plate and never shrinks. Clip at the plate as a backstop. */
+.wrap{overflow-x:clip}
+html,body{max-width:100%;overflow-x:hidden}
+.masthead .plate{min-width:0;overflow:hidden}
+.masthead h1{max-width:100%}
+footer p{min-width:0;overflow-wrap:anywhere}
+footer{margin-top:14px;font-size:11px;color:var(--ink-soft);line-height:1.7;max-width:80ch}
+footer .crowd{
+  display:block;margin-top:10px;padding:9px 12px;background:#fff6c9;
+  border:2px solid var(--line);border-radius:3px;box-shadow:var(--shadow-sm);
+  font-size:11.5px;line-height:1.6;color:var(--ink);
+}
+footer .crowd b{font-family:var(--chip);font-weight:400}
+footer .dcontrib{font-family:var(--chip);font-size:12.5px;color:var(--plumbob);white-space:nowrap}
+footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
 </style>
 </head>
 <body>
@@ -397,8 +419,8 @@ button.ghost:hover{background:var(--paper-2);filter:none}
   <a class="home" href="https://bb.moveobjects.com/">bb<span class="dot">.</span>moveobjects</a>
   <span class="spacer"></span>
   <a class="tool" href="https://bb.moveobjects.com/sims4-house-style-finder.html" style="--navpen:#6a3fc0;--navbg:#e4d7ff">House Style Finder</a>
-  <a class="tool" href="https://bb.moveobjects.com/sims-business-activity-finder.html" style="--navpen:#0f8b78;--navbg:#c8f2ea">Activity Finder</a>
-  <a class="tool" href="https://bb.moveobjects.com/sims-tag-builder-public.html" style="--navpen:#c02f78;--navbg:#ffd3e6" aria-current="page">Gallery Tag Builder</a>
+  <a class="tool" href="https://bb.moveobjects.com/sims-business-activity-finder.html" style="--navpen:#0d7666;--navbg:#c8f2ea">Activity Finder</a>
+  <a class="tool" href="https://bb.moveobjects.com/sims-tag-builder-public.html" style="--navpen:#b22b6f;--navbg:#ffd3e6" aria-current="page">Gallery Tag Builder</a>
 </nav>
 
 
@@ -430,7 +452,7 @@ button.ghost:hover{background:var(--paper-2);filter:none}
   </div>
   <div class="sidecar">
   <div class="readout" id="readout">
-    <div class="r-id"><input id="simid" placeholder="your ea id" spellcheck="false" autocomplete="off"><span class="cap">tagged on every post</span></div>
+    <div class="r-id"><input id="simid" placeholder="your ea id" spellcheck="false" autocomplete="off"><span class="cap">required &middot; tagged on every post</span></div>
   </div>
 
   <div class="steps">
@@ -675,6 +697,11 @@ button.ghost:hover{background:var(--paper-2);filter:none}
 <p class="foot">
   Pick the shape of the build, the rooms and features it actually has, and who it is for. The tool assembles the tag block, strips duplicates, keeps titles inside the gallery&rsquo;s 25-character limit and suggests which category to upload under. Gallery category is a reminder for the in-game upload screen &mdash; it is never written into the description or the tags. Nothing leaves your browser; saved builds are stored locally.
 </p>
+
+<footer>
+  <p class="crowd"><b>This is a work in progress, and yours to correct.</b> The tag lists are one builder&rsquo;s, not an official source. If a tag is missing or wrong, send it over and it goes in with your name on it. <a class="dcontrib" href="https://github.com/dhahna/bb.moveobjectson/issues/new?title=Gallery%20Tag%20Builder%3A%20" target="_blank" rel="noopener">Send us the wording &rarr;</a></p>
+  <p class="ea">This site is not endorsed by or affiliated with Electronic Arts, or its licensors. Trademarks are the property of their respective owners. Game content and materials copyright Electronic Arts Inc. and its licensors. All rights reserved.</p>
+</footer>
 
 </div>
 
@@ -1347,6 +1374,23 @@ function customTags(){
     .split(/[,\n;]+/).map(s=>s.replace(/[^A-Za-z0-9]/g,'')).filter(Boolean).slice(0,12);
 }
 
+// ---------- EA ID ----------
+// Required: it goes on every post as a tag, so nothing is generated without it.
+// Remembered in this browser so it survives Clear all and reloads.
+const EAID_KEY = 's4tagbuilder_eaid';
+function eaId(){
+  return document.getElementById('simid').value.trim().replace(/[^A-Za-z0-9_]/g,'');
+}
+function rememberEaId(){
+  try{ localStorage.setItem(EAID_KEY, document.getElementById('simid').value.trim()); }catch(err){}
+}
+function restoreEaId(){
+  try{
+    const v = localStorage.getItem(EAID_KEY);
+    if(v && !document.getElementById('simid').value) document.getElementById('simid').value = v;
+  }catch(err){}
+}
+
 function buildTags(){
   const pack = PACKS.find(p=>p.id===state.pack);
   const out = [];
@@ -1369,7 +1413,7 @@ function buildTags(){
   if(world) push([world]);
   const place = currentLotPlace();
   if(place) push([place.s]);
-  const simid = document.getElementById('simid').value.trim().replace(/[^A-Za-z0-9_]/g,'');
+  const simid = eaId();
   if(simid) push([simid]);
 
   const lotname = document.getElementById('lotname').value.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
@@ -1685,7 +1729,7 @@ function buildDesc(){
   else if(who.length>1) whoStr = `, built for ${who[0]} and ${who[1]}`;
 
   const cc = isBG() ? 'No CC, no mods, no packs.' : 'No CC, no mods.';
-  return `${head}${placeStr}${featStr}${tail}${whoStr}. ${cc} [[bb.moveobjects.com]]`;
+  return `${head}${placeStr}${featStr}${tail}${whoStr}. ${cc} [[bb.moveobjects on]]`;
 }
 
 function estimate(){
@@ -1801,6 +1845,25 @@ function render(){
   const gone = tags.filter(t =>  state.dropped.has(t));
   tags = kept;
 
+  // No EA ID, no tags. Everything else still renders so the build isn't lost.
+  const idBox = document.querySelector('.readout .r-id');
+  const idOK = !!eaId();
+  idBox.classList.toggle('needed', !idOK && started);
+  if(!idOK){
+    document.getElementById('tagOut').innerHTML =
+      '<p class="idgate">Add your EA ID in the cover box first. It goes on every post as a tag, so the tag block isn\u2019t generated without it.</p>';
+    document.getElementById('droppedOut').hidden = true;
+    document.getElementById('tightSaves').textContent = '';
+    document.getElementById('charCount').textContent = 0;
+    document.getElementById('mfill').style.width = '0%';
+    document.getElementById('tagCountBox').classList.remove('over','warn');
+    document.getElementById('mline').hidden = true;
+    document.getElementById('tagCount').textContent = 0;
+    document.getElementById('tagCountBox').classList.add('short');
+    document.getElementById('notes').innerHTML = '';
+    return;
+  }
+
   const dropEl = document.getElementById('droppedOut');
   dropEl.hidden = !gone.length;
   dropEl.innerHTML = gone.length
@@ -1878,7 +1941,7 @@ function clearAll(){
   document.getElementById('beds').value = 3;
   document.getElementById('baths').value = 2;
   document.getElementById('lotname').value = '';
-  document.getElementById('simid').value = '';
+  // The EA ID is the builder's, not the build's: Clear all leaves it alone.
   document.getElementById('custom').value = '';
   document.getElementById('hideDash').checked = false;
   catTouched = false;
@@ -1887,20 +1950,20 @@ function clearAll(){
 }
 
 // ---------- templates ----------
-// Artifact storage when it's there, memory when it isn't.
+// Saved in this browser's localStorage; memory only when that's blocked.
 const TPL_KEY = 's4tagbuilder_templates';
 let tplCache = [];
 
 async function tplLoad(){
   try{
-    const r = await window.storage.get(TPL_KEY);
-    tplCache = r && r.value ? JSON.parse(r.value) : [];
-  }catch(err){ /* nothing saved yet, or no storage here */ }
+    const raw = localStorage.getItem(TPL_KEY);
+    tplCache = raw ? JSON.parse(raw) : [];
+  }catch(err){ /* private window or storage blocked: memory only */ }
   drawTemplates();
 }
 async function tplPersist(){
   drawTemplates();
-  try{ await window.storage.set(TPL_KEY, JSON.stringify(tplCache)); }
+  try{ localStorage.setItem(TPL_KEY, JSON.stringify(tplCache)); }
   catch(err){ /* memory only for this session */ }
 }
 
@@ -1932,6 +1995,7 @@ function restore(s){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+const escHTML = x => String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 function drawTemplates(){
   const el = document.getElementById('tplList');
   if(!tplCache.length){
@@ -1940,8 +2004,8 @@ function drawTemplates(){
   }
   el.innerHTML = tplCache.map((t,i)=>
     `<div class="trow" data-tpl="${i}">`
-    + `<span class="ttext">${t.name}</span>`
-    + `<span class="tlen">${t.when}</span>`
+    + `<span class="ttext">${escHTML(t.name)}</span>`
+    + `<span class="tlen">${escHTML(t.when)}</span>`
     + `<span class="tdel" data-tpldel="${i}" title="Delete">\u00d7</span></div>`
   ).join('');
 }
@@ -2003,6 +2067,7 @@ document.addEventListener('change', e=>{
   render();
 });
 document.addEventListener('input', e=>{
+  if(e.target.id==='simid') rememberEaId();
   if(['beds','baths','lotname','custom','simid'].includes(e.target.id)){ started = true; render(); }
 });
 document.getElementById('packCount').addEventListener('change', render);
@@ -2066,6 +2131,12 @@ document.addEventListener('click', e=>{
   const btn = e.target.closest('button[data-copy]');
   if(!btn) return;
   const which = btn.dataset.copy;
+  if(which!=='descOut' && !eaId()){
+    const old = btn.textContent; btn.textContent = 'Add your EA ID first';
+    setTimeout(()=>{ btn.textContent = old; }, 1600);
+    document.getElementById('simid').focus();
+    return;
+  }
   const text = which==='bothOut'
     ? document.getElementById('descOut').textContent + '\n\n' + document.getElementById('tagOut').textContent
     : document.getElementById(which).textContent;
@@ -2101,22 +2172,22 @@ render();
 // ---------- keep the title on one line ----------
 // Shrink to fit rather than wrap; the underline follows the text width.
 function fitTitle(){
-  const h1 = document.querySelector('.masthead h1');
-  if(!h1) return;
-  const plate = h1.parentElement;
-  const cs = getComputedStyle(plate);
-  const room = plate.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  if(room <= 0) return;
-  h1.style.fontSize = '';
-  const base = parseFloat(getComputedStyle(h1).fontSize);
-  const needed = h1.scrollWidth;
-  if(needed <= room) return;
-  const size = Math.max(15, Math.floor(base * (room / needed)));
-  h1.style.fontSize = size + 'px';
+  var h1=document.querySelector('.masthead h1'); if(!h1) return;
+  var plate=h1.closest('.plate'), hero=h1.closest('.masthead'); if(!plate||!hero) return;
+  // Measure the hero, not the plate: the plate can be stretched by the h1
+  // itself, which made the old check think there was room when there wasn't.
+  var ps=getComputedStyle(plate);
+  var room=Math.min(plate.clientWidth, hero.clientWidth)
+           - parseFloat(ps.paddingLeft||0) - parseFloat(ps.paddingRight||0);
+  h1.style.fontSize='';
+  var size=parseFloat(getComputedStyle(h1).fontSize) || 36;
+  while(h1.scrollWidth>room && size>10){ size-=1; h1.style.fontSize=size+'px'; }
 }
 window.addEventListener('resize', fitTitle);
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitTitle);
 fitTitle();
+restoreEaId();
+render();
 tplLoad();
 
 
