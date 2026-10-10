@@ -75,7 +75,7 @@ These are Dana's working methods. Label them as one builder's methods.
 - Hosted on SiteGround (static HTML at `bb.moveobjects.com`; WordPress is also installed there). `moveobjects.com` redirects to it.
 - SiteGround's file manager extracts a zip into a folder named after the zip. That caused a 403 once. Upload files, or extract and then move them.
 - Search indexing has been discouraged during the build. Turning it on is Dana's call.
-- **Auto-deploy:** pushing HTML changes to `main` uploads them to SiteGround via GitHub Actions (`docs/deploy.md`). It skips itself until the secrets are added.
+- **Auto-deploy is live (Oct 10 2026):** pushing HTML changes to `main` uploads them to SiteGround via GitHub Actions and verifies each page came back matching (`docs/deploy.md`). The SSH key, passphrase, host, user and path live only in the repo's GitHub secrets; never in a file here. The workflow deletes nothing on the server, so WordPress and any extra files in `public_html` stay as they are.
 - Possible future: GitHub Pages as a mirror or deploy source. Ask before changing where the live site comes from.
 
 ## Tone
