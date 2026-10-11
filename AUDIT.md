@@ -46,9 +46,10 @@ The home page uses Walter Turncoat for body text. All three tools still use **Ve
 Opening the page landed the visitor several screens down, below the cover and the venue list, because the default venue's results were scrolled into view as part of the first render. At 375px that was about 4,500px of scroll. Seen during the item 1–3 re-check.
 **Done:** the first render no longer scrolls; picking a venue still does.
 
-### 6. Your gallery numbers are in the Tag Builder's source code
+### 6. Your gallery numbers are in the Tag Builder's source code — comment removed
 Nothing is shown on screen, but a code comment reads *"spaced follow-ups median 258 downloads against 74 same-day"*, and the chip ordering and weights come from your export. Anyone can read them with "view source", both here and on the live site.
 **Fix:** delete the comment. Then decide whether the site says that the ordering comes from your upload history. That was already an open question, and saying so is the honest choice.
+**Done (Oct 11 2026):** the comment is gone. The chip weights are still relative numbers derived from the export (no raw figures). Whether to say so on the site is still Dana's call.
 
 ## Polish
 
