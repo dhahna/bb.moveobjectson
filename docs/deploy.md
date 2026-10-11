@@ -1,6 +1,6 @@
 # Deploying to SiteGround
 
-Every change to an `.html` file on `main` is uploaded to SiteGround automatically by `.github/workflows/deploy-siteground.yml`. Only the HTML pages are uploaded. Nothing on the server is deleted, so WordPress stays as it is.
+Every change to an `.html` file, `sitemap.xml` or `robots.txt` on `main` is uploaded to SiteGround automatically by `.github/workflows/deploy-siteground.yml`. Nothing else is uploaded and nothing on the server is deleted, so WordPress stays as it is.
 
 ## One-time setup
 
