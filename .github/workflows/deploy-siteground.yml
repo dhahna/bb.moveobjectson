@@ -5,7 +5,7 @@ name: Deploy to SiteGround
 on:
   push:
     branches: [main]
-    paths: ['*.html']
+    paths: ['*.html', 'sitemap.xml', 'robots.txt']
   workflow_dispatch:
 
 concurrency: deploy-siteground
@@ -48,9 +48,9 @@ jobs:
             ssh-add ~/.ssh/sg
           fi
           ssh-keyscan -p 18765 "$SG_HOST" >> ~/.ssh/known_hosts 2>/dev/null
-          # Only the site pages go up. No --delete, so WordPress and anything
-          # else already on the server is left alone.
-          rsync -avz -e "ssh -p 18765" ./*.html "$SG_USER@$SG_HOST:$SG_PATH/"
+          # Only the site pages, the sitemap and robots.txt go up. No --delete, so
+          # WordPress and anything else already on the server is left alone.
+          rsync -avz -e "ssh -p 18765" ./*.html ./sitemap.xml ./robots.txt "$SG_USER@$SG_HOST:$SG_PATH/"
 
       - name: Check the live site
         if: steps.check.outputs.ready == 'true'
@@ -59,7 +59,7 @@ jobs:
           # uploaded. A mismatch is a warning, not a failure: SiteGround's cache
           # can serve the old copy for a few minutes.
           ok=0; total=0
-          for f in *.html; do
+          for f in *.html sitemap.xml robots.txt; do
             total=$((total+1))
             url="https://bb.moveobjects.com/$f"; [ "$f" = index.html ] && url="https://bb.moveobjects.com/"
             code=$(curl -s -o /tmp/live.html -w '%{http_code}' "$url?v=$GITHUB_SHA")
