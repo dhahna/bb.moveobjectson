@@ -639,17 +639,18 @@ scrape: `You're helping a Sims 4 builder (EA ID: {EA}) pull their most-downloade
 1. Open https://www.ea.com/games/the-sims/the-sims-4/gallery and search: #{EA}
    (If nothing of theirs comes up, their descriptions don't use that hashtag. Search their build names one at a time instead, and keep only results by {EA}.)
 2. Open "Sort by", choose "Most Downloaded", then under "Category" choose "Lots" and apply. Read every card by {EA}: build name, favorites (heart number), downloads (arrow number) and the card's link (it goes to /gallery/item/...). The page shows at most 24 cards, so then switch Category to "Rooms" and do the same. If you need more, search narrower terms (for example "#{EA} #basegame") and merge, dropping duplicates by link.
-3. Keep the top {N} by downloads. For each one, open its gallery link and note: lot or room type, size, price, bedrooms and bathrooms, the builder's own description (skip the hashtags) and the gallery town if a hashtag names it. Look at the main picture and note what you can actually see.
+3. Keep the top {N} by downloads. For each one, open its gallery link and note: lot or room type, size, price, bedrooms and bathrooms, the builder's own description, and the full list of hashtags. The hashtags are where most of the facts live: the town and neighborhood, features (#pool, #gym, #laundry), packs or #basegame, #nocc, and artwork credits (\"#art by #creator\"). Use them for the facts line and to know what's in the build, but don't paste the hashtag list into the stories. Look at the main picture and note what you can actually see.
 4. Write down the date and time you collected these numbers; this is the builder's baseline for measuring growth later.
 5. Hand back ONE JSON file (an array, highest downloads first) in this shape, one object per build:
-{"id":"b01","title":"Build name","cat":"Lot" or "Room","fav":123,"dl":4567,"url":"gallery link","date":"","facts":"size · town · beds/baths · base game or packs · CC or no CC","notes":"what the picture and description show","discord":"","reddit":"","reddit_body":"","caption":"","posted":{}}
+{"id":"b01","title":"Build name","cat":"Lot" or "Room","fav":123,"dl":4567,"url":"gallery link","date":"","facts":"size · town · beds/baths · base game or packs · CC or no CC","tags":"the build's hashtags","notes":"what the picture and description show","discord":"","reddit":"","reddit_body":"","caption":"","posted":{}}
 Also give the same list as a simple table (rank, name, favorites, downloads) for the baseline.`,
 posts: `
 Then write the posts. For each build:
 - "discord": first line **Build name** in bold. Then a short story (60 to 100 words) about Sims living in or using this build, drawn from the picture and the builder's own description. Then the facts line. Then a line with favorites and downloads and "on the gallery under {EA}". Last line: the gallery link on its own, so Discord shows the picture.
 - "reddit": a plain title under 100 characters that says what the build is.
 - "reddit_body": the story, the facts line, then "Gallery: <link> (EA ID: {EA})".
-- "caption": one or two sentences plus hashtags for {WHERE}: #sims4 #thesims4 #ts4 #sims4build #showusyourbuilds #{EA} and #basegame / #nocc only when true.
+- "caption": one or two sentences plus hashtags for {WHERE}: #sims4 #thesims4 #ts4 #sims4build #showusyourbuilds #{EA}, plus the build's own feature and style hashtags that fit the platform (#basegame / #nocc only when the build is tagged that way).
+- Credit any artwork creators the hashtags name (\"art by ...\") in the facts line.
 Rules: never invent the builder's own life, opinions or backstory; only use first person when the builder's description already tells that story. Don't claim packs, CC, towns or room counts you didn't see listed. Alternate lots and rooms so it doesn't feel repetitive. Set "date" to one build per day starting {START}.
 Return the same JSON file with these fields filled in, and flag any post you were unsure about so the builder can check it.`,
 schedule: `
