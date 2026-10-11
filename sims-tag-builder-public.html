@@ -693,6 +693,7 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
         <button data-copy="tagOut">Copy tags</button>
         <button class="ghost" data-copy="bothOut">Copy all</button>
       </div>
+      <p class="hint aftercopy" id="afterCopy" hidden>Missing a tag, or one that&rsquo;s wrong? <a class="dcontrib" href="https://discord.gg/456GJhzNUU" target="_blank" rel="noopener">Tell us in the Discord</a>. Testers get new tools first.</p>
       <ul class="notes" id="notes"></ul>
     </div>
   </div>
@@ -2145,7 +2146,7 @@ document.addEventListener('click', e=>{
   const text = which==='bothOut'
     ? document.getElementById('descOut').textContent + '\n\n' + document.getElementById('tagOut').textContent
     : document.getElementById(which).textContent;
-  const done = () => { const old = btn.textContent; btn.textContent = 'Copied'; setTimeout(()=>{ btn.textContent = old; }, 1200); };
+  const done = () => { const old = btn.textContent; btn.textContent = 'Copied'; setTimeout(()=>{ btn.textContent = old; }, 1200); if(which!=='descOut'){ const ac = document.getElementById('afterCopy'); if(ac) ac.hidden = false; } };
   if(navigator.clipboard && navigator.clipboard.writeText)
     navigator.clipboard.writeText(text).then(done).catch(()=>fallback(text,done));
   else fallback(text,done);

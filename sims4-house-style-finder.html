@@ -677,13 +677,15 @@ renderPresets();renderFacets();runFinder();runItems();runGl();runPg();
       var CONTRIBUTE = {
         url: 'https://github.com/dhahna/bb.moveobjectson/issues/new',
         email: 'bb@moveobjects.com',          // no GitHub account needed
+        discord: 'https://discord.gg/456GJhzNUU',  // #glossary-corrections lives here
         label: 'Send us the wording'
       };
       var contributeLink = function(term, kind){
         var title = encodeURIComponent('House Style Finder ' + (kind||'definition') + ': ' + (term || ''));
         var href = CONTRIBUTE.url + (CONTRIBUTE.url.indexOf('?') > -1 ? '&' : '?') + 'title=' + title;
         return '<a class="dcontrib" href="' + href + '" target="_blank" rel="noopener">' + CONTRIBUTE.label + ' &rarr;</a>'
-          + ' or <a class="dcontrib" href="mailto:' + CONTRIBUTE.email + '?subject=' + title + '">email it</a>';
+          + ', <a class="dcontrib" href="mailto:' + CONTRIBUTE.email + '?subject=' + title + '">email it</a>'
+          + ', or post it in <a class="dcontrib" href="' + CONTRIBUTE.discord + '" target="_blank" rel="noopener">#glossary-corrections on Discord</a>';
       };
 
       var esc2 = function(x){ return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
