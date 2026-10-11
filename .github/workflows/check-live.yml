@@ -1,0 +1,24 @@
+name: Check live URLs
+
+# On-demand only. Reports the HTTP status of paths on the live site, for checks
+# that can't be made from a cloud session (the site is blocked from there).
+# Reads nothing private and changes nothing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      paths:
+        description: Space-separated paths to check, relative to https://bb.moveobjects.com/
+        required: true
+        default: index.html
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch each path
+        run: |
+          for p in ${{ inputs.paths }}; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' "https://bb.moveobjects.com/$p?v=$GITHUB_RUN_ID" || echo "000")
+            echo "$code  $p"
+          done
