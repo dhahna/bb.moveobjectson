@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sims 4 Gallery Tag Builder</title>
+<title>Sims 4 Gallery Tag Builder &middot; bb.moveobjects</title>
+<meta name="description" content="Build a gallery title, description and hashtag block for a Sims 4 upload. Pick what you built and get tags ordered so the useful ones come first, inside EA&rsquo;s 500-character limit.">
 <style>/* Fonts, all SIL Open Font License 1.1, Latin subsets embedded:
    Coming Soon, Indie Flower, Walter Turncoat, Zeyada — Kimberly Geswein
    Momo Signature — The MoMo Signature Project Authors
@@ -43,7 +44,7 @@ html,body{margin:0;padding:0}
 body{
   background:#e6f2fb;
   color:var(--ink);
-  font-family:Verdana,Geneva,"DejaVu Sans",Tahoma,sans-serif;
+  font-family:var(--chip); /* body text is Walter Turncoat like the home page; var(--body) is the small-print fallback */
   font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:1180px;margin:0 auto;padding:26px 20px 72px}
@@ -404,6 +405,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .masthead .plate{min-width:0;overflow:hidden}
 .masthead h1{max-width:100%}
 footer p{min-width:0;overflow-wrap:anywhere}
+footer .byline{font-size:11.5px;color:var(--pale-dim)}
 footer{margin-top:14px;font-size:11px;color:var(--ink-soft);line-height:1.7;max-width:80ch}
 footer .crowd{
   display:block;margin-top:10px;padding:9px 12px;background:#fff6c9;
@@ -704,6 +706,7 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
 </p>
 
 <footer>
+  <p class="byline">Built by <strong>@dhahna</strong>. Search the same name in the gallery to see what these tags produce.</p>
   <p class="crowd"><b>This is a work in progress, and yours to correct.</b> The tag lists are one builder&rsquo;s, not an official source. If a tag is missing or wrong, send it over and it goes in with your name on it. <a class="dcontrib" href="https://github.com/dhahna/bb.moveobjectson/issues/new?title=Gallery%20Tag%20Builder%3A%20" target="_blank" rel="noopener">Send us the wording &rarr;</a> or <a class="dcontrib" href="mailto:bb@moveobjects.com?subject=Gallery%20Tag%20Builder">email bb@moveobjects.com</a>, or <a class="dcontrib" href="https://discord.gg/456GJhzNUU" target="_blank" rel="noopener">join the Discord</a></p>
   <p class="oss">Free and open source. The code and content live on <a class="dcontrib" href="https://github.com/dhahna/bb.moveobjectson" target="_blank" rel="noopener">GitHub</a>; testers and questions on <a class="dcontrib" href="https://discord.gg/456GJhzNUU" target="_blank" rel="noopener">Discord</a>.</p>
   <p class="ea">This site is not endorsed by or affiliated with Electronic Arts, Maxis, or their licensors. Trademarks are the property of their respective owners. Game content and materials copyright Electronic Arts Inc. and its licensors. All rights reserved.</p>
