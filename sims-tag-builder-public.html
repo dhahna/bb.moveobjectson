@@ -716,73 +716,75 @@ footer .ea{color:var(--pale-dim);font-size:10.5px;margin:10px 0 0}
 
 <script>
 // ---------- data ----------
+// rank / bg / pack hold ordering only: a higher number sorts first in the chips and in the
+// generated title and description. The figures they came from are not in this build.
 const PACKS = [
-  {id:'bg',    label:'Basegame', n:'', tags:['basegame','base','BG','bgc','basegamebuild','basegamebuilds','basegameonly','onlybasegame','nopacks','basegamestarter'], base:76},
-  {id:'packs', label:'Uses Packs', n:'', tags:['stopstealing','creators4fairplay'], base:24},
+  {id:'bg',    label:'Basegame', n:'', tags:['basegame','base','BG','bgc','basegamebuild','basegamebuilds','basegameonly','onlybasegame','nopacks','basegamestarter']},
+  {id:'packs', label:'Uses Packs', n:'', tags:['stopstealing','creators4fairplay']},
 ];
 
 // Pack titles. Ordered roughly by how often the name doubles as a place people search for.
 const PACKLIST = [
   // Expansion packs
-  {id:'ep_gtw',  label:'Get to Work',        dl:null, tags:['gettowork','retail']},
-  {id:'ep_gt',   label:'Get Together',       dl:0.83, tags:['gettogether'], flag:'weak'},
-  {id:'ep_cl',   label:'City Living',        dl:0.83, tags:['cityliving'], flag:'weak'},
-  {id:'ep_cd',   label:'Cats & Dogs',        dl:1.42, tags:['catsanddogs']},
-  {id:'ep_se',   label:'Seasons',            dl:0.83, tags:['seasons'], flag:'weak'},
-  {id:'ep_gf',   label:'Get Famous',         dl:1.00, tags:['getfamous']},
-  {id:'ep_il',   label:'Island Living',      dl:1.42, tags:['islandliving']},
-  {id:'ep_du',   label:'Discover University',dl:null, tags:['discoveruniversity']},
-  {id:'ep_eco',  label:'Eco Lifestyle',      dl:1.00, tags:['ecolifestyle']},
-  {id:'ep_sn',   label:'Snowy Escape',       dl:null, tags:['snowyescape']},
-  {id:'ep_co',   label:'Cottage Living',     dl:null, tags:['cottageliving']},
-  {id:'ep_hs',   label:'High School Years',  dl:null, tags:['highschoolyears']},
-  {id:'ep_gtg',  label:'Growing Together',   dl:1.12, tags:['growingtogether']},
-  {id:'ep_hr',   label:'Horse Ranch',        dl:1.88, tags:['horseranch']},
-  {id:'ep_fr',   label:'For Rent',           dl:1.46, tags:['forrent','forrentpack']},
-  {id:'ep_ls',   label:'Lovestruck',         dl:null, tags:['lovestruck']},
-  {id:'ep_lad',  label:'Life & Death',       dl:null, tags:['lifeanddeath']},
-  {id:'ep_bh',   label:'Businesses & Hobbies',dl:1.88, tags:['businessesandhobbies']},
-  {id:'ep_ebn',  label:'Enchanted by Nature',dl:null, tags:['enchantedbynature']},
-  {id:'ep_aa',   label:'Adventure Awaits',   dl:null, tags:['adventureawaits']},
-  {id:'ep_rl',   label:'Royalty & Legacy',   dl:null, tags:['royaltyandlegacy']},
+  {id:'ep_gtw',  label:'Get to Work',        rank:null, tags:['gettowork','retail']},
+  {id:'ep_gt',   label:'Get Together',       rank:8, tags:['gettogether']},
+  {id:'ep_cl',   label:'City Living',        rank:8, tags:['cityliving']},
+  {id:'ep_cd',   label:'Cats & Dogs',        rank:31, tags:['catsanddogs']},
+  {id:'ep_se',   label:'Seasons',            rank:8, tags:['seasons']},
+  {id:'ep_gf',   label:'Get Famous',         rank:17, tags:['getfamous']},
+  {id:'ep_il',   label:'Island Living',      rank:31, tags:['islandliving']},
+  {id:'ep_du',   label:'Discover University',rank:null, tags:['discoveruniversity']},
+  {id:'ep_eco',  label:'Eco Lifestyle',      rank:17, tags:['ecolifestyle']},
+  {id:'ep_sn',   label:'Snowy Escape',       rank:null, tags:['snowyescape']},
+  {id:'ep_co',   label:'Cottage Living',     rank:null, tags:['cottageliving']},
+  {id:'ep_hs',   label:'High School Years',  rank:null, tags:['highschoolyears']},
+  {id:'ep_gtg',  label:'Growing Together',   rank:24, tags:['growingtogether']},
+  {id:'ep_hr',   label:'Horse Ranch',        rank:43, tags:['horseranch']},
+  {id:'ep_fr',   label:'For Rent',           rank:32, tags:['forrent','forrentpack']},
+  {id:'ep_ls',   label:'Lovestruck',         rank:null, tags:['lovestruck']},
+  {id:'ep_lad',  label:'Life & Death',       rank:null, tags:['lifeanddeath']},
+  {id:'ep_bh',   label:'Businesses & Hobbies',rank:43, tags:['businessesandhobbies']},
+  {id:'ep_ebn',  label:'Enchanted by Nature',rank:null, tags:['enchantedbynature']},
+  {id:'ep_aa',   label:'Adventure Awaits',   rank:null, tags:['adventureawaits']},
+  {id:'ep_rl',   label:'Royalty & Legacy',   rank:null, tags:['royaltyandlegacy']},
   // Game packs
-  {id:'gp_or',   label:'Outdoor Retreat',    dl:null, tags:['outdoorretreat']},
-  {id:'gp_spa',  label:'Spa Day',            dl:4.88, tags:['spaday','spa']},
-  {id:'gp_do',   label:'Dine Out',           dl:3.04, tags:['dineout','restaurant']},
-  {id:'gp_vamp', label:'Vampires',           dl:null, tags:['vampires']},
-  {id:'gp_par',  label:'Parenthood',         dl:null, tags:['parenthood']},
-  {id:'gp_ja',   label:'Jungle Adventure',   dl:null, tags:['jungleadventure']},
-  {id:'gp_sv',   label:'StrangerVille',      dl:null, tags:['strangerville']},
-  {id:'gp_rom',  label:'Realm of Magic',     dl:null, tags:['realmofmagic']},
-  {id:'gp_batuu',label:'Journey to Batuu',   dl:null, tags:['batuu']},
-  {id:'gp_dhd',  label:'Dream Home Decorator',dl:1.21, tags:['dreamhomedecorator']},
-  {id:'gp_mws',  label:'My Wedding Stories', dl:null, tags:['myweddingstories']},
-  {id:'gp_ww',   label:'Werewolves',         dl:null, tags:['werewolves']},
+  {id:'gp_or',   label:'Outdoor Retreat',    rank:null, tags:['outdoorretreat']},
+  {id:'gp_spa',  label:'Spa Day',            rank:60, tags:['spaday','spa']},
+  {id:'gp_do',   label:'Dine Out',           rank:55, tags:['dineout','restaurant']},
+  {id:'gp_vamp', label:'Vampires',           rank:null, tags:['vampires']},
+  {id:'gp_par',  label:'Parenthood',         rank:null, tags:['parenthood']},
+  {id:'gp_ja',   label:'Jungle Adventure',   rank:null, tags:['jungleadventure']},
+  {id:'gp_sv',   label:'StrangerVille',      rank:null, tags:['strangerville']},
+  {id:'gp_rom',  label:'Realm of Magic',     rank:null, tags:['realmofmagic']},
+  {id:'gp_batuu',label:'Journey to Batuu',   rank:null, tags:['batuu']},
+  {id:'gp_dhd',  label:'Dream Home Decorator',rank:27, tags:['dreamhomedecorator']},
+  {id:'gp_mws',  label:'My Wedding Stories', rank:null, tags:['myweddingstories']},
+  {id:'gp_ww',   label:'Werewolves',         rank:null, tags:['werewolves']},
   // Stuff packs that add build items
-  {id:'sp_lp',   label:'Luxury Party',       dl:null, tags:['luxuryparty']},
-  {id:'sp_pp',   label:'Perfect Patio',      dl:null, tags:['perfectpatio']},
-  {id:'sp_ck',   label:'Cool Kitchen',       dl:null, tags:['coolkitchen']},
-  {id:'sp_mh',   label:'Movie Hangout',      dl:null, tags:['moviehangout']},
-  {id:'sp_by',   label:'Backyard',           dl:null, tags:['backyardstuff']},
-  {id:'sp_vg',   label:'Vintage Glamour',    dl:null, tags:['vintageglamour']},
-  {id:'sp_bn',   label:'Bowling Night',      dl:null, tags:['bowlingnight']},
-  {id:'sp_fit',  label:'Fitness Stuff',      dl:null, tags:['fitnessstuff']},
-  {id:'sp_ld',   label:'Laundry Day',        dl:null, tags:['laundryday']},
-  {id:'sp_tl',   label:'Tiny Living',        dl:null, tags:['tinyliving']},
-  {id:'sp_nk',   label:'Nifty Knitting',     dl:null, tags:['niftyknitting']},
-  {id:'sp_para', label:'Paranormal',         dl:null, tags:['paranormal']},
-  {id:'sp_hch',  label:'Home Chef Hustle',   dl:0.92, tags:['homechefhustle'], flag:'weak'},
-  {id:'sp_cc',   label:'Crystal Creations',  dl:null, tags:['crystalcreations']},
+  {id:'sp_lp',   label:'Luxury Party',       rank:null, tags:['luxuryparty']},
+  {id:'sp_pp',   label:'Perfect Patio',      rank:null, tags:['perfectpatio']},
+  {id:'sp_ck',   label:'Cool Kitchen',       rank:null, tags:['coolkitchen']},
+  {id:'sp_mh',   label:'Movie Hangout',      rank:null, tags:['moviehangout']},
+  {id:'sp_by',   label:'Backyard',           rank:null, tags:['backyardstuff']},
+  {id:'sp_vg',   label:'Vintage Glamour',    rank:null, tags:['vintageglamour']},
+  {id:'sp_bn',   label:'Bowling Night',      rank:null, tags:['bowlingnight']},
+  {id:'sp_fit',  label:'Fitness Stuff',      rank:null, tags:['fitnessstuff']},
+  {id:'sp_ld',   label:'Laundry Day',        rank:null, tags:['laundryday']},
+  {id:'sp_tl',   label:'Tiny Living',        rank:null, tags:['tinyliving']},
+  {id:'sp_nk',   label:'Nifty Knitting',     rank:null, tags:['niftyknitting']},
+  {id:'sp_para', label:'Paranormal',         rank:null, tags:['paranormal']},
+  {id:'sp_hch',  label:'Home Chef Hustle',   rank:12, tags:['homechefhustle']},
+  {id:'sp_cc',   label:'Crystal Creations',  rank:null, tags:['crystalcreations']},
 ];
 
 // Pack count. N/A leaves the count untagged.
 const PACKCOUNTS = [
-  {v:'',  label:'N/A — Not Stated', dl:1.00, tags:[], word:''},
-  {v:'1', label:'1 Pack',    dl:1.98, tags:['onepack'],    word:'One-pack',   title:'1 Pack'},
-  {v:'2', label:'2 Packs',   dl:1.69, tags:['twopacks'],   word:'Two-pack',   title:'2 Pack'},
-  {v:'3', label:'3 Packs',   dl:0.75, tags:['threepacks'], word:'Three-pack', title:'3 Pack'},
-  {v:'4', label:'4 Packs',       dl:null, tags:['fourpacks'],  word:'Four-pack',  title:'4 Pack'},
-  {v:'5', label:'5 Packs',       dl:null, tags:['fivepacks'],  word:'Five-pack',  title:'5 Pack'},
+  {v:'',  label:'N/A — Not Stated', tags:[], word:''},
+  {v:'1', label:'1 Pack', tags:['onepack'],    word:'One-pack',   title:'1 Pack'},
+  {v:'2', label:'2 Packs', tags:['twopacks'],   word:'Two-pack',   title:'2 Pack'},
+  {v:'3', label:'3 Packs', tags:['threepacks'], word:'Three-pack', title:'3 Pack'},
+  {v:'4', label:'4 Packs', tags:['fourpacks'],  word:'Four-pack',  title:'4 Pack'},
+  {v:'5', label:'5 Packs', tags:['fivepacks'],  word:'Five-pack',  title:'5 Pack'},
 ];
 
 
@@ -793,102 +795,102 @@ const SCOPE = [
 
 const LOT = {
   bg:[
-    {id:'house', label:'House', dl:0.78, seed:['modern','open','pool'],  tags:['house','modern','openfloorplan'], flag:'weak'},
-    {id:'housebiz', label:'House + Business', dl:1.57, seed:['s_adu','modern'], tags:['house','homebusiness','smallbiz','smallbusiness','business','businessandhobbies','separateentrance']},
-    {id:'houseapt', label:'House + Apartment', dl:0.95, seed:['garage'], tags:['house','apartment','apartments','forrent'], flag:'weak'},
-    {id:'houseguest', label:'House + Guest House', dl:2.80, implies:['s_adu'], seed:['s_adu','garden'], tags:['house','guesthouse','detached','separateentrance','adu','casita']},
-    {id:'basementapt', label:'Basement Apartment', dl:1.94, implies:['s_basement'], seed:['s_basement'], tags:['basementapartment','basement','apartment','forrent','underground','separateentrance']},
-    {id:'garageaptlot', label:'House + Garage Apartment', dl:2.02, implies:['s_garageapt'], seed:['s_garageapt'], tags:['house','garageapartment','garage','apartment','forrent']},
-    {id:'bizapt',   label:'Business + Apartment', dl:2.12, seed:['retail','s_garageapt'], tags:['smallbiz','smallbusiness','business','apartment','apartments','forrent','genericlot','lot51']},
-    {id:'apts',  label:'Apartments / Hotel', dl:1.07, seed:['frontdesk','comlaundry','pool'], tags:['apartment','apartments','forrent','hotel','motel','hotelroom','motelroom','condo','generic','genericlot','lot51','lot51hotels','lot51hotelsuite','suitelife']},
-    {id:'biz',   label:'Business / Venue', dl:1.57, seed:['retail','backoffice','parking'], tags:['smallbiz','smallbusiness','businessandhobbies','businessesandhobbies','homebusiness','business','hobbies','hobby','retail','skills','genericlot','generic']},
-    {id:'retreat',label:'Retreat / Getaway', dl:null, seed:['water','firepit','fishing'], tags:['retreat','getaway','vacation','vacationrental','destination','adventureawaits']},
-    {id:'multi', label:'Loft / Studio / Garage Apt', dl:1.6, implies:['s_loft','s_studio','s_garageapt'], seed:['s_loft'], tags:['loft','studio','garageapartment','splitlevel','guesthouse','basement','underground']},
-    {id:'shell', label:'Shell (unfurnished)', dl:0.76, seed:['terrain','landsc'], tags:['shell','unfurnished','decorate','terrain','landscape'], flag:'shell'},
-    {id:'park',  label:'Park / Outdoor Lot', dl:3.11, seed:['playgnd','bbq'], tags:['park','playground','outdoors','minigolf','fishing']},
+    {id:'house', label:'House', rank:5, seed:['modern','open','pool'],  tags:['house','modern','openfloorplan']},
+    {id:'housebiz', label:'House + Business', rank:37, seed:['s_adu','modern'], tags:['house','homebusiness','smallbiz','smallbusiness','business','businessandhobbies','separateentrance']},
+    {id:'houseapt', label:'House + Apartment', rank:14, seed:['garage'], tags:['house','apartment','apartments','forrent']},
+    {id:'houseguest', label:'House + Guest House', rank:52, implies:['s_adu'], seed:['s_adu','garden'], tags:['house','guesthouse','detached','separateentrance','adu','casita']},
+    {id:'basementapt', label:'Basement Apartment', rank:44, implies:['s_basement'], seed:['s_basement'], tags:['basementapartment','basement','apartment','forrent','underground','separateentrance']},
+    {id:'garageaptlot', label:'House + Garage Apartment', rank:46, implies:['s_garageapt'], seed:['s_garageapt'], tags:['house','garageapartment','garage','apartment','forrent']},
+    {id:'bizapt',   label:'Business + Apartment', rank:48, seed:['retail','s_garageapt'], tags:['smallbiz','smallbusiness','business','apartment','apartments','forrent','genericlot','lot51']},
+    {id:'apts',  label:'Apartments / Hotel', rank:22, seed:['frontdesk','comlaundry','pool'], tags:['apartment','apartments','forrent','hotel','motel','hotelroom','motelroom','condo','generic','genericlot','lot51','lot51hotels','lot51hotelsuite','suitelife']},
+    {id:'biz',   label:'Business / Venue', rank:37, seed:['retail','backoffice','parking'], tags:['smallbiz','smallbusiness','businessandhobbies','businessesandhobbies','homebusiness','business','hobbies','hobby','retail','skills','genericlot','generic']},
+    {id:'retreat',label:'Retreat / Getaway', rank:null, seed:['water','firepit','fishing'], tags:['retreat','getaway','vacation','vacationrental','destination','adventureawaits']},
+    {id:'multi', label:'Loft / Studio / Garage Apt', rank:38, implies:['s_loft','s_studio','s_garageapt'], seed:['s_loft'], tags:['loft','studio','garageapartment','splitlevel','guesthouse','basement','underground']},
+    {id:'shell', label:'Shell (unfurnished)', rank:4, seed:['terrain','landsc'], tags:['shell','unfurnished','decorate','terrain','landscape'], flag:'shell'},
+    {id:'park',  label:'Park / Outdoor Lot', rank:56, seed:['playgnd','bbq'], tags:['park','playground','outdoors','minigolf','fishing']},
   ],
   pack:[
-    {id:'house', label:'House', dl:0.75, tags:['house','modern'], flag:'dlcres'},
-    {id:'housebiz', label:'House + Business', dl:2.12, tags:['house','homebusiness','smallbiz','smallbusiness','business','separateentrance']},
-    {id:'houseapt', label:'House + Apartment', dl:0.88, tags:['house','apartment','apartments','forrent'], flag:'dlcres'},
-    {id:'houseguest', label:'House + Guest House', dl:null, implies:['s_adu'], tags:['house','guesthouse','detached','separateentrance','adu','casita']},
-    {id:'basementapt', label:'Basement Apartment', dl:null, implies:['s_basement'], tags:['basementapartment','basement','apartment','forrent','underground','separateentrance']},
-    {id:'garageaptlot', label:'House + Garage Apartment', dl:2.04, implies:['s_garageapt'], tags:['house','garageapartment','garage','apartment','forrent']},
-    {id:'bizapt',   label:'Business + Apartment', dl:2.42, tags:['smallbiz','smallbusiness','business','apartment','apartments','forrent','genericlot','lot51']},
-    {id:'apts',  label:'Apartments / Hotel', dl:0.83, tags:['apartment','apartments','forrent','condo','genericlot','lot51','lobby'], flag:'dlcres'},
-    {id:'biz',   label:'Business / Venue', dl:2.12, tags:['smallbusiness','businessandhobbies','smallbiz','business','retail','restaurant','dineout','genericlot','publicvenue','hobbies','hobby','terrainedit']},
-    {id:'retreat',label:'Retreat / Getaway', dl:null, tags:['retreat','getaway','vacation','vacationrental','destination','adventureawaits']},
-    {id:'multi', label:'Loft / Studio / Garage Apt', dl:1.46, implies:['s_loft','s_studio','s_garageapt'], tags:['studio','garageapartment']},
-    {id:'shell', label:'Shell (unfurnished)', dl:1.0, tags:['shell','unfurnished','decorate','terrain','terrainedit']},
-    {id:'park',  label:'Park / Outdoor Lot', dl:1.2, tags:['outdoors','park']},
+    {id:'house', label:'House', rank:3, tags:['house','modern'], flag:'dlcres'},
+    {id:'housebiz', label:'House + Business', rank:48, tags:['house','homebusiness','smallbiz','smallbusiness','business','separateentrance']},
+    {id:'houseapt', label:'House + Apartment', rank:10, tags:['house','apartment','apartments','forrent'], flag:'dlcres'},
+    {id:'houseguest', label:'House + Guest House', rank:null, implies:['s_adu'], tags:['house','guesthouse','detached','separateentrance','adu','casita']},
+    {id:'basementapt', label:'Basement Apartment', rank:null, implies:['s_basement'], tags:['basementapartment','basement','apartment','forrent','underground','separateentrance']},
+    {id:'garageaptlot', label:'House + Garage Apartment', rank:47, implies:['s_garageapt'], tags:['house','garageapartment','garage','apartment','forrent']},
+    {id:'bizapt',   label:'Business + Apartment', rank:50, tags:['smallbiz','smallbusiness','business','apartment','apartments','forrent','genericlot','lot51']},
+    {id:'apts',  label:'Apartments / Hotel', rank:8, tags:['apartment','apartments','forrent','condo','genericlot','lot51','lobby'], flag:'dlcres'},
+    {id:'biz',   label:'Business / Venue', rank:48, tags:['smallbusiness','businessandhobbies','smallbiz','business','retail','restaurant','dineout','genericlot','publicvenue','hobbies','hobby','terrainedit']},
+    {id:'retreat',label:'Retreat / Getaway', rank:null, tags:['retreat','getaway','vacation','vacationrental','destination','adventureawaits']},
+    {id:'multi', label:'Loft / Studio / Garage Apt', rank:32, implies:['s_loft','s_studio','s_garageapt'], tags:['studio','garageapartment']},
+    {id:'shell', label:'Shell (unfurnished)', rank:17, tags:['shell','unfurnished','decorate','terrain','terrainedit']},
+    {id:'park',  label:'Park / Outdoor Lot', rank:26, tags:['outdoors','park']},
   ]
 };
 
 const ROOMS = {
   bg:[
-    {id:'general', label:'General Room', dl:1.03, tags:[]},
-    {id:'suite',   label:'Primary Suite', dl:2.94, seed:['ensuite','walkin','dsink'], tags:['bedroom','primary','primarybedroom','master','masterbedroom','ensuite','closet','walkin','walkincloset','doublesink','bathtub']},
-    {id:'gym',     label:'Gym / Fitness', dl:4.37, seed:['treadmill','lockerrm'], tags:['gym','fitness','fitnesscenter','pt','personaltrainer','personaltraining','skills']},
-    {id:'laundry', label:'Laundry / Utility', dl:2.92, seed:['mudroom'], tags:['laundry','laundryroom','washer','dryer','washerdryer','housekeeping']},
-    {id:'closet',  label:'Walk-In Closet', dl:2.22, tags:['closet','walkin','walkincloset']},
-    {id:'closetsm',label:'Closet', dl:1.50, tags:['closet','wardrobe','storage']},
-    {id:'garageroom',label:'Garage', dl:1.66, seed:['garage'], tags:['garage','car','parking','storage','workshop']},
-    {id:'bedroom', label:'Bedroom', dl:1.47, seed:['closet'], tags:['bedroom','onebedroom']},
-    {id:'kids',    label:'Kids / Nursery', dl:1.49, seed:['twobeds','playroom'], tags:['kidsroom','bedroom','children','toddler','infant','childrensbedroom']},
-    {id:'apt',     label:'Apartment / Hotel Room', dl:1.21, seed:['kitchenette'], tags:['apartment','apartments','forrent','hotel','motel','hotelroom','motelroom','generic','genericlot','lot51','lot51hotels','lot51hotelsuite','lot51suitelife','suitelife']},
-    {id:'lobby',   label:'Lobby / Restaurant / Bar', dl:1.50, tags:['lobby','restaurant','cafe','bar','genericlot']},
-    {id:'living',  label:'Living / Rec Room', dl:1.16, seed:['tv','fire'], tags:['livingroom','familyroom','tvroom','recroom','parlor','openfloorplan']},
-    {id:'kitchen', label:'Kitchen', dl:1.05, seed:['island','pantry'], tags:['kitchen','island','choppingblock','cooking','baking','skills']},
-    {id:'kitdine', label:'Kitchen / Dining', dl:0.93, tags:['kitchen','eatin','eatinkitchen','dining','diningroom','island']},
-    {id:'dining',  label:'Dining Room', dl:0.79, tags:['dining','diningroom','entertain'], flag:'weak'},
-    {id:'great',   label:'Great Room', dl:0.80, tags:['greatroom','kitchen','livingroom','diningroom','openfloorplan','familyroom'], flag:'weak'},
-    {id:'study',   label:'Study / Office', dl:0.99, tags:['study','office','homeoffice','computer','writing','desk']},
-    {id:'bath',    label:'Bathroom', dl:0.70, seed:['shower','dsink','tub'], tags:['bathroom','doublesink','bathtub','shower'], flag:'weak'},
+    {id:'general', label:'General Room', rank:18, tags:[]},
+    {id:'suite',   label:'Primary Suite', rank:54, seed:['ensuite','walkin','dsink'], tags:['bedroom','primary','primarybedroom','master','masterbedroom','ensuite','closet','walkin','walkincloset','doublesink','bathtub']},
+    {id:'gym',     label:'Gym / Fitness', rank:59, seed:['treadmill','lockerrm'], tags:['gym','fitness','fitnesscenter','pt','personaltrainer','personaltraining','skills']},
+    {id:'laundry', label:'Laundry / Utility', rank:53, seed:['mudroom'], tags:['laundry','laundryroom','washer','dryer','washerdryer','housekeeping']},
+    {id:'closet',  label:'Walk-In Closet', rank:49, tags:['closet','walkin','walkincloset']},
+    {id:'closetsm',label:'Closet', rank:35, tags:['closet','wardrobe','storage']},
+    {id:'garageroom',label:'Garage', rank:39, seed:['garage'], tags:['garage','car','parking','storage','workshop']},
+    {id:'bedroom', label:'Bedroom', rank:33, seed:['closet'], tags:['bedroom','onebedroom']},
+    {id:'kids',    label:'Kids / Nursery', rank:34, seed:['twobeds','playroom'], tags:['kidsroom','bedroom','children','toddler','infant','childrensbedroom']},
+    {id:'apt',     label:'Apartment / Hotel Room', rank:27, seed:['kitchenette'], tags:['apartment','apartments','forrent','hotel','motel','hotelroom','motelroom','generic','genericlot','lot51','lot51hotels','lot51hotelsuite','lot51suitelife','suitelife']},
+    {id:'lobby',   label:'Lobby / Restaurant / Bar', rank:35, tags:['lobby','restaurant','cafe','bar','genericlot']},
+    {id:'living',  label:'Living / Rec Room', rank:25, seed:['tv','fire'], tags:['livingroom','familyroom','tvroom','recroom','parlor','openfloorplan']},
+    {id:'kitchen', label:'Kitchen', rank:20, seed:['island','pantry'], tags:['kitchen','island','choppingblock','cooking','baking','skills']},
+    {id:'kitdine', label:'Kitchen / Dining', rank:13, tags:['kitchen','eatin','eatinkitchen','dining','diningroom','island']},
+    {id:'dining',  label:'Dining Room', rank:6, tags:['dining','diningroom','entertain']},
+    {id:'great',   label:'Great Room', rank:7, tags:['greatroom','kitchen','livingroom','diningroom','openfloorplan','familyroom']},
+    {id:'study',   label:'Study / Office', rank:16, tags:['study','office','homeoffice','computer','writing','desk']},
+    {id:'bath',    label:'Bathroom', rank:1, seed:['shower','dsink','tub'], tags:['bathroom','doublesink','bathtub','shower']},
   ],
   pack:[
-    {id:'general',    label:'General Room', dl:1.25, tags:[]},
-    {id:'commercial', label:'Restaurant / Bar / Retail', dl:2.44, tags:['restaurant','dineout','bar','nightclub','retail','lounge','cafe','smallbusiness','genericlot']},
-    {id:'classroom',  label:'Classroom / Studio', dl:3.50, tags:['classroom','studio','skills','pottery','hobbies','hobby']},
-    {id:'lobby',      label:'Lobby', dl:3.25, tags:['lobby','genericlot','forrent']},
-    {id:'apt',        label:'Apartment / Hotel Room', dl:1.73, tags:['apartment','apartments','forrent','genericlot','lot51']},
-    {id:'laundry',    label:'Laundry / Utility', dl:1.88, tags:['laundry','laundryroom','housekeeping']},
-    {id:'garageroom', label:'Garage', dl:2.04, tags:['garage','car','parking','storage']},
-    {id:'kitdine',    label:'Kitchen / Dining', dl:1.33, tags:['kitchen','eatin','eatinkitchen','dining','diningroom','island']},
-    {id:'dining',     label:'Dining Room', dl:1.33, tags:['dining','diningroom','entertain']},
-    {id:'kitchen',    label:'Kitchen', dl:1.04, tags:['kitchen','island','cooking','skills']},
-    {id:'bedroom',    label:'Bedroom', dl:0.85, tags:['bedroom'], flag:'dlcres'},
-    {id:'living',     label:'Living Room', dl:0.88, tags:['livingroom','familyroom','recroom'], flag:'dlcres'},
-    {id:'bath',       label:'Bathroom', dl:0.83, tags:['bathroom','bathtub'], flag:'dlcres'},
-    {id:'great',      label:'Great Room', dl:0.75, tags:['greatroom','kitchen','livingroom','diningroom','openfloorplan','familyroom'], flag:'dlcres'},
+    {id:'general',    label:'General Room', rank:28, tags:[]},
+    {id:'commercial', label:'Restaurant / Bar / Retail', rank:51, tags:['restaurant','dineout','bar','nightclub','retail','lounge','cafe','smallbusiness','genericlot']},
+    {id:'classroom',  label:'Classroom / Studio', rank:58, tags:['classroom','studio','skills','pottery','hobbies','hobby']},
+    {id:'lobby',      label:'Lobby', rank:57, tags:['lobby','genericlot','forrent']},
+    {id:'apt',        label:'Apartment / Hotel Room', rank:42, tags:['apartment','apartments','forrent','genericlot','lot51']},
+    {id:'laundry',    label:'Laundry / Utility', rank:43, tags:['laundry','laundryroom','housekeeping']},
+    {id:'garageroom', label:'Garage', rank:47, tags:['garage','car','parking','storage']},
+    {id:'kitdine',    label:'Kitchen / Dining', rank:30, tags:['kitchen','eatin','eatinkitchen','dining','diningroom','island']},
+    {id:'dining',     label:'Dining Room', rank:30, tags:['dining','diningroom','entertain']},
+    {id:'kitchen',    label:'Kitchen', rank:19, tags:['kitchen','island','cooking','skills']},
+    {id:'bedroom',    label:'Bedroom', rank:9, tags:['bedroom'], flag:'dlcres'},
+    {id:'living',     label:'Living Room', rank:10, tags:['livingroom','familyroom','recroom'], flag:'dlcres'},
+    {id:'bath',       label:'Bathroom', rank:8, tags:['bathroom','bathtub'], flag:'dlcres'},
+    {id:'great',      label:'Great Room', rank:3, tags:['greatroom','kitchen','livingroom','diningroom','openfloorplan','familyroom'], flag:'dlcres'},
   ]
 };
 
 const USES = [
-  {id:'u_gym', inc:'a home gym',      label:'Home Gym',        w:'Gym',        bg:4.37, pack:null, tags:['gym','fitness','fitnesscenter','treadmill','weights','skills'], desc:'fitted out as a home gym'},
-  {id:'u_wood', inc:'a workshop',     label:'Workshop',        w:'Workshop',   bg:3.96, pack:null, tags:['woodworking','workshop','hobbies','hobby','skills'], desc:'fitted out as a workshop'},
-  {id:'u_music', inc:'a music room',    label:'Music Room',      w:'Music Room', bg:3.55, pack:null, tags:['music','guitar','piano','stereo','band','skills'], desc:'set up as a music room'},
-  {id:'u_pottery', inc:'a pottery studio',  label:'Pottery Studio',  w:'Pottery',    bg:null, pack:2.92, tags:['pottery','studio','hobbies','hobby','skills'], desc:'set up as a pottery studio'},
-  {id:'u_laundry', inc:'a laundry',  label:'Laundry',         w:'Laundry',    bg:2.58, pack:1.88, tags:['laundry','laundryroom','washer','dryer','washerdryer'], desc:'fitted out as a laundry'},
-  {id:'u_green', inc:'a plant room',    label:'Plant Room',      w:'Plant Room', bg:2.03, pack:null, tags:['greenhouse','garden','planters','gardening','skills'], desc:'set up as a plant room'},
-  {id:'u_yoga', inc:'a yoga studio',     label:'Yoga Studio',     w:'Yoga',       bg:null, pack:4.00, tags:['yoga','meditation','wellness','studio'], desc:'set up as a yoga studio'},
-  {id:'u_play', inc:'a playroom',     label:'Playroom',        w:'Playroom',   bg:1.86, pack:null, tags:['playroom','kidsactivities','kids','toys'], desc:'fitted out as a playroom'},
-  {id:'u_bed', inc:'a guest room',      label:'Guest Room',      w:'Guest Room', bg:1.47, pack:0.85, tags:['bedroom','guestroom','guesthouse'], desc:'converted into a guest room'},
-  {id:'u_art', inc:'an art studio',      label:'Art Studio',      w:'Art Studio', bg:1.39, pack:1.46, tags:['studio','art','artist','painting','easel','skills'], desc:'set up as an art studio'},
-  {id:'u_biz', inc:'a home business',      label:'Home Business',   w:'Home Biz',   bg:1.26, pack:2.25, tags:['homebusiness','smallbiz','smallbusiness','business','retail'], desc:'running as a home business'},
-  {id:'u_gaming', inc:'a gaming room',   label:'Gaming Room',     w:'Gaming',     bg:1.21, pack:null, tags:['gaming','videogames','gameconsole','computer'], desc:'set up as a gaming room'},
-  {id:'u_bar', inc:'a bar',      label:'Bar / Lounge',    w:'Bar',        bg:0.97, pack:2.67, tags:['bar','mixology','lounge','skills'], desc:'converted into a bar'},
-  {id:'u_rec', inc:'a rec room',      label:'Rec Room',        w:'Rec Room',   bg:1.05, pack:null, tags:['recroom','familyroom','tvroom','gameroom'], desc:'fitted out as a rec room'},
-  {id:'u_office', inc:'a home office',   label:'Home Office',     w:'Office',     bg:0.99, pack:1.00, tags:['office','homeoffice','study','desk','computer','writing'], desc:'converted into a home office'},
+  {id:'u_gym', inc:'a home gym',      label:'Home Gym',        w:'Gym',        bg:82, pack:null, tags:['gym','fitness','fitnesscenter','treadmill','weights','skills'], desc:'fitted out as a home gym'},
+  {id:'u_wood', inc:'a workshop',     label:'Workshop',        w:'Workshop',   bg:81, pack:null, tags:['woodworking','workshop','hobbies','hobby','skills'], desc:'fitted out as a workshop'},
+  {id:'u_music', inc:'a music room',    label:'Music Room',      w:'Music Room', bg:78, pack:null, tags:['music','guitar','piano','stereo','band','skills'], desc:'set up as a music room'},
+  {id:'u_pottery', inc:'a pottery studio',  label:'Pottery Studio',  w:'Pottery',    bg:null, pack:37, tags:['pottery','studio','hobbies','hobby','skills'], desc:'set up as a pottery studio'},
+  {id:'u_laundry', inc:'a laundry',  label:'Laundry',         w:'Laundry',    bg:72, pack:26, tags:['laundry','laundryroom','washer','dryer','washerdryer'], desc:'fitted out as a laundry'},
+  {id:'u_green', inc:'a plant room',    label:'Plant Room',      w:'Plant Room', bg:66, pack:null, tags:['greenhouse','garden','planters','gardening','skills'], desc:'set up as a plant room'},
+  {id:'u_yoga', inc:'a yoga studio',     label:'Yoga Studio',     w:'Yoga',       bg:null, pack:39, tags:['yoga','meditation','wellness','studio'], desc:'set up as a yoga studio'},
+  {id:'u_play', inc:'a playroom',     label:'Playroom',        w:'Playroom',   bg:64, pack:null, tags:['playroom','kidsactivities','kids','toys'], desc:'fitted out as a playroom'},
+  {id:'u_bed', inc:'a guest room',      label:'Guest Room',      w:'Guest Room', bg:55, pack:12, tags:['bedroom','guestroom','guesthouse'], desc:'converted into a guest room'},
+  {id:'u_art', inc:'an art studio',      label:'Art Studio',      w:'Art Studio', bg:51, pack:20, tags:['studio','art','artist','painting','easel','skills'], desc:'set up as an art studio'},
+  {id:'u_biz', inc:'a home business',      label:'Home Business',   w:'Home Biz',   bg:43, pack:32, tags:['homebusiness','smallbiz','smallbusiness','business','retail'], desc:'running as a home business'},
+  {id:'u_gaming', inc:'a gaming room',   label:'Gaming Room',     w:'Gaming',     bg:40, pack:null, tags:['gaming','videogames','gameconsole','computer'], desc:'set up as a gaming room'},
+  {id:'u_bar', inc:'a bar',      label:'Bar / Lounge',    w:'Bar',        bg:26, pack:35, tags:['bar','mixology','lounge','skills'], desc:'converted into a bar'},
+  {id:'u_rec', inc:'a rec room',      label:'Rec Room',        w:'Rec Room',   bg:31, pack:null, tags:['recroom','familyroom','tvroom','gameroom'], desc:'fitted out as a rec room'},
+  {id:'u_office', inc:'a home office',   label:'Home Office',     w:'Office',     bg:27, pack:15, tags:['office','homeoffice','study','desk','computer','writing'], desc:'converted into a home office'},
   {id:'u_store', inc:'storage',    label:'Storage',         w:'Storage',    bg:null, pack:null, tags:['storage','storeroom','pantry'], desc:'used for storage'},
 ];
 
 const WHO = [
   // Household
-  {id:'w_infant',  label:'Newborn / Infant', bg:2.07, pack:null, tags:['infant','newborn','nursery','crib'], desc:'a family with a newborn'},
-  {id:'w_toddler', label:'Toddlers',         bg:1.49, pack:null, tags:['toddler','toddlers','kids'], desc:'a family with toddlers'},
-  {id:'w_children',label:'Children',         bg:1.32, pack:null, tags:['children','kids','kidsroom'], desc:'a family with children'},
-  {id:'w_teen',    label:'Teenagers',        bg:1.12, pack:0.42, tags:['teen','teens','teenager','teenroom'], desc:'teenagers'},
-  {id:'w_family',  label:'Family',           bg:1.12, pack:null, tags:['family','familyhome'], desc:'a family'},
+  {id:'w_infant',  label:'Newborn / Infant', bg:68, pack:null, tags:['infant','newborn','nursery','crib'], desc:'a family with a newborn'},
+  {id:'w_toddler', label:'Toddlers',         bg:56, pack:null, tags:['toddler','toddlers','kids'], desc:'a family with toddlers'},
+  {id:'w_children',label:'Children',         bg:46, pack:null, tags:['children','kids','kidsroom'], desc:'a family with children'},
+  {id:'w_teen',    label:'Teenagers',        bg:36, pack:1, tags:['teen','teens','teenager','teenroom'], desc:'teenagers'},
+  {id:'w_family',  label:'Family',           bg:36, pack:null, tags:['family','familyhome'], desc:'a family'},
   {id:'w_couple',  label:'Couple',           bg:null, pack:null, tags:['couple','couples','twosims'], desc:'a couple'},
   {id:'w_single',  label:'Single Sim',       bg:null, pack:null, tags:['single','singleton','onesim','bachelor'], desc:'a single sim'},
   {id:'w_room',    label:'Roommates',        bg:null, pack:null, tags:['roommates','roommate','sharedhouse','housemates'], desc:'roommates'},
@@ -896,35 +898,35 @@ const WHO = [
   {id:'w_elder',   label:'Elders',           bg:null, pack:null, tags:['elder','elders','retiree'], desc:'elders'},
   {id:'w_pets',    label:'Pets',             bg:null, pack:null, tags:['pets','petfriendly','dog','cat'], desc:'pets'},
   // Careers and hobbies the build is set up for
-  {id:'c_doctor',  label:'Doctor',           bg:4.70, pack:null, tags:['doctor','medical','career'], desc:'a doctor'},
-  {id:'c_athlete', label:'Athlete',          bg:3.30, pack:null, tags:['athlete','fitness','sports','career'], desc:'an athlete'},
-  {id:'c_musician',label:'Musician',         bg:1.22, pack:null, tags:['musician','music','guitar','piano','career'], desc:'a musician'},
-  {id:'c_writer',  label:'Writer',           bg:1.80, pack:null, tags:['writer','writing','author','career'], desc:'a writer'},
-  {id:'c_artist',  label:'Painter / Artist', bg:1.41, pack:null, tags:['artist','art','painting','easel','career'], desc:'a painter'},
-  {id:'c_coder',   label:'Programmer',       bg:1.31, pack:null, tags:['programmer','programming','coder','computer','tech','career'], desc:'a programmer'},
+  {id:'c_doctor',  label:'Doctor',           bg:83, pack:null, tags:['doctor','medical','career'], desc:'a doctor'},
+  {id:'c_athlete', label:'Athlete',          bg:76, pack:null, tags:['athlete','fitness','sports','career'], desc:'an athlete'},
+  {id:'c_musician',label:'Musician',         bg:41, pack:null, tags:['musician','music','guitar','piano','career'], desc:'a musician'},
+  {id:'c_writer',  label:'Writer',           bg:62, pack:null, tags:['writer','writing','author','career'], desc:'a writer'},
+  {id:'c_artist',  label:'Painter / Artist', bg:52, pack:null, tags:['artist','art','painting','easel','career'], desc:'a painter'},
+  {id:'c_coder',   label:'Programmer',       bg:45, pack:null, tags:['programmer','programming','coder','computer','tech','career'], desc:'a programmer'},
   {id:'c_chef',    label:'Chef',             bg:null, pack:null, tags:['chef','cooking','baking','career'], desc:'a chef'},
-  {id:'c_gardener',label:'Gardener',         bg:2.95, pack:null, tags:['gardener','gardening','garden','career'], desc:'a gardener'},
-  {id:'c_maker',   label:'Woodworker / Maker',bg:3.96, pack:null, tags:['woodworking','maker','crafter','career'], desc:'a maker'},
-  {id:'c_biz',     label:'Business Owner',   bg:1.26, pack:2.25, tags:['businessowner','entrepreneur','homebusiness','career'], desc:'a business owner'},
-  {id:'c_streamer',label:'Gamer / Streamer', bg:1.21, pack:null, tags:['gamer','streamer','gaming','career'], desc:'a gamer'},
-  {id:'c_wfh',     label:'Works from Home',  bg:0.99, pack:null, tags:['workfromhome','remote','homeoffice','career'], desc:'someone who works from home'},
+  {id:'c_gardener',label:'Gardener',         bg:74, pack:null, tags:['gardener','gardening','garden','career'], desc:'a gardener'},
+  {id:'c_maker',   label:'Woodworker / Maker',bg:81, pack:null, tags:['woodworking','maker','crafter','career'], desc:'a maker'},
+  {id:'c_biz',     label:'Business Owner',   bg:43, pack:32, tags:['businessowner','entrepreneur','homebusiness','career'], desc:'a business owner'},
+  {id:'c_streamer',label:'Gamer / Streamer', bg:40, pack:null, tags:['gamer','streamer','gaming','career'], desc:'a gamer'},
+  {id:'c_wfh',     label:'Works from Home',  bg:27, pack:null, tags:['workfromhome','remote','homeoffice','career'], desc:'someone who works from home'},
   {id:'c_student', label:'Student',          bg:null, pack:null, tags:['student','university','homework','career'], desc:'a student'},
 ];
 
 const STYLE = [
-  {id:'desert',   label:'Desert',          bg:1.78, pack:null, tags:['desert','oasis'], desc:'desert'},
-  {id:'beach',    label:'Coastal / Beach', bg:1.67, pack:1.69, tags:['beach','coastal','tropical'], desc:'coastal'},
-  {id:'retro',    label:'Retro',           bg:1.34, pack:null, tags:['retro','vintage'], desc:'retro'},
-  {id:'stone',    label:'Stone',           bg:1.28, pack:null, tags:['stone','rock'], desc:'stone'},
-  {id:'wood',     label:'Wood',            bg:1.26, pack:2.15, tags:['wood'], desc:'wood-clad'},
-  {id:'u20',      label:'Under 20k',       bg:1.18, pack:null, tags:['under20','under20k'], desc:'under §20k'},
-  {id:'tiny',     label:'Tiny House',      bg:1.15, pack:null, tags:['tinyhouse','tinyhome'], desc:'tiny'},
-  {id:'cabin',    label:'Cabin / Lodge',   bg:0.78, pack:null, tags:['cabin','lodge','woodcabin'], desc:'cabin-style', flag:'weak'},
-  {id:'modern',   label:'Modern',          bg:1.03, pack:1.33, tags:['modern'], desc:'modern'},
-  {id:'starter',  label:'Starter',         bg:0.96, pack:null, tags:['starter','starterhouse'], desc:'starter'},
-  {id:'brick',    label:'Brick',           bg:0.92, pack:null, tags:['brick'], desc:'brick'},
-  {id:'indust',   label:'Industrial',      bg:0.92, pack:1.08, tags:['industrial'], desc:'industrial'},
-  {id:'midcent',  label:'Mid-Century',     bg:0.89, pack:0.92, tags:['midcentury','midcenturymodern'], desc:'mid-century modern', flag:'weak'},
+  {id:'desert',   label:'Desert',          bg:61, pack:null, tags:['desert','oasis'], desc:'desert'},
+  {id:'beach',    label:'Coastal / Beach', bg:60, pack:24, tags:['beach','coastal','tropical'], desc:'coastal'},
+  {id:'retro',    label:'Retro',           bg:48, pack:null, tags:['retro','vintage'], desc:'retro'},
+  {id:'stone',    label:'Stone',           bg:44, pack:null, tags:['stone','rock'], desc:'stone'},
+  {id:'wood',     label:'Wood',            bg:43, pack:30, tags:['wood'], desc:'wood-clad'},
+  {id:'u20',      label:'Under 20k',       bg:39, pack:null, tags:['under20','under20k'], desc:'under §20k'},
+  {id:'tiny',     label:'Tiny House',      bg:37, pack:null, tags:['tinyhouse','tinyhome'], desc:'tiny'},
+  {id:'cabin',    label:'Cabin / Lodge',   bg:13, pack:null, tags:['cabin','lodge','woodcabin'], desc:'cabin-style'},
+  {id:'modern',   label:'Modern',          bg:30, pack:18, tags:['modern'], desc:'modern'},
+  {id:'starter',  label:'Starter',         bg:25, pack:null, tags:['starter','starterhouse'], desc:'starter'},
+  {id:'brick',    label:'Brick',           bg:23, pack:null, tags:['brick'], desc:'brick'},
+  {id:'indust',   label:'Industrial',      bg:23, pack:16, tags:['industrial'], desc:'industrial'},
+  {id:'midcent',  label:'Mid-Century',     bg:20, pack:14, tags:['midcentury','midcenturymodern'], desc:'mid-century modern'},
   {id:'u10',      label:'Under 10k',       bg:null, pack:null, tags:['under10','under10k','cheap'], desc:'under §10k'},
   {id:'cottage',  label:'Cottage',         bg:null, pack:null, tags:['cottage','cosy','cozy'], desc:'cottage'},
   {id:'rustic',   label:'Rustic',          bg:null, pack:null, tags:['rustic','farmhouse'], desc:'rustic'},
@@ -936,185 +938,183 @@ const STYLE = [
 ];
 
 const COLOR = [
-  {id:'sand',    label:'Sand / Coastal',   bg:2.30, pack:null, tags:['sand','coconut','palm'], desc:'sand-toned'},
-  {id:'aqua',    label:'Aqua',             bg:1.86, pack:null, tags:['aqua'], desc:'aqua'},
-  {id:'bw',      label:'Black and White',  bg:1.66, pack:2.35, tags:['bw','blackandwhite','bandw','black','white'], desc:'black-and-white'},
-  {id:'pink',    label:'Pink',             bg:1.36, pack:0.42, tags:['pink','blush','rose'], desc:'pink'},
-  {id:'woodtone',label:'Wood Tones',       bg:1.26, pack:2.15, tags:['wood','woodtones','natural'], desc:'warm wood'},
-  {id:'beige',   label:'Beige / Cream',    bg:1.09, pack:null, tags:['beige','cream','neutral'], desc:'cream'},
-  {id:'black',   label:'Black',            bg:1.01, pack:1.58, tags:['black'], desc:'black'},
-  {id:'teal',    label:'Teal / Turquoise', bg:0.92, pack:0.44, tags:['teal','turquoise'], desc:'teal', flag:'weak'},
-  {id:'neon',    label:'Neon',             bg:0.90, pack:null, tags:['neon','bright','bold'], desc:'neon', flag:'weak'},
-  {id:'white',   label:'White',            bg:0.86, pack:0.83, tags:['white'], desc:'white', flag:'weak'},
-  {id:'tan',     label:'Tan',              bg:0.83, pack:0.83, tags:['tan'], desc:'tan', flag:'weak'},
-  {id:'brown',   label:'Brown',            bg:0.79, pack:0.92, tags:['brown'], desc:'brown', flag:'weak'},
-  {id:'purple',  label:'Purple',           bg:0.76, pack:null, tags:['purple','lavender','lilac'], desc:'purple', flag:'weak'},
-  {id:'grey',    label:'Grey',             bg:0.69, pack:0.92, tags:['grey','gray'], desc:'grey', flag:'weak'},
-  {id:'yellow',  label:'Yellow',           bg:0.62, pack:0.73, tags:['yellow','mustard','gold'], desc:'yellow', flag:'weak'},
-  {id:'orange',  label:'Orange',           bg:0.62, pack:0.54, tags:['orange','terracotta','rust'], desc:'orange', flag:'weak'},
-  {id:'blue',    label:'Blue',             bg:0.61, pack:0.67, tags:['blue','navy'], desc:'blue', flag:'weak'},
-  {id:'green',   label:'Green',            bg:0.59, pack:0.50, tags:['green','sage','olive'], desc:'green', flag:'weak'},
-  {id:'colorful',label:'Rainbow / Colourful', bg:null, pack:0.50, tags:['rainbow','colorful','colourful','bright'], desc:'rainbow', flag:'weak'},
-  {id:'red',     label:'Red',              bg:0.42, pack:0.48, tags:['red','burgundy','maroon'], desc:'red', flag:'weak'},
+  {id:'sand',    label:'Sand / Coastal',   bg:69, pack:null, tags:['sand','coconut','palm'], desc:'sand-toned'},
+  {id:'aqua',    label:'Aqua',             bg:64, pack:null, tags:['aqua'], desc:'aqua'},
+  {id:'bw',      label:'Black and White',  bg:59, pack:34, tags:['bw','blackandwhite','bandw','black','white'], desc:'black-and-white'},
+  {id:'pink',    label:'Pink',             bg:49, pack:1, tags:['pink','blush','rose'], desc:'pink'},
+  {id:'woodtone',label:'Wood Tones',       bg:43, pack:30, tags:['wood','woodtones','natural'], desc:'warm wood'},
+  {id:'beige',   label:'Beige / Cream',    bg:33, pack:null, tags:['beige','cream','neutral'], desc:'cream'},
+  {id:'black',   label:'Black',            bg:29, pack:22, tags:['black'], desc:'black'},
+  {id:'teal',    label:'Teal / Turquoise', bg:23, pack:2, tags:['teal','turquoise'], desc:'teal'},
+  {id:'neon',    label:'Neon',             bg:21, pack:null, tags:['neon','bright','bold'], desc:'neon'},
+  {id:'white',   label:'White',            bg:18, pack:11, tags:['white'], desc:'white'},
+  {id:'tan',     label:'Tan',              bg:16, pack:11, tags:['tan'], desc:'tan'},
+  {id:'brown',   label:'Brown',            bg:14, pack:14, tags:['brown'], desc:'brown'},
+  {id:'purple',  label:'Purple',           bg:12, pack:null, tags:['purple','lavender','lilac'], desc:'purple'},
+  {id:'grey',    label:'Grey',             bg:8, pack:14, tags:['grey','gray'], desc:'grey'},
+  {id:'yellow',  label:'Yellow',           bg:6, pack:10, tags:['yellow','mustard','gold'], desc:'yellow'},
+  {id:'orange',  label:'Orange',           bg:6, pack:5, tags:['orange','terracotta','rust'], desc:'orange'},
+  {id:'blue',    label:'Blue',             bg:5, pack:8, tags:['blue','navy'], desc:'blue'},
+  {id:'green',   label:'Green',            bg:4, pack:4, tags:['green','sage','olive'], desc:'green'},
+  {id:'colorful',label:'Rainbow / Colourful', bg:null, pack:4, tags:['rainbow','colorful','colourful','bright'], desc:'rainbow'},
+  {id:'red',     label:'Red',              bg:1, pack:3, tags:['red','burgundy','maroon'], desc:'red'},
   {id:'pastel',  label:'Pastel',           bg:null, pack:null, tags:['pastel','soft'], desc:'pastel'},
   {id:'jewel',   label:'Jewel Tones',      bg:null, pack:null, tags:['jewel','jeweltones','moody'], desc:'jewel-toned'},
   {id:'metal',   label:'Metallics',        bg:null, pack:null, tags:['gold','silver','chrome','brass','copper'], desc:'metallic'},
 ];
 
 const PLACE = [
-  {id:'garageapt', label:'Over the Garage', bg:1.84, pack:2.04, tags:['garageapartment','garage','apartment','forrent'], desc:'set over the garage'},
-  {id:'ingarage',  label:'In the Garage',   bg:1.66, pack:2.04, tags:['garage','converted'], desc:'built into the garage'},
-  {id:'inloft',    label:'In the Loft',     bg:1.43, pack:0.62, tags:['loft','mezzanine'], desc:'up in the loft'},
-  {id:'inbasement',label:'In the Basement', bg:1.34, pack:0.44, tags:['basement','underground','converted'], desc:'down in the basement'},
-  {id:'adu',       label:'Detached / ADU',  bg:1.33, pack:1.62, tags:['guesthouse','adu','detached','separateentrance'], desc:'in a detached unit'},
-  {id:'poolhouse', label:'Pool House',      bg:1.32, pack:null, tags:['poolhouse','pool','guesthouse'], desc:'in the pool house'},
-  {id:'shed',      label:'In a Shed',       bg:1.28, pack:1.33, tags:['shed','outbuilding','detached'], desc:'out in a shed'},
-  {id:'inattic',   label:'In the Attic',    bg:1.16, pack:0.71, tags:['attic','converted'], desc:'up in the attic'},
-  {id:'studioapt', label:'Studio (one Room)', bg:1.01, pack:1.46, tags:['studio','studioapartment','openfloorplan'], desc:'as a single studio space'},
+  {id:'garageapt', label:'Over the Garage', bg:63, pack:29, tags:['garageapartment','garage','apartment','forrent'], desc:'set over the garage'},
+  {id:'ingarage',  label:'In the Garage',   bg:59, pack:29, tags:['garage','converted'], desc:'built into the garage'},
+  {id:'inloft',    label:'In the Loft',     bg:53, pack:7, tags:['loft','mezzanine'], desc:'up in the loft'},
+  {id:'inbasement',label:'In the Basement', bg:48, pack:2, tags:['basement','underground','converted'], desc:'down in the basement'},
+  {id:'adu',       label:'Detached / ADU',  bg:47, pack:23, tags:['guesthouse','adu','detached','separateentrance'], desc:'in a detached unit'},
+  {id:'poolhouse', label:'Pool House',      bg:46, pack:null, tags:['poolhouse','pool','guesthouse'], desc:'in the pool house'},
+  {id:'shed',      label:'In a Shed',       bg:44, pack:18, tags:['shed','outbuilding','detached'], desc:'out in a shed'},
+  {id:'inattic',   label:'In the Attic',    bg:38, pack:9, tags:['attic','converted'], desc:'up in the attic'},
+  {id:'studioapt', label:'Studio (one Room)', bg:29, pack:20, tags:['studio','studioapartment','openfloorplan'], desc:'as a single studio space'},
 ];
 
 const SITE = [
-  {id:'water',   label:'Waterfront',      bg:1.95, pack:null, tags:['waterfront','lake','pond','lakehouse'], desc:'a waterfront lot'},
-  {id:'garage',  label:'Garage',          bg:1.66, pack:2.04, tags:['garage','car'], desc:'a garage'},
-  {id:'parking', label:'Parking Lot',     bg:0.89, pack:2.96, tags:['parking','parkinglot','publicvenue','car'], desc:'a parking lot'},
-  {id:'split',   label:'Split Level',     bg:1.51, pack:null, tags:['splitlevel'], desc:'a split-level plan'},
-  {id:'glass',   label:'Glass Walls',     bg:1.32, pack:null, tags:['glasswalls'], desc:'glass walls'},
-  {id:'pool',    label:'Pool',            bg:1.24, pack:2.29, tags:['pool','poolpatio'], desc:'a pool'},
-  {id:'terrain', label:'Terrain Work',    bg:1.11, pack:2.21, tags:['terrain','terrainedit'], desc:'custom terrain'},
-  {id:'landsc',  label:'Landscaping',     bg:0.91, pack:0.90, tags:['landscape'], desc:'landscaping'},
-  {id:'balcony', label:'Balcony',         bg:0.87, pack:null, tags:['balcony'], desc:'a balcony', flag:'weak'},
-  {id:'patio',   label:'Patio',           bg:0.86, pack:1.19, tags:['patio'], desc:'a patio', flag:'weak'},
-  {id:'deck',    label:'Deck',            bg:0.68, pack:1.50, tags:['deck'], desc:'a deck', flag:'weak'},
-  {id:'s_garageapt',label:'Garage Apartment', only:'lot', bg:1.84, pack:2.04, tags:['garageapartment','garage','apartment','forrent'], desc:'a garage apartment', w:'Over Garage', clause:'an apartment over the garage'},
-  {id:'s_loft',     label:'Loft',             only:'lot', bg:1.43, pack:0.62, tags:['loft','mezzanine'], desc:'a loft', w:'Loft', clause:'a loft above'},
-  {id:'s_studio',   label:'Studio Unit',      only:'lot', bg:1.39, pack:1.46, tags:['studio','studioapartment'], desc:'a studio unit', w:'Studio', clause:'a self-contained studio unit'},
-  {id:'s_basement', label:'Basement',         only:'lot', bg:1.34, pack:0.44, tags:['basement','underground'], desc:'a basement', w:'Basement', clause:'a finished basement below'},
-  {id:'s_adu',      label:'Guest House / ADU',only:'lot', bg:1.33, pack:1.62, tags:['guesthouse','adu','detached','separateentrance'], desc:'a guest house', w:'Detached', clause:'a detached guest house out back'},
-  {id:'s_poolhouse',label:'Pool House',       only:'lot', bg:1.32, pack:null, tags:['poolhouse','guesthouse'], desc:'a pool house', w:'Pool House', clause:'a pool house alongside'},
-  {id:'s_shed',     label:'Shed / Outbuilding',only:'lot', bg:1.28, pack:1.33, tags:['shed','outbuilding','detached'], desc:'a shed', w:'Shed', clause:'a shed out back'},
-  {id:'s_attic',    label:'Attic',            only:'lot', bg:1.16, pack:0.71, tags:['attic'], desc:'an attic', w:'Attic', clause:'a finished attic above'},
+  {id:'water',   label:'Waterfront',      bg:65, pack:null, tags:['waterfront','lake','pond','lakehouse'], desc:'a waterfront lot'},
+  {id:'garage',  label:'Garage',          bg:59, pack:29, tags:['garage','car'], desc:'a garage'},
+  {id:'parking', label:'Parking Lot',     bg:20, pack:38, tags:['parking','parkinglot','publicvenue','car'], desc:'a parking lot'},
+  {id:'split',   label:'Split Level',     bg:58, pack:null, tags:['splitlevel'], desc:'a split-level plan'},
+  {id:'glass',   label:'Glass Walls',     bg:46, pack:null, tags:['glasswalls'], desc:'glass walls'},
+  {id:'pool',    label:'Pool',            bg:42, pack:33, tags:['pool','poolpatio'], desc:'a pool'},
+  {id:'terrain', label:'Terrain Work',    bg:35, pack:31, tags:['terrain','terrainedit'], desc:'custom terrain'},
+  {id:'landsc',  label:'Landscaping',     bg:22, pack:13, tags:['landscape'], desc:'landscaping'},
+  {id:'balcony', label:'Balcony',         bg:19, pack:null, tags:['balcony'], desc:'a balcony'},
+  {id:'patio',   label:'Patio',           bg:18, pack:17, tags:['patio'], desc:'a patio'},
+  {id:'deck',    label:'Deck',            bg:7, pack:21, tags:['deck'], desc:'a deck'},
+  {id:'s_garageapt',label:'Garage Apartment', only:'lot', bg:63, pack:29, tags:['garageapartment','garage','apartment','forrent'], desc:'a garage apartment', w:'Over Garage', clause:'an apartment over the garage'},
+  {id:'s_loft',     label:'Loft',             only:'lot', bg:53, pack:7, tags:['loft','mezzanine'], desc:'a loft', w:'Loft', clause:'a loft above'},
+  {id:'s_studio',   label:'Studio Unit',      only:'lot', bg:51, pack:20, tags:['studio','studioapartment'], desc:'a studio unit', w:'Studio', clause:'a self-contained studio unit'},
+  {id:'s_basement', label:'Basement',         only:'lot', bg:48, pack:2, tags:['basement','underground'], desc:'a basement', w:'Basement', clause:'a finished basement below'},
+  {id:'s_adu',      label:'Guest House / ADU',only:'lot', bg:47, pack:23, tags:['guesthouse','adu','detached','separateentrance'], desc:'a guest house', w:'Detached', clause:'a detached guest house out back'},
+  {id:'s_poolhouse',label:'Pool House',       only:'lot', bg:46, pack:null, tags:['poolhouse','guesthouse'], desc:'a pool house', w:'Pool House', clause:'a pool house alongside'},
+  {id:'s_shed',     label:'Shed / Outbuilding',only:'lot', bg:44, pack:18, tags:['shed','outbuilding','detached'], desc:'a shed', w:'Shed', clause:'a shed out back'},
+  {id:'s_attic',    label:'Attic',            only:'lot', bg:38, pack:9, tags:['attic'], desc:'an attic', w:'Attic', clause:'a finished attic above'},
 ];
 
 const ADDONS = [
-  {id:'playgnd', label:'Playground',      bg:3.51, pack:null, tags:['playground','park','kids'], desc:'a playground'},
-  {id:'sauna',   label:'Sauna',           bg:null, pack:6.17, tags:['sauna','wellness','spa'], desc:'a sauna'},
-  {id:'firepit', label:'Firepit',         bg:2.55, pack:null, tags:['firepit','outdoors'], desc:'a firepit'},
-  {id:'tree',    label:'Treehouse',       bg:2.05, pack:null, tags:['treehouse','tree'], desc:'a treehouse'},
-  {id:'ghouse',  label:'Greenhouse',      bg:2.03, pack:null, tags:['greenhouse','garden','planters'], desc:'a greenhouse'},
-  {id:'poolbar', label:'Pool Bar',        bg:1.50, pack:null, tags:['poolbar','poolclub','bar'], desc:'a pool bar'},
-  {id:'spa',     label:'Hot Tub / Spa',   bg:1.51, pack:1.62, tags:['spa','hottub'], desc:'a hot tub'},
-  {id:'bbq',     label:'Grill / BBQ',     bg:1.38, pack:null, tags:['bbq','grill','barbecue'], desc:'a grill'},
-  {id:'garden',  label:'Garden',          bg:1.24, pack:null, tags:['garden','planters','gardening'], desc:'a garden'},
-  {id:'fishing', label:'Fishing Spot',    bg:1.07, pack:null, tags:['fishing','pond','fish'], desc:'a fishing spot'},
+  {id:'playgnd', label:'Playground',      bg:77, pack:null, tags:['playground','park','kids'], desc:'a playground'},
+  {id:'sauna',   label:'Sauna',           bg:null, pack:41, tags:['sauna','wellness','spa'], desc:'a sauna'},
+  {id:'firepit', label:'Firepit',         bg:71, pack:null, tags:['firepit','outdoors'], desc:'a firepit'},
+  {id:'tree',    label:'Treehouse',       bg:67, pack:null, tags:['treehouse','tree'], desc:'a treehouse'},
+  {id:'ghouse',  label:'Greenhouse',      bg:66, pack:null, tags:['greenhouse','garden','planters'], desc:'a greenhouse'},
+  {id:'poolbar', label:'Pool Bar',        bg:57, pack:null, tags:['poolbar','poolclub','bar'], desc:'a pool bar'},
+  {id:'spa',     label:'Hot Tub / Spa',   bg:58, pack:23, tags:['spa','hottub'], desc:'a hot tub'},
+  {id:'bbq',     label:'Grill / BBQ',     bg:50, pack:null, tags:['bbq','grill','barbecue'], desc:'a grill'},
+  {id:'garden',  label:'Garden',          bg:42, pack:null, tags:['garden','planters','gardening'], desc:'a garden'},
+  {id:'fishing', label:'Fishing Spot',    bg:32, pack:null, tags:['fishing','pond','fish'], desc:'a fishing spot'},
   {id:'minigolf',label:'Mini Golf',       bg:null, pack:null, tags:['minigolf','golfcourse'], desc:'a mini-golf course'},
 ];
 
 const BUSINESS = [
-  {id:'frontdesk', label:'Front Desk / Check-In', bg:1.09, pack:6.17, tags:['frontdesk','checkin','reception','receptiondesk','lobby'], desc:'a front desk'},
-  {id:'lockers',   label:'Lockers',              bg:5.49, pack:null, tags:['lockers','locker'], desc:'lockers'},
-  {id:'waiting',   label:'Waiting Area',         bg:null, pack:4.00, tags:['waitingroom','waitingarea','lobby'], desc:'a waiting area'},
-  {id:'comlaundry',label:'Commercial Laundry',   bg:2.58, pack:1.88, tags:['laundry','laundryroom','housekeeping','catering'], desc:'a back-of-house laundry'},
-  {id:'lockerrm',  label:'Locker Room',          bg:1.45, pack:6.17, tags:['lockerroom','lockers','changingroom'], desc:'a locker room'},
-  {id:'housekeep', label:'Housekeeping',         bg:1.51, pack:null, tags:['housekeeping','staff','employeesonly'], desc:'a housekeeping room'},
+  {id:'frontdesk', label:'Front Desk / Check-In', bg:33, pack:41, tags:['frontdesk','checkin','reception','receptiondesk','lobby'], desc:'a front desk'},
+  {id:'lockers',   label:'Lockers',              bg:86, pack:null, tags:['lockers','locker'], desc:'lockers'},
+  {id:'waiting',   label:'Waiting Area',         bg:null, pack:39, tags:['waitingroom','waitingarea','lobby'], desc:'a waiting area'},
+  {id:'comlaundry',label:'Commercial Laundry',   bg:72, pack:26, tags:['laundry','laundryroom','housekeeping','catering'], desc:'a back-of-house laundry'},
+  {id:'lockerrm',  label:'Locker Room',          bg:54, pack:41, tags:['lockerroom','lockers','changingroom'], desc:'a locker room'},
+  {id:'housekeep', label:'Housekeeping',         bg:58, pack:null, tags:['housekeeping','staff','employeesonly'], desc:'a housekeeping room'},
   {id:'publicwc',  label:'Public Restroom',      bg:null, pack:null, tags:['publicbathroom','publicrestroom','restroom','bathroom'], desc:'a public restroom'},
-  {id:'backoffice',label:'Back Office',          bg:0.99, pack:1.00, tags:['backoffice','hoteloffice','office','employeesonly'], desc:'a back office'},
+  {id:'backoffice',label:'Back Office',          bg:27, pack:15, tags:['backoffice','hoteloffice','office','employeesonly'], desc:'a back office'},
   {id:'breakroom', label:'Staff Break Room',     bg:null, pack:null, tags:['breakroom','staffroom','employeesonly','staff'], desc:'a staff break room'},
   {id:'storeroom', label:'Storeroom',            bg:null, pack:null, tags:['storeroom','storage','employeesonly'], desc:'a storeroom'},
   {id:'comkitchen',label:'Commercial Kitchen',   bg:null, pack:null, tags:['commercialkitchen','catering','hotelkitchen','kitchen'], desc:'a commercial kitchen'},
-  {id:'register',  label:'Register / Counter',   bg:0.43, pack:null, tags:['register','counter','cashier','checkout'], desc:'a register counter', flag:'weak'},
+  {id:'register',  label:'Register / Counter',   bg:2, pack:null, tags:['register','counter','cashier','checkout'], desc:'a register counter'},
   {id:'display',   label:'Display Cases',        bg:null, pack:null, tags:['displaycase','mannequin','retail'], desc:'display cases'},
-  {id:'kitchenette',label:'Kitchenette',         bg:0.55, pack:null, tags:['kitchenette'], desc:'a kitchenette', flag:'weak'},
-  {id:'minibar',   label:'Minibar',              bg:0.74, pack:null, tags:['minibar'], desc:'a minibar', flag:'weak'},
+  {id:'kitchenette',label:'Kitchenette',         bg:3, pack:null, tags:['kitchenette'], desc:'a kitchenette'},
+  {id:'minibar',   label:'Minibar',              bg:10, pack:null, tags:['minibar'], desc:'a minibar'},
 ];
 
 const LAYOUT = [
-  {id:'nursery',  label:'Nursery',            bg:3.91, pack:null, tags:['nursery','crib','infant'], desc:'a nursery'},
-  {id:'mudroom',  label:'Mudroom',            bg:3.11, pack:null, tags:['mudroom'], desc:'a mudroom'},
-  {id:'ensuite',  label:'Ensuite',            bg:2.94, pack:null, tags:['ensuite'], desc:'an ensuite'},
-  {id:'walkin',   label:'Walk-In Closet',     bg:2.37, pack:1.19, tags:['closet','walkin','walkincloset'], desc:'a walk-in closet'},
-  {id:'pantry',   label:'Pantry',             bg:1.86, pack:null, tags:['pantry'], desc:'a pantry'},
-  {id:'playroom', label:'Playroom',           bg:1.86, pack:null, tags:['playroom','kidsactivities'], desc:'a playroom'},
-  {id:'closet',   label:'Closet',             bg:1.50, pack:0.90, tags:['closet','wardrobe','storage'], desc:'a closet'},
-  {id:'shower',   label:'Walk-In Shower',     bg:1.41, pack:null, tags:['shower','walkinshower'], desc:'a walk-in shower'},
-  {id:'dsink',    label:'Double Sink',        bg:1.18, pack:null, tags:['doublesink'], desc:'a double sink'},
-  {id:'tub',      label:'Bathtub',            bg:1.18, pack:0.42, tags:['bathtub'], desc:'a bathtub'},
-  {id:'open',     label:'Open Floor Plan',    bg:1.09, pack:null, tags:['openfloorplan','floorplan'], desc:'an open floor plan'},
-  {id:'twobeds',  label:'Two Beds',           bg:1.05, pack:null, tags:['twobeds','twinbeds'], desc:'two beds'},
-  {id:'fire',     label:'Fireplace',          bg:1.03, pack:2.29, tags:['fireplace'], desc:'a fireplace'},
-  {id:'eatin',    label:'Eat-In Kitchen',     bg:0.93, pack:0.73, tags:['eatin','eatinkitchen'], desc:'an eat-in kitchen', flag:'weak'},
-  {id:'island',   label:'Kitchen Island',     bg:0.85, pack:null, tags:['island','choppingblock'], desc:'an island', flag:'weak'},
-  {id:'great',    label:'Great Room',         bg:0.78, pack:0.60, tags:['greatroom'], desc:'a great room', flag:'weak'},
-  {id:'bunk',     label:'Bunk Beds',          bg:0.59, pack:null, tags:['bunkbeds'], desc:'bunk beds', flag:'weak'},
+  {id:'nursery',  label:'Nursery',            bg:80, pack:null, tags:['nursery','crib','infant'], desc:'a nursery'},
+  {id:'mudroom',  label:'Mudroom',            bg:75, pack:null, tags:['mudroom'], desc:'a mudroom'},
+  {id:'ensuite',  label:'Ensuite',            bg:73, pack:null, tags:['ensuite'], desc:'an ensuite'},
+  {id:'walkin',   label:'Walk-In Closet',     bg:70, pack:17, tags:['closet','walkin','walkincloset'], desc:'a walk-in closet'},
+  {id:'pantry',   label:'Pantry',             bg:64, pack:null, tags:['pantry'], desc:'a pantry'},
+  {id:'playroom', label:'Playroom',           bg:64, pack:null, tags:['playroom','kidsactivities'], desc:'a playroom'},
+  {id:'closet',   label:'Closet',             bg:57, pack:13, tags:['closet','wardrobe','storage'], desc:'a closet'},
+  {id:'shower',   label:'Walk-In Shower',     bg:52, pack:null, tags:['shower','walkinshower'], desc:'a walk-in shower'},
+  {id:'dsink',    label:'Double Sink',        bg:39, pack:null, tags:['doublesink'], desc:'a double sink'},
+  {id:'tub',      label:'Bathtub',            bg:39, pack:1, tags:['bathtub'], desc:'a bathtub'},
+  {id:'open',     label:'Open Floor Plan',    bg:33, pack:null, tags:['openfloorplan','floorplan'], desc:'an open floor plan'},
+  {id:'twobeds',  label:'Two Beds',           bg:31, pack:null, tags:['twobeds','twinbeds'], desc:'two beds'},
+  {id:'fire',     label:'Fireplace',          bg:30, pack:33, tags:['fireplace'], desc:'a fireplace'},
+  {id:'eatin',    label:'Eat-In Kitchen',     bg:24, pack:10, tags:['eatin','eatinkitchen'], desc:'an eat-in kitchen'},
+  {id:'island',   label:'Kitchen Island',     bg:17, pack:null, tags:['island','choppingblock'], desc:'an island'},
+  {id:'great',    label:'Great Room',         bg:13, pack:6, tags:['greatroom'], desc:'a great room'},
+  {id:'bunk',     label:'Bunk Beds',          bg:4, pack:null, tags:['bunkbeds'], desc:'bunk beds'},
 ];
 
 const SKILLS = [
-  {id:'sk_nectar', label:'Nectar Making', pack:'Horse Ranch', bg:null, pack_:5.67, tags:['nectarmaking','nectar'], desc:'a nectar maker'},
-  {id:'sk_comedy', label:'Comedy', pack:'Base', bg:5.13, pack_:null, tags:['comedy','microphone'], desc:'a microphone'},
-  {id:'sk_singing', label:'Singing', pack:'City Living', bg:5.13, pack_:null, tags:['singing','karaoke','microphone'], desc:'a karaoke machine'},
-  {id:'sk_charisma', label:'Charisma', pack:'Base', bg:5.05, pack_:null, tags:['charisma','mirror'], desc:'a practice mirror'},
-  {id:'sk_handiness', label:'Handiness', pack:'Base', bg:3.8, pack_:null, tags:['handiness','woodworking','workbench','repair'], desc:'a woodworking bench'},
-  {id:'sk_guitar', label:'Guitar', pack:'Base', bg:3.55, pack_:null, tags:['guitar'], desc:'a guitar'},
-  {id:'sk_motor', label:'Motor (child)', pack:'Base', bg:3.51, pack_:null, tags:['motor','monkeybars','junglegym','playground'], desc:'a jungle gym'},
-  {id:'sk_fitness', label:'Fitness', pack:'Base', bg:3.3, pack_:null, tags:['fitness','treadmill','weights','workout'], desc:'a workout setup'},
-  {id:'sk_pottery', label:'Pottery', pack:'Businesses & Hobbies', bg:null, pack_:2.92, tags:['pottery','potterywheel','kiln'], desc:'a pottery wheel'},
-  {id:'sk_wellness', label:'Wellness', pack:'Spa Day', bg:null, pack_:2.75, tags:['wellness','yoga','meditation','massage'], desc:'a yoga and meditation space'},
-  {id:'sk_logic', label:'Logic', pack:'Base', bg:2.3, pack_:null, tags:['logic','chess','telescope','microscope'], desc:'a chess table'},
-  {id:'sk_mixology', label:'Mixology', pack:'Base', bg:0.93, pack_:2.02, tags:['mixology','bar','bartending'], desc:'a bar'},
-  {id:'sk_fishing', label:'Fishing', pack:'Base', bg:1.12, pack_:1.92, tags:['fishing','fish','pond'], desc:'a fishing spot'},
-  {id:'sk_programming', label:'Programming', pack:'Base', bg:1.0, pack_:1.79, tags:['programming','computer','coding'], desc:'a programming setup'},
-  {id:'sk_piano', label:'Piano', pack:'Base', bg:1.49, pack_:null, tags:['piano'], desc:'a piano'},
-  {id:'sk_dancing', label:'Dancing', pack:'Get Together', bg:0.7, pack_:1.4, tags:['dancing','dancefloor'], desc:'a dance floor'},
-  {id:'sk_gardening', label:'Gardening', pack:'Base', bg:1.34, pack_:null, tags:['gardening','garden','planters'], desc:'a gardening setup'},
-  {id:'sk_gaming', label:'Video Gaming', pack:'Base', bg:1.21, pack_:null, tags:['videogaming','gaming','gameconsole'], desc:'a gaming setup'},
-  {id:'sk_painting', label:'Painting', pack:'Base', bg:1.1, pack_:null, tags:['painting','easel'], desc:'an easel'},
-  {id:'sk_writing', label:'Writing', pack:'Base', bg:0.87, pack_:0.54, tags:['writing','writer','desk'], desc:'a writing desk', flag:'weak'},
-  {id:'sk_baking', label:'Baking', pack:'Get to Work', bg:0.82, pack_:null, tags:['baking','cupcakes'], desc:'a baking station', flag:'weak'},
-  {id:'sk_cooking', label:'Cooking', pack:'Base', bg:0.75, pack_:null, tags:['cooking','homestylecooking','stove'], desc:'a cooking setup', flag:'weak'},
-  {id:'sk_acting', label:'Acting', pack:'Get Famous', bg:null, pack_:null, tags:['acting','actor'], desc:'an acting mirror'},
-  {id:'sk_apothecary', label:'Apothecary', pack:'Enchanted by Nature', bg:null, pack_:null, tags:['apothecary','elixirs'], desc:'an apothecary table'},
-  {id:'sk_archaeology', label:'Archaeology', pack:'Jungle Adventure', bg:null, pack_:null, tags:['archaeology','artifacts'], desc:'an archaeology table'},
-  {id:'sk_archery', label:'Archery', pack:'Adventure Awaits', bg:null, pack_:null, tags:['archery','archerytarget'], desc:'an archery target'},
-  {id:'sk_bowling', label:'Bowling', pack:'Bowling Night', bg:null, pack_:null, tags:['bowling','bowlinglane'], desc:'a bowling lane'},
-  {id:'sk_creativity', label:'Creativity (child)', pack:'Base', bg:null, pack_:null, tags:['creativity','activitytable'], desc:'an activity table'},
-  {id:'sk_crossstitch', label:'Cross-Stitch', pack:'Cottage Living', bg:null, pack_:null, tags:['crossstitch','crossstitching'], desc:'a cross-stitch hoop'},
-  {id:'sk_dj', label:'DJ Mixing', pack:'Get Together', bg:null, pack_:null, tags:['djmixing','dj','djbooth'], desc:'a DJ booth'},
-  {id:'sk_diving', label:'Diving', pack:'Adventure Awaits', bg:null, pack_:null, tags:['diving','divingboard'], desc:'a diving board'},
-  {id:'sk_entomology', label:'Entomology', pack:'Adventure Awaits', bg:null, pack_:null, tags:['entomology','butterflies'], desc:'an entomology setup'},
-  {id:'sk_entrepreneur', label:'Entrepreneur', pack:'High School Years', bg:null, pack_:null, tags:['entrepreneur','sidehustle'], desc:'a side-hustle setup'},
-  {id:'sk_fabrication', label:'Fabrication', pack:'Eco Lifestyle', bg:null, pack_:null, tags:['fabrication','fabricator','candlemaking'], desc:'a fabricator'},
-  {id:'sk_flowers', label:'Flower Arranging', pack:'Seasons', bg:null, pack_:null, tags:['flowerarranging','flowers'], desc:'a flower arranging table'},
-  {id:'sk_gemology', label:'Gemology', pack:'Crystal Creations', bg:null, pack_:null, tags:['gemology','gems','crystals'], desc:'a gemology table'},
-  {id:'sk_gourmet', label:'Gourmet Cooking', pack:'Base', bg:null, pack_:null, tags:['gourmetcooking','gourmet'], desc:'a gourmet kitchen'},
-  {id:'sk_herbalism', label:'Herbalism', pack:'Outdoor Retreat', bg:null, pack_:null, tags:['herbalism','herbs'], desc:'a herbalism setup'},
-  {id:'sk_horse', label:'Horse Riding', pack:'Horse Ranch', bg:null, pack_:null, tags:['horseriding','horse','stable'], desc:'a stable'},
-  {id:'sk_imagination', label:'Imagination (toddler)', pack:'Base', bg:null, pack_:null, tags:['imagination','toys','blocks'], desc:'a toy set'},
-  {id:'sk_juice', label:'Juice Fizzing', pack:'Eco Lifestyle', bg:null, pack_:null, tags:['juicefizzing','juice'], desc:'a juice fizzer'},
-  {id:'sk_knitting', label:'Knitting', pack:'Nifty Knitting', bg:null, pack_:null, tags:['knitting','yarn'], desc:'a knitting basket'},
-  {id:'sk_media', label:'Media Production', pack:'Get Famous', bg:null, pack_:null, tags:['mediaproduction','streaming','musicstation'], desc:'a media station'},
-  {id:'sk_medium', label:'Medium', pack:'Paranormal', bg:null, pack_:null, tags:['medium','seance'], desc:'a seance table'},
-  {id:'sk_mental', label:'Mental (child)', pack:'Base', bg:null, pack_:null, tags:['mental','sciencetable'], desc:'a science table'},
-  {id:'sk_mischief', label:'Mischief', pack:'Base', bg:null, pack_:null, tags:['mischief','voodoo'], desc:'a voodoo doll'},
-  {id:'sk_natural', label:'Natural Living', pack:'Enchanted by Nature', bg:null, pack_:null, tags:['naturalliving','offgrid','foraging'], desc:'an off-grid setup'},
-  {id:'sk_papercraft', label:'Papercraft', pack:'Adventure Awaits', bg:null, pack_:null, tags:['papercraft'], desc:'a papercraft kit'},
-  {id:'sk_parenting', label:'Parenting', pack:'Parenthood', bg:null, pack_:null, tags:['parenting'], desc:'a family setup'},
-  {id:'sk_pettraining', label:'Pet Training', pack:'Cats & Dogs', bg:null, pack_:null, tags:['pettraining','pets','dog'], desc:'pet training gear'},
-  {id:'sk_photo', label:'Photography', pack:'Base', bg:null, pack_:null, tags:['photography','camera','darkroom'], desc:'a photo studio'},
-  {id:'sk_organ', label:'Pipe Organ', pack:'Vampires', bg:null, pack_:null, tags:['pipeorgan','organ'], desc:'a pipe organ'},
-  {id:'sk_research', label:'Research & Debate', pack:'Discover University', bg:null, pack_:null, tags:['researchanddebate','debate','research'], desc:'a research archive'},
-  {id:'sk_robotics', label:'Robotics', pack:'Discover University', bg:null, pack_:null, tags:['robotics','robot'], desc:'a robotics station'},
-  {id:'sk_climbing', label:'Rock Climbing', pack:'Snowy Escape', bg:null, pack_:null, tags:['rockclimbing','climbing'], desc:'a climbing wall'},
-  {id:'sk_rocket', label:'Rocket Science', pack:'Base', bg:null, pack_:null, tags:['rocketscience','rocket'], desc:'a rocket'},
-  {id:'sk_romance', label:'Romance', pack:'Lovestruck', bg:null, pack_:null, tags:['romance'], desc:'a romantic setup'},
-  {id:'sk_ski', label:'Skiing', pack:'Snowy Escape', bg:null, pack_:null, tags:['skiing','ski'], desc:'ski gear'},
-  {id:'sk_snowboard', label:'Snowboarding', pack:'Snowy Escape', bg:null, pack_:null, tags:['snowboarding','snowboard'], desc:'snowboard gear'},
-  {id:'sk_social', label:'Social (child)', pack:'Base', bg:null, pack_:null, tags:['social','dollhouse'], desc:'a dollhouse'},
-  {id:'sk_tattoo', label:'Tattooing', pack:'Businesses & Hobbies', bg:null, pack_:null, tags:['tattooing','tattoo'], desc:'a tattoo table'},
-  {id:'sk_thanatology', label:'Thanatology', pack:'Life & Death', bg:null, pack_:null, tags:['thanatology'], desc:'a thanatology study'},
-  {id:'sk_vet', label:'Veterinarian', pack:'Cats & Dogs', bg:null, pack_:null, tags:['veterinarian','vet','vetclinic'], desc:'a vet station'},
-  {id:'sk_violin', label:'Violin', pack:'Base', bg:null, pack_:null, tags:['violin'], desc:'a violin'},
+  {id:'sk_nectar', label:'Nectar Making', from:'Horse Ranch', bg:null, pack:40, tags:['nectarmaking','nectar'], desc:'a nectar maker'},
+  {id:'sk_comedy', label:'Comedy', from:'Base', bg:85, pack:null, tags:['comedy','microphone'], desc:'a microphone'},
+  {id:'sk_singing', label:'Singing', from:'City Living', bg:85, pack:null, tags:['singing','karaoke','microphone'], desc:'a karaoke machine'},
+  {id:'sk_charisma', label:'Charisma', from:'Base', bg:84, pack:null, tags:['charisma','mirror'], desc:'a practice mirror'},
+  {id:'sk_handiness', label:'Handiness', from:'Base', bg:79, pack:null, tags:['handiness','woodworking','workbench','repair'], desc:'a woodworking bench'},
+  {id:'sk_guitar', label:'Guitar', from:'Base', bg:78, pack:null, tags:['guitar'], desc:'a guitar'},
+  {id:'sk_motor', label:'Motor (child)', from:'Base', bg:77, pack:null, tags:['motor','monkeybars','junglegym','playground'], desc:'a jungle gym'},
+  {id:'sk_fitness', label:'Fitness', from:'Base', bg:76, pack:null, tags:['fitness','treadmill','weights','workout'], desc:'a workout setup'},
+  {id:'sk_pottery', label:'Pottery', from:'Businesses & Hobbies', bg:null, pack:37, tags:['pottery','potterywheel','kiln'], desc:'a pottery wheel'},
+  {id:'sk_wellness', label:'Wellness', from:'Spa Day', bg:null, pack:36, tags:['wellness','yoga','meditation','massage'], desc:'a yoga and meditation space'},
+  {id:'sk_logic', label:'Logic', from:'Base', bg:69, pack:null, tags:['logic','chess','telescope','microscope'], desc:'a chess table'},
+  {id:'sk_mixology', label:'Mixology', from:'Base', bg:24, pack:28, tags:['mixology','bar','bartending'], desc:'a bar'},
+  {id:'sk_fishing', label:'Fishing', from:'Base', bg:36, pack:27, tags:['fishing','fish','pond'], desc:'a fishing spot'},
+  {id:'sk_programming', label:'Programming', from:'Base', bg:28, pack:25, tags:['programming','computer','coding'], desc:'a programming setup'},
+  {id:'sk_piano', label:'Piano', from:'Base', bg:56, pack:null, tags:['piano'], desc:'a piano'},
+  {id:'sk_dancing', label:'Dancing', from:'Get Together', bg:9, pack:19, tags:['dancing','dancefloor'], desc:'a dance floor'},
+  {id:'sk_gardening', label:'Gardening', from:'Base', bg:48, pack:null, tags:['gardening','garden','planters'], desc:'a gardening setup'},
+  {id:'sk_gaming', label:'Video Gaming', from:'Base', bg:40, pack:null, tags:['videogaming','gaming','gameconsole'], desc:'a gaming setup'},
+  {id:'sk_painting', label:'Painting', from:'Base', bg:34, pack:null, tags:['painting','easel'], desc:'an easel'},
+  {id:'sk_writing', label:'Writing', from:'Base', bg:19, pack:5, tags:['writing','writer','desk'], desc:'a writing desk'},
+  {id:'sk_baking', label:'Baking', from:'Get to Work', bg:15, pack:null, tags:['baking','cupcakes'], desc:'a baking station'},
+  {id:'sk_cooking', label:'Cooking', from:'Base', bg:11, pack:null, tags:['cooking','homestylecooking','stove'], desc:'a cooking setup'},
+  {id:'sk_acting', label:'Acting', from:'Get Famous', bg:null, pack:null, tags:['acting','actor'], desc:'an acting mirror'},
+  {id:'sk_apothecary', label:'Apothecary', from:'Enchanted by Nature', bg:null, pack:null, tags:['apothecary','elixirs'], desc:'an apothecary table'},
+  {id:'sk_archaeology', label:'Archaeology', from:'Jungle Adventure', bg:null, pack:null, tags:['archaeology','artifacts'], desc:'an archaeology table'},
+  {id:'sk_archery', label:'Archery', from:'Adventure Awaits', bg:null, pack:null, tags:['archery','archerytarget'], desc:'an archery target'},
+  {id:'sk_bowling', label:'Bowling', from:'Bowling Night', bg:null, pack:null, tags:['bowling','bowlinglane'], desc:'a bowling lane'},
+  {id:'sk_creativity', label:'Creativity (child)', from:'Base', bg:null, pack:null, tags:['creativity','activitytable'], desc:'an activity table'},
+  {id:'sk_crossstitch', label:'Cross-Stitch', from:'Cottage Living', bg:null, pack:null, tags:['crossstitch','crossstitching'], desc:'a cross-stitch hoop'},
+  {id:'sk_dj', label:'DJ Mixing', from:'Get Together', bg:null, pack:null, tags:['djmixing','dj','djbooth'], desc:'a DJ booth'},
+  {id:'sk_diving', label:'Diving', from:'Adventure Awaits', bg:null, pack:null, tags:['diving','divingboard'], desc:'a diving board'},
+  {id:'sk_entomology', label:'Entomology', from:'Adventure Awaits', bg:null, pack:null, tags:['entomology','butterflies'], desc:'an entomology setup'},
+  {id:'sk_entrepreneur', label:'Entrepreneur', from:'High School Years', bg:null, pack:null, tags:['entrepreneur','sidehustle'], desc:'a side-hustle setup'},
+  {id:'sk_fabrication', label:'Fabrication', from:'Eco Lifestyle', bg:null, pack:null, tags:['fabrication','fabricator','candlemaking'], desc:'a fabricator'},
+  {id:'sk_flowers', label:'Flower Arranging', from:'Seasons', bg:null, pack:null, tags:['flowerarranging','flowers'], desc:'a flower arranging table'},
+  {id:'sk_gemology', label:'Gemology', from:'Crystal Creations', bg:null, pack:null, tags:['gemology','gems','crystals'], desc:'a gemology table'},
+  {id:'sk_gourmet', label:'Gourmet Cooking', from:'Base', bg:null, pack:null, tags:['gourmetcooking','gourmet'], desc:'a gourmet kitchen'},
+  {id:'sk_herbalism', label:'Herbalism', from:'Outdoor Retreat', bg:null, pack:null, tags:['herbalism','herbs'], desc:'a herbalism setup'},
+  {id:'sk_horse', label:'Horse Riding', from:'Horse Ranch', bg:null, pack:null, tags:['horseriding','horse','stable'], desc:'a stable'},
+  {id:'sk_imagination', label:'Imagination (toddler)', from:'Base', bg:null, pack:null, tags:['imagination','toys','blocks'], desc:'a toy set'},
+  {id:'sk_juice', label:'Juice Fizzing', from:'Eco Lifestyle', bg:null, pack:null, tags:['juicefizzing','juice'], desc:'a juice fizzer'},
+  {id:'sk_knitting', label:'Knitting', from:'Nifty Knitting', bg:null, pack:null, tags:['knitting','yarn'], desc:'a knitting basket'},
+  {id:'sk_media', label:'Media Production', from:'Get Famous', bg:null, pack:null, tags:['mediaproduction','streaming','musicstation'], desc:'a media station'},
+  {id:'sk_medium', label:'Medium', from:'Paranormal', bg:null, pack:null, tags:['medium','seance'], desc:'a seance table'},
+  {id:'sk_mental', label:'Mental (child)', from:'Base', bg:null, pack:null, tags:['mental','sciencetable'], desc:'a science table'},
+  {id:'sk_mischief', label:'Mischief', from:'Base', bg:null, pack:null, tags:['mischief','voodoo'], desc:'a voodoo doll'},
+  {id:'sk_natural', label:'Natural Living', from:'Enchanted by Nature', bg:null, pack:null, tags:['naturalliving','offgrid','foraging'], desc:'an off-grid setup'},
+  {id:'sk_papercraft', label:'Papercraft', from:'Adventure Awaits', bg:null, pack:null, tags:['papercraft'], desc:'a papercraft kit'},
+  {id:'sk_parenting', label:'Parenting', from:'Parenthood', bg:null, pack:null, tags:['parenting'], desc:'a family setup'},
+  {id:'sk_pettraining', label:'Pet Training', from:'Cats & Dogs', bg:null, pack:null, tags:['pettraining','pets','dog'], desc:'pet training gear'},
+  {id:'sk_photo', label:'Photography', from:'Base', bg:null, pack:null, tags:['photography','camera','darkroom'], desc:'a photo studio'},
+  {id:'sk_organ', label:'Pipe Organ', from:'Vampires', bg:null, pack:null, tags:['pipeorgan','organ'], desc:'a pipe organ'},
+  {id:'sk_research', label:'Research & Debate', from:'Discover University', bg:null, pack:null, tags:['researchanddebate','debate','research'], desc:'a research archive'},
+  {id:'sk_robotics', label:'Robotics', from:'Discover University', bg:null, pack:null, tags:['robotics','robot'], desc:'a robotics station'},
+  {id:'sk_climbing', label:'Rock Climbing', from:'Snowy Escape', bg:null, pack:null, tags:['rockclimbing','climbing'], desc:'a climbing wall'},
+  {id:'sk_rocket', label:'Rocket Science', from:'Base', bg:null, pack:null, tags:['rocketscience','rocket'], desc:'a rocket'},
+  {id:'sk_romance', label:'Romance', from:'Lovestruck', bg:null, pack:null, tags:['romance'], desc:'a romantic setup'},
+  {id:'sk_ski', label:'Skiing', from:'Snowy Escape', bg:null, pack:null, tags:['skiing','ski'], desc:'ski gear'},
+  {id:'sk_snowboard', label:'Snowboarding', from:'Snowy Escape', bg:null, pack:null, tags:['snowboarding','snowboard'], desc:'snowboard gear'},
+  {id:'sk_social', label:'Social (child)', from:'Base', bg:null, pack:null, tags:['social','dollhouse'], desc:'a dollhouse'},
+  {id:'sk_tattoo', label:'Tattooing', from:'Businesses & Hobbies', bg:null, pack:null, tags:['tattooing','tattoo'], desc:'a tattoo table'},
+  {id:'sk_thanatology', label:'Thanatology', from:'Life & Death', bg:null, pack:null, tags:['thanatology'], desc:'a thanatology study'},
+  {id:'sk_vet', label:'Veterinarian', from:'Cats & Dogs', bg:null, pack:null, tags:['veterinarian','vet','vetclinic'], desc:'a vet station'},
+  {id:'sk_violin', label:'Violin', from:'Base', bg:null, pack:null, tags:['violin'], desc:'a violin'},
 ];
-
-SKILLS.forEach(s=>{ s.from = s.pack; s.pack = s.pack_; });
 
 const GROUPS = [
   {el:'uses',     arr:USES},
@@ -1131,32 +1131,32 @@ const GROUPS = [
 const FEATURES = GROUPS.reduce((a,g)=>a.concat(g.arr), []);
 
 const SIZES = [
-  {v:'', label:'—', dl:1, packdl:1},
-  {v:'20x20', label:'20x20', dl:1.88, packdl:4.19},
-  {v:'30x20', label:'30x20', dl:1.25, packdl:0.88},
-  {v:'20x15', label:'20x15', dl:1.06, packdl:1.85},
-  {v:'40x30', label:'40x30', dl:1.11, packdl:1.98},
-  {v:'30x30', label:'30x30', dl:1.32, packdl:1},
-  {v:'20x30', label:'20x30', dl:0.89, packdl:1},
-  {v:'40x20', label:'40x20', dl:1, packdl:1},
-  {v:'40x40', label:'40x40', dl:1, packdl:1},
-  {v:'50x40', label:'50x40', dl:1, packdl:1},
-  {v:'50x50', label:'50x50', dl:1, packdl:1},
-  {v:'64x64', label:'64x64', dl:1, packdl:1},
+  {v:'', label:'—'},
+  {v:'20x20', label:'20x20'},
+  {v:'30x20', label:'30x20'},
+  {v:'20x15', label:'20x15'},
+  {v:'40x30', label:'40x30'},
+  {v:'30x30', label:'30x30'},
+  {v:'20x30', label:'20x30'},
+  {v:'40x20', label:'40x20'},
+  {v:'40x40', label:'40x40'},
+  {v:'50x40', label:'50x40'},
+  {v:'50x50', label:'50x50'},
+  {v:'64x64', label:'64x64'},
 ];
 
 const CREDITS = [
-  {id:'strudel', label:'strudeltoaster', dl:1.68, n:60, tags:['art','artwork','strudeltoaster']},
-  {id:'simsat', label:'simsationaltoo', dl:1.51, n:143, tags:['art','artwork','simsationaltoo']},
-  {id:'banshee', label:'bansheehvo', dl:1.21, n:196, tags:['art','artwork','bansheehvo','nbansheehvo']},
-  {id:'coco', label:'cocosims2205', dl:0.96, n:14, tags:['art','artwork','cocosims2205']},
-  {id:'simluski', label:'simluski', dl:0.93, n:13, tags:['art','artwork','simluski']},
-  {id:'simplesimmer', label:'simplesimmer', dl:0.79, n:9, tags:['art','artwork','simplesimmer','simple_simmer']},
-  {id:'timywuff', label:'timywuff12', dl:0.74, n:6, tags:['art','artwork','timywuff12']},
-  {id:'jeaney', label:'jeaney1', dl:null, n:2, tags:['art','artwork','jeaney1']},
-  {id:'holyshmowow', label:'holyshmowow', dl:null, n:2, tags:['art','artwork','holyshmowow']},
-  {id:'middows', label:'middows', dl:null, n:2, tags:['art','artwork','middows']},
-  {id:'summerplays', label:'summerplays', dl:null, n:2, tags:['art','artwork','summerplays']},
+  {id:'strudel', label:'strudeltoaster', tags:['art','artwork','strudeltoaster']},
+  {id:'simsat', label:'simsationaltoo', tags:['art','artwork','simsationaltoo']},
+  {id:'banshee', label:'bansheehvo', tags:['art','artwork','bansheehvo','nbansheehvo']},
+  {id:'coco', label:'cocosims2205', tags:['art','artwork','cocosims2205']},
+  {id:'simluski', label:'simluski', tags:['art','artwork','simluski']},
+  {id:'simplesimmer', label:'simplesimmer', tags:['art','artwork','simplesimmer','simple_simmer']},
+  {id:'timywuff', label:'timywuff12', tags:['art','artwork','timywuff12']},
+  {id:'jeaney', label:'jeaney1', tags:['art','artwork','jeaney1']},
+  {id:'holyshmowow', label:'holyshmowow', tags:['art','artwork','holyshmowow']},
+  {id:'middows', label:'middows', tags:['art','artwork','middows']},
+  {id:'summerplays', label:'summerplays', tags:['art','artwork','summerplays']},
 ];
 
 // Rooms worth posting more than once, and what each pass should be.
@@ -1169,7 +1169,7 @@ const SPLITS = {
 };
 
 // Relative reach by position within a set of posts for one build.
-const ORDINAL = [2.00, 1.65, 1.12, 1.30, 0.93, 1.01, 0.76, 0.74];
+const POST_PASSES = 8;   // how many passes the post-number select offers
 const POST_GAP = 3; // days between passes of a split build, so each lands in "Newly Added" on its own
 
 const CATS = [
@@ -1193,30 +1193,30 @@ const CAT_FOR = {
 
 const CORE = ['nocc','nomods','moo','TOOL','showusyourbuilds','startersims','newsimplayers','debug','liveedit'];
 const WORLDS = [
-  {v:'', label:'—', dl:1, pdl:1, lots:[]},
-  {v:'newcrest', label:'Newcrest', dl:1.08, pdl:0.73, lots:[{n:'Asphalt Abodes',s:'asphaltabodes',z:'30x20',d:1.51}, {n:'Avarice Acres',s:'avariceacres',z:'40x30',d:null}, {n:'Beech Byway',s:'beechbyway',z:'30x20',d:1.09}, {n:'Civic Highlands',s:'civichighlands',z:'30x20',d:null}, {n:'Comfy Cubby',s:'comfycubby',z:'20x15',d:1.59}, {n:'Cookout Lookout',s:'cookoutlookout',z:'30x20',d:1.29}, {n:'Fern Park',s:'fernpark',z:'30x20',d:null}, {n:'Hillside Highlands',s:'hillsidehighlands',z:'30x20',d:1.62}, {n:'Midtown Meadows',s:'midtownmeadows',z:'40x30',d:null}, {n:'Oak Alcove',s:'oakalcove',z:'20x15',d:1.0}, {n:'Optimist\'s Outlook',s:'optimistsoutlook',z:'40x30',d:null}, {n:'Rippling Flat',s:'ripplingflat',z:'40x30',d:null}, {n:'Sandy Run',s:'sandyrun',z:'40x20',d:null}, {n:'Tranquil Crescent',s:'tranquilcrescent',z:'30x30',d:null}, {n:'Twin Oracle Point',s:'twinoraclepoint',z:'50x40',d:null}]},
-  {v:'willowcreek', label:'Willow Creek', dl:1.07, pdl:1.79, lots:[{n:'Bargain Bend',s:'bargainbend',z:'30x20',d:null}, {n:'Brook Bungalow',s:'brookbungalow',z:'40x30',d:null}, {n:'Crick Cabana',s:'crickcabana',z:'20x15',d:1.18}, {n:'Cypress Terrace',s:'cypressterrace',z:'40x30',d:null}, {n:'Daisy Hovel',s:'daisyhovel',z:'30x20',d:1.36}, {n:'Garden Essence',s:'gardenessence',z:'40x30',d:null}, {n:'Hallow Slough',s:'hallowslough',z:'20x30',d:null}, {n:'Oakenstead',s:'oakenstead',z:'50x50',d:null}, {n:'Ophelia Villa',s:'opheliavilla',z:'20x30',d:null}, {n:'Parkshore',s:'parkshore',z:'40x30',d:0.62}, {n:'Pique Hearth',s:'piquehearth',z:'30x20',d:0.93}, {n:'Potters Splay',s:'potterssplay',z:'30x20',d:null}, {n:'Rindle Rose',s:'rindlerose',z:'20x15',d:1.12}, {n:'Riverside Roost',s:'riversideroost',z:'30x20',d:null}, {n:'Streamlet Single',s:'streamletsingle',z:'20x15',d:0.82}, {n:'Umbrage Manor',s:'umbragemanor',z:'40x30',d:null}]},
-  {v:'oasissprings', label:'Oasis Springs', dl:1.2, pdl:1.0, lots:[{n:'Affluista Mansion',s:'affluistamansion',z:'50x50',d:null}, {n:'Agave Adobe',s:'agaveadobe',z:'20x15',d:null}, {n:'Arid Ridge',s:'aridridge',z:'40x30',d:null}, {n:'Cacti Casa',s:'cacticasa',z:'40x30',d:1.11}, {n:'Dusty Turf',s:'dustyturf',z:'30x20',d:null}, {n:'Granada Place',s:'granadaplace',z:'30x20',d:3.99}, {n:'Nookstone',s:'nookstone',z:'20x15',d:0.76}, {n:'Pebble Burrow',s:'pebbleburrow',z:'30x20',d:1.62}, {n:'Raffia Quinta',s:'raffiaquinta',z:'20x15',d:1.26}, {n:'Rio Verde',s:'rioverde',z:'40x30',d:null}, {n:'Sandtrap Flat',s:'sandtrapflat',z:'30x20',d:null}, {n:'Slipshod Mesquite',s:'slipshodmesquite',z:'40x30',d:null}, {n:'Springscape',s:'springscape',z:'30x20',d:2.01}, {n:'Sultry Springside',s:'sultryspringside',z:'30x20',d:null}, {n:'Vista Quarry',s:'vistaquarry',z:'20x30',d:1.43}, {n:'Yuma Heights',s:'yumaheights',z:'40x30',d:null}]},
-  {v:'windenburg', label:'Windenburg', dl:1.72, pdl:1.0, lots:[{n:'Coorinberg Cottage',s:'coorinbergcottage',z:'40x30',d:null}, {n:'Cottage Am See',s:'cottageamsee',z:'20x20',d:null}, {n:'Dock Den',s:'dockden',z:'30x20',d:null}, {n:'Dresden House',s:'dresdenhouse',z:'64x64',d:null}, {n:'Factory One',s:'factoryone',z:'30x20',d:null}, {n:'Havisham House',s:'havishamhouse',z:'20x20',d:2.37}, {n:'Mid-NoWhere',s:'midnowhere',z:'20x20',d:1.78}, {n:'Pier Palace',s:'pierpalace',z:'30x20',d:1.72}, {n:'Proprietor\'s Square',s:'proprietorssquare',z:'30x20',d:null}, {n:'Rustic Residence',s:'rusticresidence',z:'30x20',d:1.47}, {n:'The Lighthouse',s:'thelighthouse',z:'40x30',d:null}, {n:'The Shrieking Llama',s:'shriekingllama',z:'20x20',d:1.16}, {n:'The Summer Home',s:'thesummerhome',z:'40x30',d:null}, {n:'Von Haunt Estate',s:'vonhauntestate',z:'40x30',d:null}, {n:'Von-Windenburg Estate',s:'vonwindenburgestate',z:'64x64',d:null}, {n:'Waterlock Redoubt',s:'waterlockredoubt',z:'30x20',d:null}]},
-  {v:'nordhaven', label:'Nordhaven', dl:1.45, pdl:4.17, lots:[{n:'Comfortably Canalside',s:'comfortablycanalside',z:'20x20',d:2.45}, {n:'Fisher\'s Horizon',s:'fishershorizon',z:'30x20',d:null}, {n:'Inked Inlet',s:'inkedinlet',z:'20x20',d:0.8}, {n:'Koffieboon',s:'koffieboon',z:'20x20',d:null}, {n:'Lighthouse Lookout',s:'lighthouselookout',z:'50x40',d:null}, {n:'New Harbor Park',s:'newharborpark',z:'50x40',d:null}, {n:'Old Torget House',s:'oldtorgethouse',z:'20x15',d:1.57}, {n:'Spilled Neon',s:'spilledneon',z:'20x20',d:null}, {n:'Terra-Potta',s:'terrapotta',z:'30x20',d:null}, {n:'The Old Foundry',s:'theoldfoundry',z:'20x15',d:null}, {n:'The Rouge Note',s:'therougenote',z:'20x20',d:null}]},
-  {v:'sansequoia', label:'San Sequoia', dl:1.41, pdl:1.0, lots:[{n:'13 Acacia Avenue',s:'13acaciaavenue',z:'40x30',d:null}, {n:'18 Celebration Way',s:'18celebrationway',z:'40x20',d:null}, {n:'23 Eucalyptus Lane',s:'23eucalyptuslane',z:'30x20',d:2.0}, {n:'36 Bayani Place',s:'36bayaniplace',z:'30x20',d:null}, {n:'7 Eucalyptus Lane',s:'7eucalyptuslane',z:'50x40',d:null}, {n:'Anchorpoint Abode',s:'anchorpointabode',z:'30x20',d:null}, {n:'Anchorpoint Library',s:'anchorpointlibrary',z:'30x20',d:null}, {n:'Celebration Center',s:'celebrationcenter',z:'64x64',d:null}, {n:'Manzanita Terrace',s:'manzanitaterrace',z:'30x20',d:null}, {n:'Parkside Place',s:'parksideplace',z:'30x20',d:1.59}, {n:'Robles Point',s:'roblespoint',z:'50x40',d:null}, {n:'Sequoia Cottage',s:'sequoiacottage',z:'30x20',d:null}]},
-  {v:'ravenwood', label:'Ravenwood', dl:0.98, pdl:1.0, lots:[{n:'Club Eternity',s:'clubeternity',z:'30x20',d:null}, {n:'Crow\'s Perch',s:'crowsperch',z:'30x30',d:null}, {n:'Eternal Hollow',s:'eternalhollow',z:'64x64',d:null}, {n:'Hay Hill Landing',s:'hayhilllanding',z:'64x64',d:null}, {n:'Moppy Manor',s:'moppymanor',z:'30x20',d:0.98}, {n:'Mourning Mist Manor',s:'mourningmistmanor',z:'30x20',d:null}, {n:'Mystic Crossroads',s:'mysticcrossroads',z:'30x30',d:null}, {n:'Old Ravenwood Estate',s:'oldravenwoodestate',z:'50x50',d:null}, {n:'Specter Family Manor',s:'specterfamilymanor',z:'30x20',d:null}, {n:'Teardrop Cottage',s:'teardropcottage',z:'30x30',d:null}, {n:'The Cozy Casket House',s:'thecozycaskethouse',z:'30x20',d:null}, {n:'The Final Draught',s:'thefinaldraught',z:'30x30',d:null}, {n:'The Marigold Chateau',s:'themarigoldchateau',z:'50x50',d:null}]},
-  {v:'britechester', label:'Britechester', dl:1.63, pdl:1.0, lots:[{n:'Honeydew Fields',s:'honeydewfields',z:'20x15',d:1.63}, {n:'Mossy Lane',s:'mossylane',z:'20x15',d:null}, {n:'Spring Steppes',s:'springsteppes',z:'20x15',d:null}]},
-  {v:'henfordonbagley', label:'Henford-on-Bagley', dl:0.96, pdl:1.0, lots:[{n:'1 Cobblebottom Street',s:'1cobblebottomstreet',z:'20x15',d:null}, {n:'13 Nettle Lane',s:'13nettlelane',z:'30x20',d:0.96}, {n:'14 Nettle Lane',s:'14nettlelane',z:'40x30',d:null}, {n:'2 Olde Mill Lane',s:'2oldemilllane',z:'50x40',d:null}, {n:'3 Cobblebottom Street',s:'3cobblebottomstreet',z:'20x20',d:null}, {n:'3 Olde Mill Lane',s:'3oldemilllane',z:'50x40',d:null}, {n:'4 Olde Mill Lane',s:'4oldemilllane',z:'30x20',d:null}, {n:'5 Cobblebottom Street',s:'5cobblebottomstreet',z:'30x20',d:null}, {n:'Cordelia\'s Secret Cottage',s:'cordeliassecretcottage',z:'30x20',d:null}, {n:'Olde Mill Hill',s:'oldemillhill',z:'64x64',d:null}]},
-  {v:'brindletonbay', label:'Brindleton Bay', dl:1.38, pdl:1.58, lots:[{n:'Bedlington Boathouse',s:'bedlingtonboathouse',z:'20x20',d:null}, {n:'Catscratch Cottage',s:'catscratchcottage',z:'20x15',d:null}, {n:'Chateau Frise',s:'chateaufrise',z:'40x40',d:null}, {n:'Dachsund\'s Creek',s:'dachsundscreek',z:'30x20',d:null}, {n:'Domus Familiaris',s:'domusfamiliaris',z:'30x30',d:null}, {n:'Hindquarter Hideaway',s:'hindquarterhideaway',z:'30x20',d:null}, {n:'Hound\'s Head',s:'houndshead',z:'64x64',d:null}, {n:'It\'s a Good House',s:'itsagoodhouse',z:'40x40',d:1.59}, {n:'Ragdoll Refurb',s:'ragdollrefurb',z:'20x20',d:null}, {n:'Sporting Space',s:'sportingspace',z:'30x20',d:0.97}, {n:'Tail\'s End',s:'tailsend',z:'40x30',d:null}]},
-  {v:'magnoliapromenade', label:'Magnolia Promenade', dl:1.34, pdl:3.25, lots:[{n:'Preeminent Domain',s:'preeminentdomain',z:'30x20',d:1.34}]},
-  {v:'delsolvalley', label:'Del Sol Valley', dl:1.0, pdl:1.0, lots:[{n:'Bailey-Moon Manor',s:'baileymoonmanor',z:'50x40',d:null}, {n:'Chateau Peak',s:'chateaupeak',z:'64x64',d:null}, {n:'Inner Circle',s:'innercircle',z:'40x30',d:null}, {n:'The Ward Den',s:'thewardden',z:'50x40',d:null}, {n:'Upland Place',s:'uplandplace',z:'40x30',d:null}, {n:'Vacuous Green',s:'vacuousgreen',z:'50x40',d:null}]},
-  {v:'evergreenharbor', label:'Evergreen Harbor', dl:1.0, pdl:0.5, lots:[{n:'Canal Corner',s:'canalcorner',z:'20x15',d:null}, {n:'Miner Mansion',s:'minermansion',z:'30x20',d:null}, {n:'Pigulock Manor',s:'pigulockmanor',z:'30x20',d:null}, {n:'Rockridge Springs',s:'rockridgesprings',z:'30x20',d:null}, {n:'The Old Mill',s:'theoldmill',z:'30x20',d:null}, {n:'The Portsmouth Promenade',s:'theportsmouthpromenade',z:'30x20',d:null}, {n:'The Shipping Views',s:'theshippingviews',z:'30x20',d:null}]},
-  {v:'strangerville', label:'Strangerville', dl:1.0, pdl:1.0, lots:[{n:'Carpophagous Corner',s:'carpophagouscorner',z:'30x20',d:null}, {n:'Cliff Side Crest',s:'cliffsidecrest',z:'30x20',d:null}, {n:'Creek Corner Cove',s:'creekcornercove',z:'30x20',d:null}, {n:'Dream Weavers Way',s:'dreamweaversway',z:'30x20',d:null}, {n:'Old Penelope',s:'oldpenelope',z:'50x40',d:null}, {n:'Plateau Place',s:'plateauplace',z:'40x30',d:null}, {n:'Riverside Grove',s:'riversidegrove',z:'30x20',d:null}, {n:'Slip 42',s:'slip42',z:'20x15',d:null}, {n:'Strangerville Overlook',s:'strangervilleoverlook',z:'40x30',d:null}]},
-  {v:'sulani', label:'Sulani', dl:1.0, pdl:1.0, lots:[{n:'Admiral\'s Wreckage',s:'admiralswreckage',z:'50x50',d:null}, {n:'Caldera Camp',s:'calderacamp',z:'30x30',d:null}, {n:'Chieftain\'s Villa',s:'chieftainsvilla',z:'40x30',d:null}, {n:'Journey\'s End',s:'journeysend',z:'40x30',d:null}, {n:'Key Point',s:'keypoint',z:'40x30',d:null}, {n:'Kin-Ship',s:'kinship',z:'30x30',d:null}, {n:'Lagoon Look',s:'lagoonlook',z:'30x20',d:null}, {n:'Pier Perfection',s:'pierperfection',z:'30x20',d:null}, {n:'Reef Finery',s:'reeffinery',z:'40x30',d:null}, {n:'Sapphire Shores',s:'sapphireshores',z:'50x50',d:null}, {n:'Tangled Flat',s:'tangledflat',z:'20x20',d:null}]},
-  {v:'tartosa', label:'Tartosa', dl:1.0, pdl:1.0, lots:[{n:'Baia dell\'Amore',s:'baiadellamore',z:'40x20',d:null}, {n:'Old Wood Nectory',s:'oldwoodnectory',z:'40x30',d:null}, {n:'Piccola Lane',s:'piccolalane',z:'20x20',d:null}, {n:'Rifugio dei Pirati',s:'rifugiodeipirati',z:'30x20',d:null}, {n:'Thebe Estate',s:'thebeestate',z:'50x50',d:null}, {n:'Via Romanza',s:'viaromanza',z:'30x30',d:null}]},
-  {v:'copperdale', label:'Copperdale', dl:1.0, pdl:1.0, lots:[{n:'Bridge Creek Drive',s:'bridgecreekdrive',z:'30x30',d:null}, {n:'Golden Peak',s:'goldenpeak',z:'30x30',d:null}, {n:'LaSuli Point',s:'lasulipoint',z:'20x15',d:null}, {n:'Little Falls Nook',s:'littlefallsnook',z:'20x20',d:null}, {n:'Town Square Terrace',s:'townsquareterrace',z:'20x15',d:null}, {n:'Water Tower Way',s:'watertowerway',z:'20x15',d:null}]},
-  {v:'forgottenhollow', label:'Forgotten Hollow', dl:1.0, pdl:1.0, lots:[{n:'Fledermaus Bend',s:'fledermausbend',z:'30x30',d:null}, {n:'Garliclauter Place',s:'garliclauterplace',z:'30x20',d:null}, {n:'Straud Mansion',s:'straudmansion',z:'40x30',d:null}, {n:'Widowshild Townhome',s:'widowshildtownhome',z:'30x20',d:null}, {n:'Wolfsbane Manor',s:'wolfsbanemanor',z:'30x30',d:null}]},
-  {v:'glimmerbrook', label:'Glimmerbrook', dl:1.0, pdl:1.0, lots:[{n:'Brooks Bridge Borough',s:'brooksbridgeborough',z:'30x20',d:null}, {n:'Creek Side Corner',s:'creeksidecorner',z:'30x20',d:null}, {n:'Glimmerbrook Watch',s:'glimmerbrookwatch',z:'30x20',d:null}, {n:'Rock Ridge Canyon',s:'rockridgecanyon',z:'40x30',d:null}]},
-  {v:'granitefalls', label:'Granite Falls', dl:1.0, pdl:1.0, lots:[{n:'Forest Manor',s:'forestmanor',z:'40x30',d:null}, {n:'Lakeview Estate',s:'lakeviewestate',z:'40x30',d:null}, {n:'Luxurious Getaway',s:'luxuriousgetaway',z:'30x20',d:null}, {n:'Riverside Resort',s:'riversideresort',z:'30x20',d:null}]},
-  {v:'moonwoodmill', label:'Moonwood Mill', dl:1.0, pdl:1.0, lots:[{n:'New Moon Shack',s:'newmoonshack',z:'20x15',d:null}, {n:'Prowler\'s Patch',s:'prowlerspatch',z:'30x30',d:null}, {n:'The Collective Cabin',s:'thecollectivecabin',z:'40x30',d:null}]},
-  {v:'mtkomorebi', label:'Mt. Komorebi', dl:0.74, pdl:1.0, lots:[{n:'2-4-1 Wakabamori',s:'241wakabamori',z:'20x15',d:null}, {n:'2-4-3 Wakabamori',s:'243wakabamori',z:'20x15',d:null}, {n:'2-5-1 Wakabamori',s:'251wakabamori',z:'50x50',d:null}, {n:'5-3-1 Shinrinyoku',s:'531shinrinyoku',z:'30x20',d:null}, {n:'5-6-1 Shinrinyohu',s:'561shinrinyohu',z:'20x15',d:null}, {n:'6-4-1 Hanamigawa',s:'641hanamigawa',z:'20x15',d:null}, {n:'Kiryomatsu Point',s:'kiryomatsupoint',z:'50x50',d:null}]},
-  {v:'sanmyshuno', label:'San Myshuno', dl:1.0, pdl:1.0, lots:[{n:'1 Torendi Tower Penthouse',s:'1torenditowerpenthouse',z:'40x30',d:null}, {n:'Fountainview Penthouse',s:'fountainviewpenthouse',z:'30x20',d:null}, {n:'The Old Salt House',s:'theoldsalthouse',z:'30x30',d:null}]},
+  {v:'', label:'—', lots:[]},
+  {v:'newcrest', label:'Newcrest', lots:[{n:'Asphalt Abodes',s:'asphaltabodes',z:'30x20'}, {n:'Avarice Acres',s:'avariceacres',z:'40x30'}, {n:'Beech Byway',s:'beechbyway',z:'30x20'}, {n:'Civic Highlands',s:'civichighlands',z:'30x20'}, {n:'Comfy Cubby',s:'comfycubby',z:'20x15'}, {n:'Cookout Lookout',s:'cookoutlookout',z:'30x20'}, {n:'Fern Park',s:'fernpark',z:'30x20'}, {n:'Hillside Highlands',s:'hillsidehighlands',z:'30x20'}, {n:'Midtown Meadows',s:'midtownmeadows',z:'40x30'}, {n:'Oak Alcove',s:'oakalcove',z:'20x15'}, {n:'Optimist\'s Outlook',s:'optimistsoutlook',z:'40x30'}, {n:'Rippling Flat',s:'ripplingflat',z:'40x30'}, {n:'Sandy Run',s:'sandyrun',z:'40x20'}, {n:'Tranquil Crescent',s:'tranquilcrescent',z:'30x30'}, {n:'Twin Oracle Point',s:'twinoraclepoint',z:'50x40'}]},
+  {v:'willowcreek', label:'Willow Creek', lots:[{n:'Bargain Bend',s:'bargainbend',z:'30x20'}, {n:'Brook Bungalow',s:'brookbungalow',z:'40x30'}, {n:'Crick Cabana',s:'crickcabana',z:'20x15'}, {n:'Cypress Terrace',s:'cypressterrace',z:'40x30'}, {n:'Daisy Hovel',s:'daisyhovel',z:'30x20'}, {n:'Garden Essence',s:'gardenessence',z:'40x30'}, {n:'Hallow Slough',s:'hallowslough',z:'20x30'}, {n:'Oakenstead',s:'oakenstead',z:'50x50'}, {n:'Ophelia Villa',s:'opheliavilla',z:'20x30'}, {n:'Parkshore',s:'parkshore',z:'40x30'}, {n:'Pique Hearth',s:'piquehearth',z:'30x20'}, {n:'Potters Splay',s:'potterssplay',z:'30x20'}, {n:'Rindle Rose',s:'rindlerose',z:'20x15'}, {n:'Riverside Roost',s:'riversideroost',z:'30x20'}, {n:'Streamlet Single',s:'streamletsingle',z:'20x15'}, {n:'Umbrage Manor',s:'umbragemanor',z:'40x30'}]},
+  {v:'oasissprings', label:'Oasis Springs', lots:[{n:'Affluista Mansion',s:'affluistamansion',z:'50x50'}, {n:'Agave Adobe',s:'agaveadobe',z:'20x15'}, {n:'Arid Ridge',s:'aridridge',z:'40x30'}, {n:'Cacti Casa',s:'cacticasa',z:'40x30'}, {n:'Dusty Turf',s:'dustyturf',z:'30x20'}, {n:'Granada Place',s:'granadaplace',z:'30x20'}, {n:'Nookstone',s:'nookstone',z:'20x15'}, {n:'Pebble Burrow',s:'pebbleburrow',z:'30x20'}, {n:'Raffia Quinta',s:'raffiaquinta',z:'20x15'}, {n:'Rio Verde',s:'rioverde',z:'40x30'}, {n:'Sandtrap Flat',s:'sandtrapflat',z:'30x20'}, {n:'Slipshod Mesquite',s:'slipshodmesquite',z:'40x30'}, {n:'Springscape',s:'springscape',z:'30x20'}, {n:'Sultry Springside',s:'sultryspringside',z:'30x20'}, {n:'Vista Quarry',s:'vistaquarry',z:'20x30'}, {n:'Yuma Heights',s:'yumaheights',z:'40x30'}]},
+  {v:'windenburg', label:'Windenburg', lots:[{n:'Coorinberg Cottage',s:'coorinbergcottage',z:'40x30'}, {n:'Cottage Am See',s:'cottageamsee',z:'20x20'}, {n:'Dock Den',s:'dockden',z:'30x20'}, {n:'Dresden House',s:'dresdenhouse',z:'64x64'}, {n:'Factory One',s:'factoryone',z:'30x20'}, {n:'Havisham House',s:'havishamhouse',z:'20x20'}, {n:'Mid-NoWhere',s:'midnowhere',z:'20x20'}, {n:'Pier Palace',s:'pierpalace',z:'30x20'}, {n:'Proprietor\'s Square',s:'proprietorssquare',z:'30x20'}, {n:'Rustic Residence',s:'rusticresidence',z:'30x20'}, {n:'The Lighthouse',s:'thelighthouse',z:'40x30'}, {n:'The Shrieking Llama',s:'shriekingllama',z:'20x20'}, {n:'The Summer Home',s:'thesummerhome',z:'40x30'}, {n:'Von Haunt Estate',s:'vonhauntestate',z:'40x30'}, {n:'Von-Windenburg Estate',s:'vonwindenburgestate',z:'64x64'}, {n:'Waterlock Redoubt',s:'waterlockredoubt',z:'30x20'}]},
+  {v:'nordhaven', label:'Nordhaven', lots:[{n:'Comfortably Canalside',s:'comfortablycanalside',z:'20x20'}, {n:'Fisher\'s Horizon',s:'fishershorizon',z:'30x20'}, {n:'Inked Inlet',s:'inkedinlet',z:'20x20'}, {n:'Koffieboon',s:'koffieboon',z:'20x20'}, {n:'Lighthouse Lookout',s:'lighthouselookout',z:'50x40'}, {n:'New Harbor Park',s:'newharborpark',z:'50x40'}, {n:'Old Torget House',s:'oldtorgethouse',z:'20x15'}, {n:'Spilled Neon',s:'spilledneon',z:'20x20'}, {n:'Terra-Potta',s:'terrapotta',z:'30x20'}, {n:'The Old Foundry',s:'theoldfoundry',z:'20x15'}, {n:'The Rouge Note',s:'therougenote',z:'20x20'}]},
+  {v:'sansequoia', label:'San Sequoia', lots:[{n:'13 Acacia Avenue',s:'13acaciaavenue',z:'40x30'}, {n:'18 Celebration Way',s:'18celebrationway',z:'40x20'}, {n:'23 Eucalyptus Lane',s:'23eucalyptuslane',z:'30x20'}, {n:'36 Bayani Place',s:'36bayaniplace',z:'30x20'}, {n:'7 Eucalyptus Lane',s:'7eucalyptuslane',z:'50x40'}, {n:'Anchorpoint Abode',s:'anchorpointabode',z:'30x20'}, {n:'Anchorpoint Library',s:'anchorpointlibrary',z:'30x20'}, {n:'Celebration Center',s:'celebrationcenter',z:'64x64'}, {n:'Manzanita Terrace',s:'manzanitaterrace',z:'30x20'}, {n:'Parkside Place',s:'parksideplace',z:'30x20'}, {n:'Robles Point',s:'roblespoint',z:'50x40'}, {n:'Sequoia Cottage',s:'sequoiacottage',z:'30x20'}]},
+  {v:'ravenwood', label:'Ravenwood', lots:[{n:'Club Eternity',s:'clubeternity',z:'30x20'}, {n:'Crow\'s Perch',s:'crowsperch',z:'30x30'}, {n:'Eternal Hollow',s:'eternalhollow',z:'64x64'}, {n:'Hay Hill Landing',s:'hayhilllanding',z:'64x64'}, {n:'Moppy Manor',s:'moppymanor',z:'30x20'}, {n:'Mourning Mist Manor',s:'mourningmistmanor',z:'30x20'}, {n:'Mystic Crossroads',s:'mysticcrossroads',z:'30x30'}, {n:'Old Ravenwood Estate',s:'oldravenwoodestate',z:'50x50'}, {n:'Specter Family Manor',s:'specterfamilymanor',z:'30x20'}, {n:'Teardrop Cottage',s:'teardropcottage',z:'30x30'}, {n:'The Cozy Casket House',s:'thecozycaskethouse',z:'30x20'}, {n:'The Final Draught',s:'thefinaldraught',z:'30x30'}, {n:'The Marigold Chateau',s:'themarigoldchateau',z:'50x50'}]},
+  {v:'britechester', label:'Britechester', lots:[{n:'Honeydew Fields',s:'honeydewfields',z:'20x15'}, {n:'Mossy Lane',s:'mossylane',z:'20x15'}, {n:'Spring Steppes',s:'springsteppes',z:'20x15'}]},
+  {v:'henfordonbagley', label:'Henford-on-Bagley', lots:[{n:'1 Cobblebottom Street',s:'1cobblebottomstreet',z:'20x15'}, {n:'13 Nettle Lane',s:'13nettlelane',z:'30x20'}, {n:'14 Nettle Lane',s:'14nettlelane',z:'40x30'}, {n:'2 Olde Mill Lane',s:'2oldemilllane',z:'50x40'}, {n:'3 Cobblebottom Street',s:'3cobblebottomstreet',z:'20x20'}, {n:'3 Olde Mill Lane',s:'3oldemilllane',z:'50x40'}, {n:'4 Olde Mill Lane',s:'4oldemilllane',z:'30x20'}, {n:'5 Cobblebottom Street',s:'5cobblebottomstreet',z:'30x20'}, {n:'Cordelia\'s Secret Cottage',s:'cordeliassecretcottage',z:'30x20'}, {n:'Olde Mill Hill',s:'oldemillhill',z:'64x64'}]},
+  {v:'brindletonbay', label:'Brindleton Bay', lots:[{n:'Bedlington Boathouse',s:'bedlingtonboathouse',z:'20x20'}, {n:'Catscratch Cottage',s:'catscratchcottage',z:'20x15'}, {n:'Chateau Frise',s:'chateaufrise',z:'40x40'}, {n:'Dachsund\'s Creek',s:'dachsundscreek',z:'30x20'}, {n:'Domus Familiaris',s:'domusfamiliaris',z:'30x30'}, {n:'Hindquarter Hideaway',s:'hindquarterhideaway',z:'30x20'}, {n:'Hound\'s Head',s:'houndshead',z:'64x64'}, {n:'It\'s a Good House',s:'itsagoodhouse',z:'40x40'}, {n:'Ragdoll Refurb',s:'ragdollrefurb',z:'20x20'}, {n:'Sporting Space',s:'sportingspace',z:'30x20'}, {n:'Tail\'s End',s:'tailsend',z:'40x30'}]},
+  {v:'magnoliapromenade', label:'Magnolia Promenade', lots:[{n:'Preeminent Domain',s:'preeminentdomain',z:'30x20'}]},
+  {v:'delsolvalley', label:'Del Sol Valley', lots:[{n:'Bailey-Moon Manor',s:'baileymoonmanor',z:'50x40'}, {n:'Chateau Peak',s:'chateaupeak',z:'64x64'}, {n:'Inner Circle',s:'innercircle',z:'40x30'}, {n:'The Ward Den',s:'thewardden',z:'50x40'}, {n:'Upland Place',s:'uplandplace',z:'40x30'}, {n:'Vacuous Green',s:'vacuousgreen',z:'50x40'}]},
+  {v:'evergreenharbor', label:'Evergreen Harbor', lots:[{n:'Canal Corner',s:'canalcorner',z:'20x15'}, {n:'Miner Mansion',s:'minermansion',z:'30x20'}, {n:'Pigulock Manor',s:'pigulockmanor',z:'30x20'}, {n:'Rockridge Springs',s:'rockridgesprings',z:'30x20'}, {n:'The Old Mill',s:'theoldmill',z:'30x20'}, {n:'The Portsmouth Promenade',s:'theportsmouthpromenade',z:'30x20'}, {n:'The Shipping Views',s:'theshippingviews',z:'30x20'}]},
+  {v:'strangerville', label:'Strangerville', lots:[{n:'Carpophagous Corner',s:'carpophagouscorner',z:'30x20'}, {n:'Cliff Side Crest',s:'cliffsidecrest',z:'30x20'}, {n:'Creek Corner Cove',s:'creekcornercove',z:'30x20'}, {n:'Dream Weavers Way',s:'dreamweaversway',z:'30x20'}, {n:'Old Penelope',s:'oldpenelope',z:'50x40'}, {n:'Plateau Place',s:'plateauplace',z:'40x30'}, {n:'Riverside Grove',s:'riversidegrove',z:'30x20'}, {n:'Slip 42',s:'slip42',z:'20x15'}, {n:'Strangerville Overlook',s:'strangervilleoverlook',z:'40x30'}]},
+  {v:'sulani', label:'Sulani', lots:[{n:'Admiral\'s Wreckage',s:'admiralswreckage',z:'50x50'}, {n:'Caldera Camp',s:'calderacamp',z:'30x30'}, {n:'Chieftain\'s Villa',s:'chieftainsvilla',z:'40x30'}, {n:'Journey\'s End',s:'journeysend',z:'40x30'}, {n:'Key Point',s:'keypoint',z:'40x30'}, {n:'Kin-Ship',s:'kinship',z:'30x30'}, {n:'Lagoon Look',s:'lagoonlook',z:'30x20'}, {n:'Pier Perfection',s:'pierperfection',z:'30x20'}, {n:'Reef Finery',s:'reeffinery',z:'40x30'}, {n:'Sapphire Shores',s:'sapphireshores',z:'50x50'}, {n:'Tangled Flat',s:'tangledflat',z:'20x20'}]},
+  {v:'tartosa', label:'Tartosa', lots:[{n:'Baia dell\'Amore',s:'baiadellamore',z:'40x20'}, {n:'Old Wood Nectory',s:'oldwoodnectory',z:'40x30'}, {n:'Piccola Lane',s:'piccolalane',z:'20x20'}, {n:'Rifugio dei Pirati',s:'rifugiodeipirati',z:'30x20'}, {n:'Thebe Estate',s:'thebeestate',z:'50x50'}, {n:'Via Romanza',s:'viaromanza',z:'30x30'}]},
+  {v:'copperdale', label:'Copperdale', lots:[{n:'Bridge Creek Drive',s:'bridgecreekdrive',z:'30x30'}, {n:'Golden Peak',s:'goldenpeak',z:'30x30'}, {n:'LaSuli Point',s:'lasulipoint',z:'20x15'}, {n:'Little Falls Nook',s:'littlefallsnook',z:'20x20'}, {n:'Town Square Terrace',s:'townsquareterrace',z:'20x15'}, {n:'Water Tower Way',s:'watertowerway',z:'20x15'}]},
+  {v:'forgottenhollow', label:'Forgotten Hollow', lots:[{n:'Fledermaus Bend',s:'fledermausbend',z:'30x30'}, {n:'Garliclauter Place',s:'garliclauterplace',z:'30x20'}, {n:'Straud Mansion',s:'straudmansion',z:'40x30'}, {n:'Widowshild Townhome',s:'widowshildtownhome',z:'30x20'}, {n:'Wolfsbane Manor',s:'wolfsbanemanor',z:'30x30'}]},
+  {v:'glimmerbrook', label:'Glimmerbrook', lots:[{n:'Brooks Bridge Borough',s:'brooksbridgeborough',z:'30x20'}, {n:'Creek Side Corner',s:'creeksidecorner',z:'30x20'}, {n:'Glimmerbrook Watch',s:'glimmerbrookwatch',z:'30x20'}, {n:'Rock Ridge Canyon',s:'rockridgecanyon',z:'40x30'}]},
+  {v:'granitefalls', label:'Granite Falls', lots:[{n:'Forest Manor',s:'forestmanor',z:'40x30'}, {n:'Lakeview Estate',s:'lakeviewestate',z:'40x30'}, {n:'Luxurious Getaway',s:'luxuriousgetaway',z:'30x20'}, {n:'Riverside Resort',s:'riversideresort',z:'30x20'}]},
+  {v:'moonwoodmill', label:'Moonwood Mill', lots:[{n:'New Moon Shack',s:'newmoonshack',z:'20x15'}, {n:'Prowler\'s Patch',s:'prowlerspatch',z:'30x30'}, {n:'The Collective Cabin',s:'thecollectivecabin',z:'40x30'}]},
+  {v:'mtkomorebi', label:'Mt. Komorebi', lots:[{n:'2-4-1 Wakabamori',s:'241wakabamori',z:'20x15'}, {n:'2-4-3 Wakabamori',s:'243wakabamori',z:'20x15'}, {n:'2-5-1 Wakabamori',s:'251wakabamori',z:'50x50'}, {n:'5-3-1 Shinrinyoku',s:'531shinrinyoku',z:'30x20'}, {n:'5-6-1 Shinrinyohu',s:'561shinrinyohu',z:'20x15'}, {n:'6-4-1 Hanamigawa',s:'641hanamigawa',z:'20x15'}, {n:'Kiryomatsu Point',s:'kiryomatsupoint',z:'50x50'}]},
+  {v:'sanmyshuno', label:'San Myshuno', lots:[{n:'1 Torendi Tower Penthouse',s:'1torenditowerpenthouse',z:'40x30'}, {n:'Fountainview Penthouse',s:'fountainviewpenthouse',z:'30x20'}, {n:'The Old Salt House',s:'theoldsalthouse',z:'30x30'}]},
 ];
 
 // ---------- state ----------
@@ -1236,9 +1236,9 @@ const lotList  = () => LOT[key()];
 const roomList = () => ROOMS[key()];
 const pickedLots  = () => lotList().filter(l=>state.lots.has(l.id));
 const pickedRooms = () => roomList().filter(r=>state.rooms.has(r.id));
-const byDl = arr => arr.slice().sort((a,b)=>(b.dl||0)-(a.dl||0));
-const primaryLot  = () => byDl(pickedLots())[0]  || null;
-const primaryRoom = () => byDl(pickedRooms())[0] || null;
+const byRank = arr => arr.slice().sort((a,b)=>(b.rank||0)-(a.rank||0));
+const primaryLot  = () => byRank(pickedLots())[0]  || null;
+const primaryRoom = () => byRank(pickedRooms())[0] || null;
 const pickedFeat  = arr => arr.filter(f=>state.features.has(f.id));
 // "General room" is a fallback, not a room — it drops out as soon as a real one is picked.
 const namedRooms = () => {
@@ -1260,12 +1260,10 @@ function dropEchoes(words, core){
 }
 
 // ---------- controls ----------
-function chip(group, o, type, checked, meta){
-  const cls = '';  // public build: no chip is marked as a weaker choice
-  return `<label class="chip${cls}"><input type="${type}" name="${group}" id="${group}_${o.id}" value="${o.id}" ${checked?'checked':''}>`
-       + `<span>${o.label}${meta?`<small>${meta}</small>`:''}</span></label>`;
+function chip(group, o, type, checked){
+  return `<label class="chip"><input type="${type}" name="${group}" id="${group}_${o.id}" value="${o.id}" ${checked?'checked':''}>`
+       + `<span>${o.label}</span></label>`;
 }
-function x(n){ return ''; }  // public build: no personal performance figures
 
 function renderControls(){
   const k = key();
@@ -1295,7 +1293,7 @@ function renderControls(){
     applySeed(lots, 'house', true);
   }
   document.getElementById('lotType').innerHTML =
-    lots.map(l=>chip('lot',l,'checkbox',state.lots.has(l.id),x(l.dl))).join('');
+    lots.map(l=>chip('lot',l,'checkbox',state.lots.has(l.id))).join('');
 
   const rooms = roomList();
   const roomIds = new Set(rooms.map(r=>r.id));
@@ -1305,13 +1303,13 @@ function renderControls(){
     applySeed(rooms, 'suite', true);
   }
   document.getElementById('roomType').innerHTML =
-    rooms.map(r=>chip('room',r,'checkbox',state.rooms.has(r.id),x(r.dl))).join('');
+    rooms.map(r=>chip('room',r,'checkbox',state.rooms.has(r.id))).join('');
 
   GROUPS.forEach(g=>{
     const arr = visible(g.arr);
     const el = document.getElementById(g.el);
     el.innerHTML = arr.length
-      ? arr.map(f=>chip('feat',f,'checkbox',state.features.has(f.id), x(f[k]))).join('')
+      ? arr.map(f=>chip('feat',f,'checkbox',state.features.has(f.id))).join('')
       : '<span class="hint" style="margin:0">Nothing here has a figure in this pack mode. Untick the hide option above to see them.</span>';
   });
   document.getElementById('credits').innerHTML =
@@ -1346,9 +1344,9 @@ fillSelect(document.getElementById('size'), SIZES);
 fillSelect(document.getElementById('world'), WORLDS);
 fillSelect(document.getElementById('cat'), CATS);
 fillSelect(document.getElementById('packCount'), PACKCOUNTS);
-fillSelect(document.getElementById('postNum'), ORDINAL.map((v,i)=>({
+fillSelect(document.getElementById('postNum'), Array.from({length:POST_PASSES},(_,i)=>({
   v:String(i+1),
-  label:(i===ORDINAL.length-1 ? (i+1)+'+ for this build' : (i+1)+' for this build')
+  label:(i===POST_PASSES-1 ? (i+1)+'+ for this build' : (i+1)+' for this build')
 })));
 
 function currentWorld(){ return WORLDS.find(w=>w.v===document.getElementById('world').value) || WORLDS[0]; }
@@ -1498,7 +1496,7 @@ function titleAddon(){
 
 function titleCore(){
   if(state.scope==='room'){
-    const picks = byDl(namedRooms());
+    const picks = byRank(namedRooms());
     if(picks.length>=2){
       const a = ROOM_TITLE[picks[0].id], b = ROOM_TITLE[picks[1].id];
       const combo = `${a} + ${b}`;
@@ -1521,16 +1519,11 @@ function titleCore(){
 }
 
 function postNumber(){ return parseInt(document.getElementById('postNum').value,10) || 1; }
-function ordinalFactor(){
-  const i = Math.min(postNumber()-1, ORDINAL.length-1);
-  return ORDINAL[i] / ORDINAL[0];
-}
-
 // Each pass gets its own room set, category, title and date.
 function buildPlan(){
   if(state.scope !== 'room') return [];
   const seen = new Set(), out = [];
-  byDl(namedRooms()).forEach(r=>{
+  byRank(namedRooms()).forEach(r=>{
     const passes = SPLITS[r.id] || [[r.id, r.label, CAT_FOR[r.id] || 'career']];
     passes.forEach(([id,label,cat])=>{
       if(seen.has(id)) return;
@@ -1559,14 +1552,14 @@ function buildTitles(){
   const shortPack = isBG() ? 'BG' : '';
   const longPack  = isBG() ? 'Basegame' : '';
   const namedPack = isBG() ? null
-    : PACKLIST.filter(p=>state.packsUsed.has(p.id)).sort((a,b)=>(b.dl||0)-(a.dl||0))[0];
+    : PACKLIST.filter(p=>state.packsUsed.has(p.id)).sort((a,b)=>(b.rank||0)-(a.rank||0))[0];
   const core = titleCore();
-  const styles = dropEchoes(byDl2(pickedFeat(STYLE), k).map(f=>f.label), core);
+  const styles = dropEchoes(byRank2(pickedFeat(STYLE), k).map(f=>f.label), core);
   const impliedT = new Set();
   if(state.scope==='lot') pickedLots().forEach(l=>(l.implies||[]).forEach(i=>impliedT.add(i)));
-  const stf = state.scope==='lot' ? byDl2(pickedFeat(SITE).filter(f=>f.w && !impliedT.has(f.id)), k)[0] : null;
+  const stf = state.scope==='lot' ? byRank2(pickedFeat(SITE).filter(f=>f.w && !impliedT.has(f.id)), k)[0] : null;
   const feats = dropEchoes(
-    byDl2(FEATURES.filter(f=>state.features.has(f.id) && f!==stf && !PLACE.includes(f) && !STYLE.includes(f) && !COLOR.includes(f) && !USES.includes(f) && !WHO.includes(f)), k)
+    byRank2(FEATURES.filter(f=>state.features.has(f.id) && f!==stf && !PLACE.includes(f) && !STYLE.includes(f) && !COLOR.includes(f) && !USES.includes(f) && !WHO.includes(f)), k)
       .map(f=>f.label.replace(/ \/ .*$/,'').replace(/^Walk-in /,'Walk-In ')),
     core);
 
@@ -1592,8 +1585,8 @@ function buildTitles(){
     add(`${core} + ${short}`);
   }
   add(`${shortPack} ${core}`);
-  const cols = dropEchoes(byDl2(pickedFeat(COLOR), k).map(f=>f.label), core);
-  const use = byDl2(pickedFeat(USES), k)[0];
+  const cols = dropEchoes(byRank2(pickedFeat(COLOR), k).map(f=>f.label), core);
+  const use = byRank2(pickedFeat(USES), k)[0];
   if(state.scope==='lot' && use){
     add(`${shortPack} ${core} + ${use.w}`);
     add(`${core} w/ ${use.w}`);
@@ -1629,7 +1622,7 @@ function buildTitles(){
             })
             .slice(0,5);
 }
-function byDl2(arr, k){ return arr.slice().sort((a,b)=>(b[k]||0)-(a[k]||0)); }
+function byRank2(arr, k){ return arr.slice().sort((a,b)=>(b[k]||0)-(a[k]||0)); }
 
 const ROOM_DESC = {
   suite:'primary suite with walk-in closet and ensuite', gym:'fitness room with personal-training setup',
@@ -1650,8 +1643,8 @@ function buildDesc(){
   const packWord = isBG() ? 'Basegame' : packCount().word;
 
   // --- look ---
-  const colWord = byDl2(pickedFeat(COLOR), k).slice(0,1).map(f=>f.desc).join(' ');
-  const styleWord = byDl2(pickedFeat(STYLE), k).slice(0,2).map(f=>f.desc).join(' ');
+  const colWord = byRank2(pickedFeat(COLOR), k).slice(0,1).map(f=>f.desc).join(' ');
+  const styleWord = byRank2(pickedFeat(STYLE), k).slice(0,2).map(f=>f.desc).join(' ');
   const look = [colWord, styleWord].filter(Boolean).join(' ');
   const lookStr = look ? look + ' ' : '';
 
@@ -1659,17 +1652,17 @@ function buildDesc(){
   const implied = new Set();
   if(state.scope==='lot') pickedLots().forEach(l=>(l.implies||[]).forEach(i=>implied.add(i)));
   const struct = state.scope==='lot'
-    ? byDl2(pickedFeat(SITE).filter(f=>f.clause && !implied.has(f.id)), k)[0]
+    ? byRank2(pickedFeat(SITE).filter(f=>f.clause && !implied.has(f.id)), k)[0]
     : null;
 
   // --- headline ---
-  const roomNames = byDl(namedRooms()).slice(0,2).map(r=>(ROOM_DESC[r.id]||'') + ' ' + r.label).join(' ');
+  const roomNames = byRank(namedRooms()).slice(0,2).map(r=>(ROOM_DESC[r.id]||'') + ' ' + r.label).join(' ');
   let head, lotExtra = null;
   if(state.scope==='room'){
-    const picks = byDl(namedRooms()).slice(0,2).map(r=>ROOM_DESC[r.id] || r.label.toLowerCase());
+    const picks = byRank(namedRooms()).slice(0,2).map(r=>ROOM_DESC[r.id] || r.label.toLowerCase());
     head = `${packWord} ${lookStr}${picks.join(' plus ')}`;
   } else {
-    const picks = byDl(pickedLots());
+    const picks = byRank(pickedLots());
     const l = picks[0];
     const bb = beds>0 ? `${beds}-bedroom${baths>0?` ${baths}-bath`:''} ` : '';
     // A lot's second element joins the "with" list rather than forming its own
@@ -1703,17 +1696,17 @@ function buildDesc(){
 
   // --- clauses that sit straight after the headline ---
   const placed = pickedFeat(PLACE)[0];
-  const used = byDl2(pickedFeat(USES), k)[0];
+  const used = byRank2(pickedFeat(USES), k)[0];
   const placeOK = placed && dropEchoes([placed.desc], roomNames).length;
   const lotUses = state.scope==='lot'
-    ? byDl2(pickedFeat(USES), k).map(f=>f.inc).filter(Boolean)
+    ? byRank2(pickedFeat(USES), k).map(f=>f.inc).filter(Boolean)
     : [];
   const useOK = state.scope==='room' && used && dropEchoes([used.w], roomNames).length;
   const placeStr = (placeOK ? ' ' + placed.desc : '') + (useOK ? ' ' + used.desc : '');
 
   // --- the "with" list ---
   const roomWords = state.scope==='room' ? roomNames : pickedLots().map(o=>o.label).join(' ');
-  const featPool = byDl2(FEATURES.filter(f=>
+  const featPool = byRank2(FEATURES.filter(f=>
     state.features.has(f.id) && f!==struct && !implied.has(f.id) &&
     !PLACE.includes(f) && !STYLE.includes(f) && !COLOR.includes(f) && !USES.includes(f) && !WHO.includes(f)), k);
   const lead = [lotExtra, struct && struct.clause].concat(lotUses).filter(Boolean);
@@ -1732,35 +1725,13 @@ function buildDesc(){
   else if(place) tail += ` at ${place.n}`;
   else if(world && world.v) tail += ` in ${world.label}`;
 
-  const who = byDl2(pickedFeat(WHO), k).slice(0,2).map(f=>f.desc);
+  const who = byRank2(pickedFeat(WHO), k).slice(0,2).map(f=>f.desc);
   let whoStr = '';
   if(who.length===1) whoStr = `, built for ${who[0]}`;
   else if(who.length>1) whoStr = `, built for ${who[0]} and ${who[1]}`;
 
   const cc = isBG() ? 'No CC, no mods, no packs.' : 'No CC, no mods.';
   return `${head}${placeStr}${featStr}${tail}${whoStr}. ${cc} [[bb.moveobjects on]]`;
-}
-
-function estimate(){
-  const pack = PACKS.find(p=>p.id===state.pack);
-  const k = key();
-  const lifts = [];
-  if(!isBG() && packCount().dl!=null && packCount().v) lifts.push(packCount().dl);
-  if(!isBG()) PACKLIST.forEach(p=>{ if(state.packsUsed.has(p.id) && p.dl!=null) lifts.push(p.dl); });
-  (state.scope==='lot' ? pickedLots() : pickedRooms()).forEach(o=>{ if(o.dl!=null) lifts.push(o.dl); });
-  FEATURES.forEach(f=>{ if(state.features.has(f.id) && f[k]!=null) lifts.push(f[k]); });
-  CREDITS.forEach(c=>{ if(state.credits.has(c.id) && c.dl!=null) lifts.push(c.dl); });
-  const sz = SIZES.find(s=>s.v===document.getElementById('size').value);
-  if(sz && sz.v) lifts.push(isBG()? sz.dl : (sz.packdl||1));
-  const wd = currentWorld();
-  if(wd.v) lifts.push(isBG()? wd.dl : (wd.pdl||1));
-  const pl = currentLotPlace();
-  if(pl && pl.d!=null) lifts.push(pl.d);
-
-  lifts.sort((a,b)=>b-a);
-  const top = lifts.slice(0,3);
-  const blend = top.length ? top.reduce((a,b)=>a+b,0)/top.length : 1;
-  return Math.round(pack.base * blend * (state.scope==='room' ? ordinalFactor() : 1));
 }
 
 function buildNotes(tags){
