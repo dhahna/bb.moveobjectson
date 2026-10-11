@@ -46,7 +46,7 @@ Files sit at the root because that's how the live site is laid out: the pages li
 - The description is editable; manual edits survive chip changes. The field is not re-rendered while the user is typing (that would make the caret jump). Paste strips formatting. **Clear all** resets edits too.
 - Tag counter lives in the sticky sidebar next to Clear all and reads zero until the first manual selection.
 - Pack counts stay out of titles (the "only show what I own" filter handles that). Pack *names* may appear in titles.
-- Chip *ordering* is still derived from Dana's own gallery export, even though the numbers are stripped. Whether to say so on the site is undecided.
+- Chip *ordering* is still derived from Dana's own gallery export. The source carries only an ordering rank per chip (`rank`, or `bg`/`pack` on features: higher sorts first); the download multipliers behind those ranks were stripped in Oct 2026 and must not come back. Whether to say so on the site is undecided.
 - Description logic avoids repeating itself: a structure doesn't restate the lot's phrase and a use doesn't restate the room (see `dropEchoes`).
 
 ### House Style Finder
