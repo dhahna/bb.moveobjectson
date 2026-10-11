@@ -24,6 +24,8 @@ Planned: a gallery stats exporter (a step-by-step guide for Mac and PC so you ca
 
 The glossaries are incomplete. The tips are one builder's methods, not gospel. Wherever something is missing or muddy, the site says so plainly. If you know better, send the correction: open an issue or a pull request (see [CONTRIBUTING.md](CONTRIBUTING.md)), or email **bb@moveobjects.com** if you don't have a GitHub account. It goes in with your name on it.
 
+Beta testers and bug reports: join the [bb.moveobjects Discord](https://discord.gg/456GJhzNUU).
+
 ## Licence
 
 - Code: [MIT](LICENSE)

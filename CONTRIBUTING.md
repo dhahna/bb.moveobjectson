@@ -6,6 +6,8 @@ This is a crowd-sourced project. Corrections and additions are the whole point.
 
 No GitHub account? Email **bb@moveobjects.com** instead; everything below works by email too.
 
+Want to beta test new tools, or talk it through first? Join the **[bb.moveobjects Discord](https://discord.gg/456GJhzNUU)**. Testers get a private channel, a bug-report forum and a say in what gets built next.
+
 - **Fix a glossary entry or tip.** Open an issue titled `Glossary: <term>` or `Tip: <topic>` with the correction and, if you have one, a source.
 - **Fill a gap.** Anywhere a tool says something is missing, that's an open invitation.
 - **Report a bug.** Say which tool, what you clicked, what you expected and what happened. A screenshot helps.
