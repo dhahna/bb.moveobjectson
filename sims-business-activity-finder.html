@@ -1112,7 +1112,7 @@ function renderDb(){
   document.getElementById('dbCount').textContent = rows.length+' of '+ACTIVITIES.length+' activities';
   const tb=document.getElementById('tbody');
   if(!rows.length){
-    tb.innerHTML = '<tr class="emptyrow"><td colspan="9">Nothing matches. Try a shorter word, or clear a filter above.</td></tr>';
+    tb.innerHTML = '<tr class="emptyrow"><td colspan="9">Nothing matches. Try a shorter word, or clear a filter above. Think it should be here? <a class="dcontrib" href="https://discord.gg/456GJhzNUU" target="_blank" rel="noopener">Tell us in the Discord</a>.</td></tr>';
     return;
   }
   tb.innerHTML = rows.map(a=>{
