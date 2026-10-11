@@ -34,9 +34,10 @@ The crowd-sourcing promise is central to the site, but:
 
 ## Fix next
 
-### 4. The tools don't match the home page's type
+### 4. The tools don't match the home page's type — fixed
 The home page uses Walter Turncoat for body text. All three tools still use **Verdana** for body text, and in the Tag Builder even the **chips** are Verdana, which breaks the "Walter Turncoat chips" rule. Next to the home page, the tools look like a different site.
 **Fix:** point the tools' body and chip styles at the same `--body` token the home page uses. *Your call:* Walter Turncoat is harder to read in long paragraphs, so you might keep Verdana for long glossary definitions only.
+**Done:** all three tools set body text to Walter Turncoat (`var(--chip)`), the same face the home page uses for its paragraphs. Verdana stays only where it already was explicit: the wordmark and the small print under 11px (pack badges, source badges, sort arrows). The glossary definitions are short enough to read in Walter Turncoat, so they switched too; the term is a step larger than its definition so the two still read apart.
 
 ### 5. The Activity Finder title wraps to two lines on phones — fixed
 "Small Business & Getaway Activity Finder" breaks onto two lines at 375px, which breaks the one-line title rule. This is fixed by the same change as #1, but at that length it will shrink quite small. A shorter cover title ("Activity Finder", matching the nav label) would read better.
@@ -53,20 +54,22 @@ Nothing is shown on screen, but a code comment reads *"spaced follow-ups median 
 
 ## Polish
 
-### 7. Inconsistent bylines
+### 7. Inconsistent bylines — fixed
 The home page says "Made by dhahna" and the tools say "Built by @dhahna". The Tag Builder has no byline at all. Pick one form.
+**Done:** every page says **Built by @dhahna** (home footer, both tool mastheads, both tool footers). The Tag Builder got a footer byline reusing the home page's line about searching the same name in the gallery.
 
 ### 8. Small tap targets — fixed
 Each tool has 1–4 controls under 24px tall, mostly checkboxes such as the "no spaces between tags" toggle. They're fiddly on a phone. Making the whole label clickable with some padding fixes it.
 **Done:** the "no spaces between tags" toggle and the Activity Finder's "Only Base Game" / "Hide Base Game" labels are 28px tall with the whole label clickable.
 
-### 9. Page titles (browser tabs and search results) are inconsistent
+### 9. Page titles (browser tabs and search results) are inconsistent — fixed
 - Home: "bb.moveobjects — Sims 4 building tools by dhahna"
 - "Sims 4 Gallery Tag Builder"
 - "Sims 4 House Style Finder — 50 US Architectural Styles & Build/Buy Picks"
 - "Sims 4 Small Business & Getaway Activity Finder — Businesses & Hobbies + Adventure Awaits"
 
 Suggested pattern: `<Tool name> · bb.moveobjects`. The long ones help search, so keep them only if you want search traffic.
+**Done:** titles are now `Sims 4 <Tool Name> · bb.moveobjects` and the home page is `bb.moveobjects · Sims 4 Building Tools`. "Sims 4" stays in each title because it is the search term that matters; the trailing descriptors ("50 US Architectural Styles & Build/Buy Picks", "Businesses & Hobbies + Adventure Awaits") moved into a `<meta name="description">` on each page, which no page had before, so search engines still get them.
 
 ## Break test (Oct 8 2026)
 

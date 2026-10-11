@@ -20,9 +20,11 @@ The look is a **90s high-school girl's notebook**: a composition notebook cover,
 ## Type
 
 - **Headings:** Momo Signature
-- **Chips and body text:** Walter Turncoat (the home page switched body text from Verdana to Walter Turncoat; the tools still use Verdana for body text, which is an open audit item)
+- **Chips and body text:** Walter Turncoat on every page (`var(--chip)`). `var(--body)` is Verdana and is only for small print under about 11px (pack badges, source badges, sort arrows) and the wordmark.
 - **Wordmark:** Verdana bold
 - Fonts are embedded as base64. No Google Fonts calls.
+- **Byline:** `Built by @dhahna`, with the handle in `<strong>`. One form everywhere.
+- **Browser tab titles:** `Sims 4 <Tool Name> · bb.moveobjects`; the home page is `bb.moveobjects · Sims 4 Building Tools`. Search descriptors go in `<meta name="description">`, not the title.
 - **Check that the fonts actually render before judging a layout.** If the embedded fonts are missing, the page falls back to Comic Sans and Papyrus and everything reads as cheesy. This has already caused one wasted round of revisions.
 - **Title Case** for titles and every chip label.
 - **Titles stay on one line.** Shrink the font to fit; never wrap. Watch grid children: they need `min-width: 0` or a `nowrap` title will push the container wider than the screen, and fit-to-width scripts will measure the stretched container and never shrink. This caused clipping on mobile before.
