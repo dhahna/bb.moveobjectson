@@ -89,3 +89,8 @@ Not cheesy, not salesy. Plain and direct, written by a builder who worked it out
 - Dana wants real opinions and initiative, not just agreement, while respecting that she knows Sims building best.
 - Don't invent names, brands or copy. Ask.
 - Show work in progress early; she'll redirect.
+
+## Unlisted pages
+
+- `dhahna-post-calendar.html` (Oct 2026): Dana's personal post calendar, 30 of her top builds scheduled one a day Oct 12 to Nov 10 2026, editable posts (saved in the browser), Save/Load Schedule File, and an "Have An AI Build Your Kit" handoff (scrape only / scrape + posts / scrape + posts + schedule). `noindex`, **not in the nav, and don't add it**. Her gallery numbers on it are public on EA's gallery anyway, but it's still her page, not a tool. Its Save Schedule File writes `SCHEDULE - Build Posts Oct-Nov 2026.json`, the file her daily posting task reads from her SIMS BACKUP folder.
+- A general version (Gallery Post Planner) exists but is deliberately held back until the beta-tester group is running. Don't publish it without Dana saying so.
